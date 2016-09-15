@@ -1,9 +1,9 @@
 # cellsociety 
 
-UNC CompSci 308 Cell Society Project
 
-UNC IS THE BESY SCHOOL!!!!!
+Duke CompSci 308 Cell Society Project
 
-+ Member: Ray Song (ys101)
+Names: Chalena Maess-Scholl (cm296)
 
 		Owen Chung (tc153)
+
