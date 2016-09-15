@@ -1,10 +1,8 @@
 # cellsociety 
 
-DUKE IS THE BEST 
-CompSci 308 Cell Society Project
+Duke CompSci 308 Cell Society Project
 
-+ Hey I really
-+ Want an error!
+###Group Members
++ Member: Chalena Maess-Scholl (cm296)
 + Member: Ray Song (ys101)
-+ Owen Chung (tc153)
-
++ Member: Owen Chung (tc153)
