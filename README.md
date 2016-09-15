@@ -2,4 +2,6 @@
 
 Duke CompSci 308 Cell Society Project
 
-Names: Chalena Maess-Scholl (cm296)
+###Group Members
++ Member: Chalena-Maess-Scholl (cm296)
++ Member: Ray Song (ys101)
