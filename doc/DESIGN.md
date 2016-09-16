@@ -18,13 +18,17 @@
 + **Grid Template**
 	* The **"map"** on which each individual cell operates
 	* Could be implemented with a 2D array ***or*** a map, should be prone to switching between one or the other
+	* Runs algorithm that update the cells locations
 	* Should be open to changes of the shape of the grid but the interfaces should be closed
 
 + **Game Engine**
+	* Gets satisfaction from species and marks cells to be updated
+	* Updates grids and species
+	* Interfaces should be closed to changes in algorithm and should be open extensions for other new features
+	
++ **Game Loop** 
 	* Runs the *Game Loop* including the start/stop command for each step of the process
-	* Stores the current state of cells so that each individual cell knows whether to change its state or not
-	* Interfaces should be closed to changes in algorithm that define the movement of species and but should be open extensions for other new features
-
+	* Initializes *Game Engine*
 
 + **Species**
 	* Subclasses that represent different states of the cell, as well as the algorithms that are in charge of how each cell responds given its current state & surroundings
