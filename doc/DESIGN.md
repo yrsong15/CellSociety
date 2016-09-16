@@ -9,8 +9,6 @@
 	* **Game Engine** : This is the *Game Loop* of our project that will not only give the start/stop signs for each step of the game, but also store the *status quo* of each state so that individual species know whether to change their state or not once the Game Loop begins.
 	* **Species** : This is the abstract model on which individual species will be based. Each individual species (ex: Sharks, Fire, different races) will work on the module provided by the Species superclass and manipulate the module so that specific details inherent to each model can be provided. The species class will be open to extension but closed to algorithms.
 
-
-
 	
 
 ### Overview
@@ -38,6 +36,8 @@
 	
 
 ### User Interface
+
+![User Interface Diagram](user_interface_diagram.jpg "User Interface Diagram")
 
 ### Design Details
 
