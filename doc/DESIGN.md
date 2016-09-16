@@ -9,7 +9,8 @@
 	* **Game Engine** : This is the *Game Loop* of our project that will not only give the start/stop signs for each step of the game, but also store the *status quo* of each state so that individual species know whether to change their state or not once the Game Loop begins.
 	* **Species** : This is the abstract superclass on which individual species will be based. Each individual species (ex: Sharks, Fire, different races) will work on the module provided by the Species superclass and manipulate the module so that specific details inherent to each model can be provided.
 
-+ The Species class will be the most fluid of them all, in that it will have to be able to accommodate many different types of cell models.
++ Take the Species class as an example, different kinds of species will extend from the Species superclass and could have different characteristics. In other words, the structure will be open to extension. On the other hand, it will be closed to changes in algorithms. For example, different ways of defining satisfaction of a species should not lead to code changes in other classes. The other classes should follow the same open closed principle. 
+
 
 	
 
@@ -18,10 +19,13 @@
 + **Grid Template**
 	* The **"map"** on which each individual cell operates
 	* Could be implemented with a 2D array ***or*** a map, should be prone to switching between one or the other
+	* Should be open to changes of the shape of the grid but the interfaces should be closed
 
 + **Game Engine**
 	* Runs the *Game Loop* including the start/stop command for each step of the process
 	* Stores the current state of cells so that each individual cell knows whether to change its state or not
+	* Interfaces should be closed to changes in algorithm that define the movement of species and but should be open extensions for other new features
+
 
 + **Species**
 	* Subclasses that represent different states of the cell, as well as the algorithms that are in charge of how each cell responds given its current state & surroundings
