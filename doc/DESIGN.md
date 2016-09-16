@@ -33,6 +33,8 @@
 	* Interacts with neighbors based on its status at the given point in time
 	* Different kinds of species will extend from the Species superclass and could have different characteristics. In other words, the structure will be open to extension. On the other hand, it will be closed to changes in algorithms. For example, different ways of defining satisfaction of a species should not lead to code changes in other classes. The other classes should follow the same open closed principle. 
 
+	![Design Overview Diagram](Design_Overview.png "Design Overview Diagram")
+
 	
 
 ### User Interface
