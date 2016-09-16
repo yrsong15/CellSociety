@@ -33,6 +33,21 @@
 
 ### User Interface
 
++ When Main.java is executed, a short splash message displaying our team name and individual members' names will be shown. After the message disappears, the Main Page will feature an empty grid on the left-hand side, as well as four buttons on the right-hand side that each lead to different simulations: Segregation, Fish-Shark, Fire, and Other.
+	* The grid will always be in the same location, regardless of what page the user is on.
+	* Please refer to the picture at the end of this section for visual reference.
+
++ Each simulation model page will contain the following features in common:
+	* Reset (button): The grid will be initialized to its starting state.
+	* Start (button): The game engine will run the game loop indefinitely, until the end conditions are reached or until the stop button is clicked.
+	* Stop (button): The game engine will halt the game loop.
+	* Play (button): The game engine will run a single iteration of the game loop.
+	
+	* Size of Cell (text box): The user will input an integer that determines the size of each cell on the grid.
+	* Delay (text box): The user will input an integer that determines the delay between each iteration of the game loop.
+	
+	* Run Another Simulation (button): The user will be moved back to the **Main Page**, the initial page that contains the empty grid and the four buttons that each lead to different simulations.
+
 ![User Interface Diagram](user_interface_diagram.jpg "User Interface Diagram")
 
 ### Design Details
