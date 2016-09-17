@@ -87,41 +87,40 @@
 
 ### Design Details
 
++ **Main**
+	+ Main is responsible for initializing the UI and initializing the grid. Once the user presses a UI simulation button, thus making a decision about which simulation to complete, Main will instantiate a simulation that reads in the corresponding XML file for that specific simulation (each simulation will have an XML file that describes the simulation and its global configuration parameters). Main will also call a function in the Grid class that populates the grid with a number of species based on the values of the simulation (given by the XML file).
+	+ Once the start button is pressed for the simulation, a game loop will start in which main calls the game engine. The game loop controls how quickly the simulation advances through the state of the world. Each cycle of the game loop will use the game engine, which has the function of updating each species state based on the algorithm specified in each species subclass. 
+	+ The game loop ends when all species are satisfied or if the stop button is pressed.
+	+ To summarize, Main interacts with the user interface, the grid, and the game engine, in order to direct the flow of the simulation. However, it doesn't actually do any of the real simulation work (updating states of species) itself.
+
+
 + **Grid Template**
 	+ The grid template keeps track of each species location on the grid and has functions such as getEmptyCells()
 	  that will return a list of cells that are empty and can be moved to. This will allow each species to implement
 	  its own algorithm of movement/reaction without having to gain access to the entire grid.
-	+ When initialized, it is also responsible for positioning each species on the grid.
-	+ The resources this class uses is the Species class.
-
+	+ It is also responsible for initializing and positioning each species on the grid, so this class will interact with the species subclasses as well. This would be done by a function like grid.populate(...), which would take in parameter values that specified which species to create and the amount needed, as well as a value like probCatch which could be needed by the species when its running its algorithm/updating its state.
+	+ The grid should also be able to resize itself based on a value, since the initial grid created might be of a different size then the one needed for a certain simulation.
 
 
 + **Game Engine**
 	+ Responsible for checking whether each species is satisfied in its current position and saving the unsatisfied
-	  species. species.move() can then be called on each of these, thus updating the grid and its species positions.
-	
-
-	
-+ **Game Loop** 
-	+ Initializes the game engine and the grid template (based on input from the user/XML file), so these are also what its resources are and what is has access to.
-	+ Also controls how quickly the simulation advances through the state of the world. Each cycle updates the state of the world until the loop hits its ending point, which could either be a timer, a certain state of cells, or the stop button.
-	+ Each cycle calls a run method in the game engine, which causes it to complete checking for species
-	  satisfaction and updating their states once more.
+species. It then calls species.move() on each instance of a species that is unsatisfied, ultimately using the return value to update the grid in terms of the position of species.	
+	+ The game engine will be used by the Main class (which will pass it the grid) and it itself will interact with the grid and the species classes.
 
 
 + **Species**
-	+ Species will be an abstract super class so that subclasses can be create that each know their own state and 
+	+ Species will be an abstract super class so that subclasses can be created that each know their own state and 
 	  the rules that dictate how it responds to its environment, which is dependent on what other species it is closely surrounded by. 
-	+ Each subclass will have a function (stateOfSatisfaction(lNeighb, rNeighb, uNeighb, dNeighb) that, given its surrounding neighbors as parameters, will return a value specifying whether or not it is satisfied with its state. If the cell is an edge cell, those neighbor directions that are over the edge boundary will simply be null. Before it returns this value it will also update its own knowledge about whether or not it was satisfied with its last position, or the last information it was given about its neighbors. 
+	+ Each subclass will have a function (stateOfSatisfaction(...) that, given its surrounding neighbors as parameters, will return a value specifying whether or not it is satisfied with its state. If the cell is an edge cell, the neighbor parameters that are over the edge boundary should simply be passed in as null. Before it returns whether or not it is satisfied, it will also update its own knowledge about whether or not it was satisfied with its last position, or the last information it was given about its neighbors. 
 	+ Each subclass	will also have its own algorithm of movement or reaction to a certain state, so each subclass
 	also needs to implement a move function that decides where to move on the grid. The move function will be passed the result of the getEmptySpaces() function in the grid template so that each species can make its decision about where to move based on its own specific algorithm but still without gaining access to the entire grid itself.
 	
 + **Use Cases**
-	1. Grid template class would call stateOfSatisfaction(...) on the species subclass, which would update the state of the cell in addition to returning a value about whether it is satisfied. If the result is false, it would also call .move() on the species subclass while passing the open cells in the grid as a parameter. However, since the game of life simulation does not require movement to another cell but rather just the switching of a live/dead state, nothing would happen in this .move() function as implemented in the species subclass. 	
+	1. Game engine class would call stateOfSatisfaction(...) on the species subclass, which would update the state of the cell in addition to returning a value about whether it is satisfied. If the result is false, it would also call .move() on the species subclass while passing the open cells in the grid as a parameter. However, since the game of life simulation does not require movement to another cell but rather just the switching of a live/dead state, nothing would happen in this .move() function as implemented in the species subclass. 	
 	2. Same as above.
-	3. Call the run method in the game engine, which loops through and updates each cell. After this, the UI would need to be called in order to perform the graphical/visual updates needed.
-	4. Need to discuss where simulation parameters are being saved.
-	5. Also need to discuss where UI interface/class is comging from. Is it the game engine? Is it in main?
+	3. Call the game engine, which will loop through the grid and update each cell. The grid will then correspondingly be updated visually.
+	4. Once the user decides to run the Fire simulation, Main will initialize the simulation class which will parse the Fire XML file and save those values in itself. 
+	5. The user would press the UI button "run another simulation" which will take them back to the main splash screen from which they can choose a different simulation to run. Once they choose a simulation, the simulation class would be reset and use the values of the corresponding XML file. Main would then update everything and start running the new simulation.
 	
 ### Design Considerations
 
