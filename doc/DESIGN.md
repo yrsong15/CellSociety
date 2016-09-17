@@ -13,20 +13,29 @@
 
 ### Overview
 
++ **Main** 
+	* Initializes grid and UI
+	* Creates and saves Simulation
+	* Runs the *Game Loop* including the start/stop command for each step of the process
+	
++ **UI** 
+	* See **User Interface** below
+	* Includes buttons that start different Simulations
+
++ **Simulation**
+	* Contains data from XML files that are required to instantiate and run each simulation
+
 + **Grid Template**
 	* The **"map"** on which each individual cell operates
 	* Could be implemented with a 2D array ***or*** a map, should be prone to switching between one or the other
-	* Runs algorithm that update the cells locations
+	* Includes method to populate empty grid with default settings specified by XML file
 	* Should be open to changes of the shape of the grid but the interfaces should be closed
 
 + **Game Engine**
 	* Gets satisfaction from species and marks cells to be updated
 	* Updates grids and species
+	* Updates each species' neighbors
 	* Interfaces should be closed to changes in algorithm and should be open extensions for other new features
-	
-+ **Game Loop** 
-	* Runs the *Game Loop* including the start/stop command for each step of the process
-	* Initializes *Game Engine*
 
 + **Species**
 	* Subclasses that represent different states of the cell, as well as the algorithms that are in charge of how each cell responds given its current state & surroundings
@@ -34,7 +43,7 @@
 	* Different kinds of species will extend from the Species superclass and could have different characteristics. In other words, the structure will be open to extension. On the other hand, it will be closed to changes in algorithms. For example, different ways of defining satisfaction of a species should not lead to code changes in other classes. The other classes should follow the same open closed principle. 
 ### Design Overview Diagram
 
-	![Design Overview Diagram](Design_Overview.png "Design Overview Diagram")
+	![Design Overview Diagram](design_overview.jpg "Design Overview Diagram")
 
 	
 
