@@ -122,7 +122,7 @@ species. It then calls *species.move()* on each instance of a species that is un
 	+ Each species should also know its current location on the grid.
 	
 + **Use Cases**
-	1. Game engine class would call stateOfSatisfaction(...) on the species subclass, which would update the state of the cell in addition to returning a value about whether it is satisfied. If the result is false, it would also call .move() on the species subclass while passing the open cells in the grid as a parameter. However, since the game of life simulation does not require movement to another cell but rather just the switching of a live/dead state, nothing would happen in this .move() function as implemented in the species subclass. 	
+	1. Game engine class would call *stateOfSatisfaction(...)* on the species subclass, which would update the state of the cell in addition to returning a value about whether it is satisfied. If the result is false, it would also call *.move()* on the species subclass while passing the open cells in the grid as a parameter. However, since the game of life simulation does not require movement to another cell but rather just the switching of a live/dead state, nothing would happen in this *.move()* function as implemented in the species subclass. 	
 	2. Same as above.
 	3. Call the game engine, which will loop through the grid and update each cell. The grid will then correspondingly be updated visually.
 	4. Once the user decides to run the Fire simulation, Main will initialize the simulation class which will parse the Fire XML file and save those values in itself. 
@@ -132,52 +132,52 @@ species. It then calls *species.move()* on each instance of a species that is un
 
 + Creating an extra simulation class to hold the values from the XML file.
 	+ Pros:
-		+ Reusability -> can simply re-initialize the simulation class to hold values from a different XML file which will be useful when a user wants to switch to a different simulation
-		+ Organization -> better to make it an extra class than add more code to Main that would parse/save those values
+		+ Reusability -> can simply re-initialize the simulation class to hold values from a different XML file which will be useful when a user wants to switch to a different simulation.
+		+ Organization -> better to make it an extra class than add more code to Main that would parse/save those values.
 	+ Cons:
-		+ An extra class, another thing for Main to initialize and keep track of
+		+ An extra class, another thing for Main to initialize and keep track of.
 		
 		
 		
-+ Letting Main have access to/interact with the majority of the classes to direct the flow of the simulation
++ Letting Main have access to/interact with the majority of the classes to direct the flow of the simulation.
 	+ Pros:
-		+ Readability -> the main logic of the program is created and called from one place
-		+ Central hub that oversees the entire program
+		+ Readability -> the main logic of the program is created and called from one place.
+		+ Central hub that oversees the entire program.
 	+ Cons:
-		+ Main has access to the majority of the classes
-		+ Burdening Main with too many functionalities
-		+ Code could get cluttered
+		+ Main has access to the majority of the classes.
+		+ Burdening Main with too many functionalities.
+		+ Code could get cluttered.
 
 
 
 + Having a separate class for the UI
 	+ Pros:
-		+ Better manages complexity -> can easily make UI changes in one place
-		+ Less cluttered Main class
+		+ Better manages complexity -> can easily make UI changes in one place.
+		+ Less cluttered Main class.
 	+ Cons:
-		+ Main has to continuously interact with the UI class to check whether certain buttons have been pressed
+		+ Main has to continuously interact with the UI class to check whether certain buttons have been pressed.
 
 
 
-+ Letting the subclasses of species implement their own move algorithm instead of having those functions in the grid template or game engine
++ Letting the subclasses of species implement their own move algorithm instead of having those functions in the grid template or game engine.
 	+ Pros:
-		+ Easily extendable to create other simulations that use different species which have different rules
-		+ Logic is encapsulated, no other classes need to know anything about the species rules/algorithm
+		+ Easily extendable to create other simulations that use different species which have different rules.
+		+ Logic is encapsulated, no other classes need to know anything about the species rules/algorithm.
 	+ Cons:
 		+ Species needs to receive the open cells in the grid as an input so that it can utilize its given algorithm to find the spot where it wants to go.
-		+ Each species won't necessarily require a *move()* function, some might simply change their states
+		+ Each species won't necessarily require a *move()* function, some might simply change their states.
 
 
 
-+ Passing the species subclasses the cells that are empty instead of passing the entire grid to them
++ Passing the species subclasses the cells that are empty instead of passing the entire grid to them.
 	+ Pros:
 		+ The subclasses don't receive all the information about their world, i.e. the grid they are in.
 		+ Reduces the burden of having to pass the entire grid to each and every species instance.
 	+ Cons:
-		+ Have to find the applicable parameters before the method is called, instead of calling it and just letting the species figure it out by passing it the grid
+		+ Have to find the applicable parameters before the method is called, instead of calling it and just letting the species figure it out by passing it the grid.
 		
 + Assumptions/Dependencies
-	+ The program assumes that each simulation button on the UI will also have an available XML file that is correctly formatted and can successfully be parsed by the simulation class
+	+ The program assumes that each simulation button on the UI will also have an available XML file that is correctly formatted and can successfully be parsed by the simulation class.
 	+ It also assumes that the species specified in the XML file do exist as subclasses of the superclass species.
 
 ### Team Responsibilities
