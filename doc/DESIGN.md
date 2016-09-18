@@ -2,9 +2,9 @@
 
 ### Introduction
 
-+ The objective of this project is to come up with a fluid, flexible platform on which various Cellular Automata programs - including, but not limited to Model of Segregation, Predator-Prey Relationships, and Spreading of Fire - can be run on.
++ The objective of this project is to come up with a fluid, flexible platform on which various Cellular Automata programs - including, but not limited to Model of Segregation, Predator-Prey Relationships, Spreading of Fire, and Game of Life - can be run on.
 
-+ Abstraction is the key to our project, in that the platform must be able to account for different types of CA models. Because of this we have tried to come up with a solid base to our project and allowed the most flexibility to be in adding a simulation or changing the values/algorithms of a simulation. As such, we have come up with three key components to the project, which are as follows:
++ Abstraction is the key to our project, in that the platform must be able to account for different types of CA models. Because of this we have come up with a solid base to our project and allowed the most flexibility to be in adding a simulation or changing the values/algorithms of a simulation. As such, we have come up with three key components to the project, which are as follows:
 	* **Grid Template**: This is the basic template on which the *Game Engine* and each *Species* will operate.
 	* **Game Engine** : This is part of the *Game Loop* of our project that will not only give the start/stop signs for each step of the game, but also store the *status quo* of each state so that individual species know whether to change their state or not once the Game Loop begins.
 	* **Species** : This is the abstract model on which individual species will be based. Each individual species (ex: Sharks, Fire, different races) will work on the module provided by the Species superclass and manipulate the module so that specific details inherent to each model can be provided. The species class will be open to extension but closed to algorithms.
@@ -40,8 +40,9 @@
 + **Species**
 	* Subclasses that represent different states of the cell, as well as the algorithms that are in charge of how each cell responds given its current state & surroundings
 	* Interacts with neighbors based on its status at the given point in time
-	* Different kinds of species will extend from the Species superclass and could have different characteristics. In other words, the structure will be open to extension. On the other hand, it will be closed to changes in algorithms. For example, different ways of defining satisfaction of a species should not lead to code changes in other classes. The other classes should follow the same open closed principle. 
-### Design Overview Diagram
+	* Different kinds of species will extend from the Species superclass and could have different characteristics. In other words, the structure will be open to extension. On the other hand, it will be closed to changes in algorithms. For example, different ways of defining satisfaction of a species should not lead to code changes in other classes. The other classes should follow the same open closed principle.
+	 
+#### Design Overview Diagram
 
 	![Design Overview Diagram](design_overview.jpg "Design Overview Diagram")
 
@@ -54,6 +55,7 @@
 	* **Please refer to the picture at the end of this section for visual reference.**
 
 + Each simulation model page will contain the following features in common:
+	* **Grid** (2D Array Representation): Display for current state of grid.
 	* **Reset** (button): The grid will be initialized to its starting state.
 	* **Start** (button): The game engine will run the game loop indefinitely, until the end conditions are reached or until the stop button is clicked.
 	* **Stop** (button): The game engine will halt the game loop.
@@ -82,6 +84,7 @@
 + **Other** model will also contain the following:
 	* Specific details required for simulation( ex: Game of Life model)
 	
+#### User Interface Diagram
 
 ![User Interface Diagram](user_interface_diagram.jpg "User Interface Diagram")
 
@@ -94,29 +97,29 @@
 	+ To summarize, Main interacts with the user interface, the grid, and the game engine, in order to direct the flow of the simulation. However, it doesn't actually do any of the real simulation work (updating states of species) itself.
 
 + **User Interface** 
-	+ Is responsible for visualizing the simulation and handling the user's interaction with the program. See above for more details.
+	+ The UI is responsible for visualizing the simulation and handling the user's interaction with the program. 
+	+  By clicking the buttons on the UI (ex: Spreading Fire button, stop button, etc.), the user will be able to manipulate the simulation and/or the game loop.
+	+ See above for more details.
 
 + **Grid Template**
-	+ The grid template keeps track of each species location on the grid and has functions such as getEmptyCells()
-	  that will return a list of cells that are empty and can be moved to. This will allow each species to implement
-	  its own algorithm of movement/reaction without having to gain access to the entire grid.
-	+ It is also responsible for initializing and positioning each species on the grid, so this class will interact with the species subclasses as well. This would be done by a function like grid.populate(...), which would take in parameter values that specified which species to create and the amount needed, as well as a value like probCatch which could be needed by the species when its running its algorithm/updating its state.
+	+ The grid template keeps track of each species location on the grid and has functions such as *getEmptyCells()* that will return a list of cells that are empty and can be moved to. This will allow each species to implement its own algorithm of movement/reaction without having to gain access to the entire grid.
+	+ It is also responsible for initializing and positioning each species on the grid, so this class will interact with the species subclasses as well. This would be done by a function like *grid.populate(...)*, which would take in parameter values that specified which species to create and the amount needed, as well as a value like *probCatch* which could be needed by the species when it is running its algorithm/updating its state.
 	+ The grid should also be able to resize itself based on a value, since the initial grid created might be of a different size then the one needed for a certain simulation.
 
 
 + **Game Engine**
 	+ Responsible for checking whether each species is satisfied in its current position and saving the unsatisfied
-species. It then calls species.move() on each instance of a species that is unsatisfied, ultimately using the return value to update the grid in terms of the position of species.	
-	+ The game engine will be used by the Main class (which will pass it the grid) and it itself will interact with the grid and the species classes.
+species. It then calls *species.move()* on each instance of a species that is unsatisfied, ultimately using the return value to update the grid in terms of the position of species.	
+	+ The game engine will be used by the Main class, which will pass the grid to it.
+	+ The game engine will also interact with the grid and the species classes.
 
 
 + **Species**
 	+ Species will be an abstract super class so that subclasses can be created that each know their own state and 
 	  the rules that dictate how it responds to its environment, which is dependent on what other species it is closely surrounded by. 
-	+ Each subclass will have a function (stateOfSatisfaction(...) that, given its surrounding neighbors as parameters, will return a value specifying whether or not it is satisfied with its state. If the cell is an edge cell, the neighbor parameters that are over the edge boundary should simply be passed in as null. Before it returns whether or not it is satisfied, it will also update its own knowledge about whether or not it was satisfied with its last position, or the last information it was given about its neighbors. 
-	+ Each subclass	will also have its own algorithm of movement or reaction to a certain state, so each subclass
-	also needs to implement a move function that decides where to move on the grid. The move function will be passed the result of the getEmptySpaces() function in the grid template so that each species can make its decision about where to move based on its own specific algorithm but still without gaining access to the entire grid itself.
-	+ Each species should also know it's current location on the grid.
+	+ Each subclass will have a function *stateOfSatisfaction(...)* that, given its surrounding neighbors as parameters, will return a value specifying whether or not it is satisfied with its state. If the cell is an edge cell, the neighbor parameters that are over the edge boundary should simply be passed in as null. Before it returns whether or not it is satisfied, it will also update its own knowledge about whether or not it was satisfied with its last position, or the last information it was given about its neighbors. 
+	+ Each subclass	will also have its own algorithm of movement or reaction to a certain state, so each subclass also needs to implement a move function that decides where to move on the grid. The move function will be passed the result of the *getEmptySpaces()* function in the grid template so that each species can make its decision about where to move based on its own specific algorithm but still without gaining access to the entire grid itself.
+	+ Each species should also know its current location on the grid.
 	
 + **Use Cases**
 	1. Game engine class would call stateOfSatisfaction(...) on the species subclass, which would update the state of the cell in addition to returning a value about whether it is satisfied. If the result is false, it would also call .move() on the species subclass while passing the open cells in the grid as a parameter. However, since the game of life simulation does not require movement to another cell but rather just the switching of a live/dead state, nothing would happen in this .move() function as implemented in the species subclass. 	
@@ -127,9 +130,7 @@ species. It then calls species.move() on each instance of a species that is unsa
 	
 ### Design Considerations
 
-This section describes any issues which need to be addressed or resolved before attempting to devise a complete design solution. It should include any design decisions that the group discussed at length (include pros and cons from all sides of the discussion) as well as any assumptions or dependencies regarding the program that impact the overall design. This section should go into as much detail as necessary to cover all your team wants to say.
-
-+ Creating an extra simulation class to hold the values from the XML file
++ Creating an extra simulation class to hold the values from the XML file.
 	+ Pros:
 		+ re-usability -> can simply re-initialize the simulation class to hold values from a different XML file which will be useful when a user wants to switch to a different simulation
 		+ organization -> better to make it an extra class than add more code to Main that would parse/save those values
@@ -143,6 +144,7 @@ This section describes any issues which need to be addressed or resolved before 
 		+ Readability -> the main logic of the program is created and called from one place
 	+ Cons:
 		+ Main has access to the majority of the classes
+		+ Burdening Main with too many functionalities
 		+ Code could get cluttered
 
 
