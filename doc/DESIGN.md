@@ -132,8 +132,8 @@ species. It then calls *species.move()* on each instance of a species that is un
 
 + Creating an extra simulation class to hold the values from the XML file.
 	+ Pros:
-		+ re-usability -> can simply re-initialize the simulation class to hold values from a different XML file which will be useful when a user wants to switch to a different simulation
-		+ organization -> better to make it an extra class than add more code to Main that would parse/save those values
+		+ Reusability -> can simply re-initialize the simulation class to hold values from a different XML file which will be useful when a user wants to switch to a different simulation
+		+ Organization -> better to make it an extra class than add more code to Main that would parse/save those values
 	+ Cons:
 		+ An extra class, another thing for Main to initialize and keep track of
 		
@@ -142,6 +142,7 @@ species. It then calls *species.move()* on each instance of a species that is un
 + Letting Main have access to/interact with the majority of the classes to direct the flow of the simulation
 	+ Pros:
 		+ Readability -> the main logic of the program is created and called from one place
+		+ Central hub that oversees the entire program
 	+ Cons:
 		+ Main has access to the majority of the classes
 		+ Burdening Main with too many functionalities
@@ -162,16 +163,16 @@ species. It then calls *species.move()* on each instance of a species that is un
 	+ Pros:
 		+ Easily extendable to create other simulations that use different species which have different rules
 		+ Logic is encapsulated, no other classes need to know anything about the species rules/algorithm
-		+To solve this issue, you break up pieces of functionality into their own classes and encapsulate all the logic. 
 	+ Cons:
-		+ Species needs to be passed the open cells in the grid so that it can utilize it's given algorithm to find the spot where it wants to go.
-		+ Each species won't necessarily require a move() function, some might simply change their states
+		+ Species needs to receive the open cells in the grid as an input so that it can utilize its given algorithm to find the spot where it wants to go.
+		+ Each species won't necessarily require a *move()* function, some might simply change their states
 
 
 
 + Passing the species subclasses the cells that are empty instead of passing the entire grid to them
 	+ Pros:
-		+ The subclasses don't receive all the information about their world, or the grid they are in
+		+ The subclasses don't receive all the information about their world, i.e. the grid they are in.
+		+ Reduces the burden of having to pass the entire grid to each and every species instance.
 	+ Cons:
 		+ Have to find the applicable parameters before the method is called, instead of calling it and just letting the species figure it out by passing it the grid
 		
