@@ -110,6 +110,7 @@
 + **Game Engine**
 	+ Responsible for checking whether each species is satisfied in its current position and saving the unsatisfied
 species. It then calls *species.move()* on each instance of a species that is unsatisfied, ultimately using the return value to update the grid in terms of the position of species.	
+	+ This class will also query each species to see if it needs to reproduce and complete the actions necessary for that.
 	+ The game engine will be used by the Main class, which will pass the grid to it.
 	+ The game engine will also interact with the grid and the species classes.
 
@@ -119,6 +120,7 @@ species. It then calls *species.move()* on each instance of a species that is un
 	  the rules that dictate how it responds to its environment, which is dependent on what other species it is closely surrounded by. 
 	+ Each subclass will have a function *stateOfSatisfaction(...)* that, given its surrounding neighbors as parameters, will return a value specifying whether or not it is satisfied with its state. If the cell is an edge cell, the neighbor parameters that are over the edge boundary should simply be passed in as null. Before it returns whether or not it is satisfied, it will also update its own knowledge about whether or not it was satisfied with its last position, or the last information it was given about its neighbors. 
 	+ Each subclass	will also have its own algorithm of movement or reaction to a certain state, so each subclass also needs to implement a move function that decides where to move on the grid. The move function will be passed the result of the *getEmptySpaces()* function in the grid template so that each species can make its decision about where to move based on its own specific algorithm but still without gaining access to the entire grid itself.
+	+ Each subclass should also keep track of whether or not it needs to reproduce, as this is something that each species might want to do.
 	+ Each species should also know its current location on the grid.
 	
 + **Use Cases**
