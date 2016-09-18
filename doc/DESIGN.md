@@ -44,7 +44,7 @@
 	 
 #### Design Overview Diagram
 
-	![Design Overview Diagram](design_overview.jpg "Design Overview Diagram")
+![Design Overview Diagram](design_overview.jpg "Design Overview Diagram")
 
 	
 
