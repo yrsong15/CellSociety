@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class UserInterface {
@@ -18,7 +20,7 @@ public class UserInterface {
 	private static final Color BG_COLOR = Color.LIGHTGRAY;
 	private static final int BUTTON_SIZE = 200;
 	private static final int GRID_SIZE = 420;
-	private static final int MARGIN = 50;
+	private static final int MARGIN = 60;
 	
 	private static final int SMALL_BUTTON_WIDTH = 70;
 	private static final int SMALL_BUTTON_LENGTH = 30;
@@ -126,11 +128,22 @@ public class UserInterface {
 //		return sc;
 	}
 	
+	public void addText(Group g, String msg, double xPos, double yPos){
+		Text t = new Text(xPos, yPos, msg);
+		t.setFont(Font.font ("Verdana", 15));
+		t.setFill(Color.ROYALBLUE);
+		g.getChildren().add(t);
+	}
+	
 	public void simScrollBar(Group g, Stage stage, Scene scene){
-		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4, MARGIN);
-		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4, 2 * MARGIN);
-		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4, 3 * MARGIN);
-		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4, 4 * MARGIN);
+		addText(g, "Similar", UI_WIDTH * 3/4, MARGIN + 10);
+		addText(g, "R/B", UI_WIDTH * 3/4, 2*MARGIN + 10);
+		addText(g, "Empty", UI_WIDTH * 3/4, 3*MARGIN + 10);
+		addText(g, "Size", UI_WIDTH * 3/4, 4*MARGIN + 10);
+		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, MARGIN);
+		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, 2 * MARGIN);
+		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, 3 * MARGIN);
+		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, 4 * MARGIN);
 	}
 	
 	public Scene segregationScene(){
