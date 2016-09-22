@@ -14,25 +14,27 @@ import javafx.stage.Stage;
 
 public class UserInterface {
 	
-	private static final int UI_WIDTH = 1000;
-	private static final int UI_HEIGHT = 500;
+	protected static final int UI_WIDTH = 1000;
+	protected static final int UI_HEIGHT = 500;
 	private static final String UI_TITLE = "CellSociety Simulator - Group 17";
-	private static final Color BG_COLOR = Color.LIGHTGRAY;
-	private static final int BUTTON_SIZE = 200;
-	private static final int GRID_SIZE = 420;
-	private static final int MARGIN = 60;
+	protected static final Color BG_COLOR = Color.LIGHTGRAY;
+	protected static final int BUTTON_SIZE = 200;
+	protected static final int GRID_SIZE = 420;
+	protected static final int MARGIN = 60;
 	
-	private static final int SMALL_BUTTON_WIDTH = 70;
-	private static final int SMALL_BUTTON_LENGTH = 30;
-	private static final int RESET_BUTTON_WIDTH = 200;
+	protected static final int SMALL_BUTTON_WIDTH = 70;
+	protected static final int SMALL_BUTTON_LENGTH = 30;
+	protected static final int RESET_BUTTON_WIDTH = 200;
 	
 
-	private Stage myStage;
+	protected Stage myStage;
+	private SimScene sim;
 
 	
 	public void startUI(Stage s){
 		myStage = s;
 		Scene start = startScene();
+		sim = new SimScene();
 		myStage.setScene(start);
 		myStage.setTitle(UI_TITLE);
 		myStage.show();
@@ -56,7 +58,7 @@ public class UserInterface {
 		Button btnOne = addButtons(g, scene, "Segregation", UI_WIDTH/2 + MARGIN, MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnOne.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		        stage.setScene(segregationScene());
+		        stage.setScene(sim.segregationScene());
 		    }
 		});
 		
@@ -64,7 +66,7 @@ public class UserInterface {
 				BUTTON_SIZE + MARGIN, MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnTwo.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		        stage.setScene(fishSharkScene());
+		        stage.setScene(sim.fishSharkScene());
 		    }
 		});
 		
@@ -72,7 +74,7 @@ public class UserInterface {
 				BUTTON_SIZE + MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnThree.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		        stage.setScene(fireScene());
+		        stage.setScene(sim.fireScene());
 		    }
 		});
 		
@@ -80,7 +82,7 @@ public class UserInterface {
 				BUTTON_SIZE + MARGIN, BUTTON_SIZE + MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnFour.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		        stage.setScene(gameOfLifeScene());
+		        stage.setScene(sim.gameOfLifeScene());
 		    }
 		});
 		
@@ -117,73 +119,5 @@ public class UserInterface {
 		return btn;
 	}
 	
-	public void addScrollBar(Group g, int min, int max, int base, double xPos, double yPos){
-		ScrollBar sc = new ScrollBar();
-		sc.setMin(min);
-		sc.setMax(max);
-		sc.setValue(base);
-		sc.setLayoutX(xPos);
-		sc.setLayoutY(yPos);
-		g.getChildren().add(sc);
-//		return sc;
-	}
-	
-	public void addText(Group g, String msg, double xPos, double yPos){
-		Text t = new Text(xPos, yPos, msg);
-		t.setFont(Font.font ("Verdana", 15));
-		t.setFill(Color.ROYALBLUE);
-		g.getChildren().add(t);
-	}
-	
-	public void simScrollBar(Group g, Stage stage, Scene scene){
-		addText(g, "Similar", UI_WIDTH * 3/4, MARGIN + 10);
-		addText(g, "R/B", UI_WIDTH * 3/4, 2*MARGIN + 10);
-		addText(g, "Empty", UI_WIDTH * 3/4, 3*MARGIN + 10);
-		addText(g, "Size", UI_WIDTH * 3/4, 4*MARGIN + 10);
-		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, MARGIN);
-		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, 2 * MARGIN);
-		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, 3 * MARGIN);
-		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, 4 * MARGIN);
-	}
-	
-	public Scene segregationScene(){
-		//make another scene that's attached to another root, change scene using setScene
-		Group temp = new Group();
-		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		initGrid(temp);
-		simButtons(temp, myStage, scene);
-		simScrollBar(temp, myStage, scene);
-		return scene;
-	}
-	
-	public Scene fishSharkScene(){
-		//make another scene that's attached to another root, change scene using setScene
-		Group temp = new Group();
-		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		initGrid(temp);
-		simButtons(temp, myStage, scene);
-		simScrollBar(temp, myStage, scene);
-		return scene;
-	}
-	
-	public Scene fireScene(){
-		//make another scene that's attached to another root, change scene using setScene
-		Group temp = new Group();
-		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		initGrid(temp);
-		simButtons(temp, myStage, scene);
-		simScrollBar(temp, myStage, scene);
-		return scene;
-	}
-	
-	public Scene gameOfLifeScene(){
-		//make another scene that's attached to another root, change scene using setScene
-		Group temp = new Group();
-		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		initGrid(temp);
-		simButtons(temp, myStage, scene);
-		simScrollBar(temp, myStage, scene);
-		return scene;
-	}
 
 }
