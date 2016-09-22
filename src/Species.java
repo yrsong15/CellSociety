@@ -1,6 +1,3 @@
-import java.util.List;
-
-
 public abstract class Species {
 	private Neighborhood myNeighbors;
 	private int myState; // 0 is initial state
