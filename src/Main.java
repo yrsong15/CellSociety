@@ -12,8 +12,9 @@ public class Main extends Application{
     	Simulation mySim = new Simulation();
     	mySim.getXMLDoc("Segregation.xml");
     	Grid myGrid = mySim.populateGrid();
-		
+    	myGrid.outputGridValues();
+    	
+    	
 	}
 	
-
 }
