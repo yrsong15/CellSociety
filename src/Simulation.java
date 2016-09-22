@@ -51,32 +51,39 @@ public class Simulation {
 	public String getElement(String element){
 		return myXML.getElementsByTagName(element).item(0).getTextContent();
 	}
-	//handle these errors better; meaning catch them
+	
+	//to-do: handle errors in call to createSpecies function
 	public Grid populateGrid() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		String speciesType = getElement("speciesType");
 		Grid myGrid = new Grid(getGridHeight(), getGridWidth());
-		NodeList nList = myXML.getElementsByTagName("row");
-		for (int temp = 0; temp < nList.getLength(); temp++) {
-			Node nNode = nList.item(temp);
-			String[] rowVals = nNode.getTextContent().split(" ");
-			for (int i = 0; i < rowVals.length; i++){
-				Species mySpecies = null;
-				Location pos = new Location(temp, i);
-				try {
-					Class<?> speciesClass = Class.forName(speciesType);
-					Constructor<?> constructor = speciesClass.getConstructor();
-					mySpecies = (Species) constructor.newInstance();
-					mySpecies.setState(Integer.parseInt(rowVals[i]));
-					
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-				myGrid.setCell(pos, mySpecies);
-			}
-		}
+	       NodeList nList = myXML.getElementsByTagName("percentType");
+	       int numCells = Integer.parseInt(getElement("numCells"));
+	         for (int temp = 0; temp < nList.getLength(); temp++) {
+	            Element speciesConfig = (Element) nList.item(temp);
+	            int percent = Integer.parseInt(speciesConfig.getTextContent());
+                int state = Integer.parseInt(speciesConfig.getAttribute("state"));
+                int createNum = (int) (numCells*(percent/100.0));//number need to create of species w/ this state
+                for (int created = 0; created < createNum; created++){
+                	myGrid.addCell(createSpecies(speciesType, state));
+                }
+	         }
+	         return myGrid;
+	}
+	
+	//to-do: handle errors
+	public Species createSpecies(String speciesType, int state) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		Species mySpecies = null;
+		try {
+			Class<?> speciesClass = Class.forName(speciesType);
+			Constructor<?> constructor = speciesClass.getConstructor();
+			mySpecies = (Species) constructor.newInstance();
+			mySpecies.setState(state);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
 		
-		return myGrid;
-		
+		return mySpecies;
 	}
 
 	

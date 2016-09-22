@@ -1,0 +1,30 @@
+<simulation>
+	<details>
+		<name> Segregation </name>
+		
+		<title> Segregation Team 3  </title>
+		<author>         </author>
+	</details>
+	
+	<configuration>
+		<threshold>  20  </threshold>
+	</configuration>
+	
+	<speciesType>CellofLife</speciesType>
+	
+	
+	
+	<grid>
+		<width>5</width>
+		<height>5</height>
+		<numCells>25</numCells>
+		
+		<percentType state = "0">20</percentType>
+		<percentType state = "1">30</percentType>
+		
+	
+	</grid>
+
+
+
+</simulation>
