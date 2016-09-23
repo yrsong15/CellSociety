@@ -1,11 +1,10 @@
-import Species.Species;
-
+package Species;
 public class CellofLife extends Species{
 	public CellofLife(){
 		super();
 	}
 	@Override
-	public void act(){
+	public void move(){
 		int numberofliveneighbors = 0;
 		for (Species tmpspecies : super.getNeighborhood().getMyNeighbors()){
 			if (tmpspecies.getState() == 0){

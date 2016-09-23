@@ -1,3 +1,4 @@
+package util;
 
 public class Location {
 	private int x, y;

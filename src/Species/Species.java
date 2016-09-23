@@ -1,6 +1,6 @@
 package Species;
-import Location;
-import Neighborhood;
+import util.Location;
+import util.Neighborhood;
 
 public abstract class Species {
 	private Neighborhood myNeighbors;
@@ -13,7 +13,7 @@ public abstract class Species {
 		myLocation = null;
 	}
 	
-	public abstract void act();
+	public abstract void move();
 	
 	public void moveTo(Location location){
 		

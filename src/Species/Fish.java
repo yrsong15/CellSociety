@@ -1,7 +1,7 @@
 package Species;
 import java.util.List;
 
-import Location;
+import util.Location;
 
 public class Fish extends Species {
 	private static int breedTime = 3;
@@ -21,7 +21,7 @@ public class Fish extends Species {
 	}
 	
 	@Override
-	public void act(){
+	public void move(){
 		timeuntilbreed--;
 		List<Location> openspaces = super.getNeighborhood().getEmptySpaces();
 		if (!openspaces.isEmpty()){
