@@ -18,8 +18,10 @@ public class Grid {
 			this.numCols = height;
 		}
 		
-		public Grid(Species[][] myGrid2) {
+		public Grid(Species[][] myGrid2, int i, int j) {
 			this.myGrid = myGrid2;
+			numRows = i;
+			numCols = j;
 		}
 
 		public int getWidth(){
@@ -43,6 +45,7 @@ public class Grid {
 				col = rand.nextInt(numCols);
 			}
 			myGrid[row][col] = mySpecies;
+			mySpecies.setMyLocation(new Location(row, col));
 		}
 		
 		public List<Location> getEmptyCells(){
@@ -99,7 +102,7 @@ public class Grid {
 				for (int j = 0; j < myGrid[i].length; j++){
 					Species curr= myGrid[i][j];
 					if (curr != null){
-						rowVal+= curr.getState() + " ";
+						rowVal+= curr.getCurrState() + " ";
 					}
 					else{
 						rowVal+=". ";

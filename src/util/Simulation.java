@@ -75,6 +75,35 @@ public class Simulation {
 	         return myGrid;
 	}
 	
+	//handle these errors better; meaning catch them
+	public Grid populateGridTest() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		String speciesType = getElement("speciesType");
+		Grid myGrid = new Grid(getGridHeight(), getGridWidth());
+		NodeList nList = myXML.getElementsByTagName("row");
+		for (int temp = 0; temp < nList.getLength(); temp++) {
+			Node nNode = nList.item(temp);
+			String[] rowVals = nNode.getTextContent().split(" ");
+			for (int i = 0; i < rowVals.length; i++){
+				Species mySpecies = null;
+				Location pos = new Location(temp, i);
+				try {
+					Class<?> speciesClass = Class.forName("Species." + speciesType);
+					Constructor<?> constructor = speciesClass.getConstructor();
+					mySpecies = (Species) constructor.newInstance();
+					mySpecies.setCurrState(Integer.parseInt(rowVals[i]));
+					mySpecies.setNextState(Integer.parseInt(rowVals[i]));
+					mySpecies.setMyLocation(pos);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				myGrid.setCell(pos, mySpecies);
+			}
+		}
+		
+		return myGrid;
+		
+	}
+	
 	//to-do: handle errors
 	public Species createSpecies(String speciesType, int state) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Species mySpecies = null;
@@ -82,7 +111,7 @@ public class Simulation {
 			Class<?> speciesClass = Class.forName("Species." + speciesType);
 			Constructor<?> constructor = speciesClass.getConstructor();
 			mySpecies = (Species) constructor.newInstance();
-			mySpecies.setState(state);
+			mySpecies.setCurrState(state);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

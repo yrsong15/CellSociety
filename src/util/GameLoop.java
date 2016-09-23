@@ -13,18 +13,35 @@ import Species.Species;
 public class GameLoop {
 	
 	public void updateWorld(Grid myGrid){
-		List<Location> emptyCells = new ArrayList<Location>();
+		Grid copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight());
+		System.out.println("-----");
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
-				Species currSpecies= myGrid.getCell(new Location(i, j));
+				Location currLoc = new Location(i, j);
+				Species currSpecies= myGrid.getCell(currLoc);
 				if (currSpecies != null){
-					//To be changed, performTask(emptyCells, neighborhood)
-					Location moveTo = currSpecies.performTask(myGrid.getEmptyCells(), null);
-					myGrid.setCell(moveTo, currSpecies);
+					
+					Location moveTo = currSpecies.performTask(copyGrid.getEmptyCells(), copyGrid.getNeighborhood(currLoc));
+					if (moveTo != null){
+						myGrid.setCell(moveTo, currSpecies);
+					}
 				}
 			}
 		}
-		
+		updateStates(myGrid);
+	}
+	
+	
+	public void updateStates(Grid myGrid){
+		for (int i = 0; i < myGrid.getWidth(); i++){
+			for (int j = 0; j < myGrid.getHeight(); j++){
+				Location currLoc = new Location(i, j);
+				Species currSpecies= myGrid.getCell(currLoc);
+				if (currSpecies != null){
+					currSpecies.updateToLatestState();
+			}
+		}
+	}
 		
 	}
 

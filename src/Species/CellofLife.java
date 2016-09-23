@@ -17,18 +17,18 @@ public class CellofLife extends Species{
 		this.setNeighborhood(myneighbors);
 		int numberofliveneighbors = 0;
 		for (Species tmpspecies : this.getNeighborhood().getMyNeighbors()){
-			if (tmpspecies.getState() == 0){
+			if (tmpspecies.getCurrState() == 0){
 				numberofliveneighbors++;
 			}
 		}
-		if (super.getState() == 0){
+		if (super.getCurrState() == 0){
 			if (numberofliveneighbors < 2 || numberofliveneighbors > 3){
-				super.setState(1);
+				super.setNextState(1);
 			}
 		}
 		else{
 			if (numberofliveneighbors == 3){
-				super.setState(0);
+				super.setNextState(0);
 			}
 		}
 		return null;
