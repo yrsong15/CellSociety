@@ -1,6 +1,7 @@
 package user_interface;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,6 +9,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -23,6 +26,7 @@ public class UserInterface {
 	protected static final int BUTTON_SIZE = 200;
 	protected static final int GRID_SIZE = 420;
 	protected static final int MARGIN = 60;
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	
 	protected static final int SMALL_BUTTON_WIDTH = 70;
 	protected static final int SMALL_BUTTON_LENGTH = 30;
@@ -30,18 +34,16 @@ public class UserInterface {
 	
 	protected Stage myStage;
 	private GridReader gr;
+	private ResourceBundle myResources;
 	
 	public void startUI(Stage s){
 		myStage = s;
 		gr = new GridReader();
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE+"UILabels");
 		s.setScene(startScene());
 		s.setTitle(UI_TITLE);
 		s.show();
 	}
-	
-//	public void displayGrid(Grid grid){
-//		
-//	}
 	
 	public Scene startScene(){
 		Group temp = new Group();
@@ -52,9 +54,20 @@ public class UserInterface {
 	}
 	
 	public void initGrid(Group g){
-		Rectangle r = new Rectangle(MARGIN, MARGIN, GRID_SIZE, GRID_SIZE);
-		r.setStroke(Color.ROYALBLUE);
-		g.getChildren().add(r);
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/duvall.jpg"));
+		ImageView theMan = new ImageView(image);
+		theMan = setPosition(theMan, GRID_SIZE, GRID_SIZE, MARGIN, MARGIN);
+//		Rectangle r = new Rectangle(MARGIN, MARGIN, GRID_SIZE, GRID_SIZE);
+//		r.setStroke(Color.ROYALBLUE);
+		g.getChildren().add(theMan);
+	}
+	
+	public ImageView setPosition(ImageView temp, int width, int height, double d, double e){
+		temp.setFitWidth(width);
+		temp.setFitHeight(height);
+		temp.setX(d);
+		temp.setY(e);
+		return temp;
 	}
 	
 	public void startGrid(Group g) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
@@ -63,14 +76,15 @@ public class UserInterface {
 	}
 	
 	public void initButtons(Group g, Stage stage, Scene scene){
-		Button btnOne = addButtons(g, scene, "Segregation", UI_WIDTH/2 + MARGIN, MARGIN, BUTTON_SIZE, BUTTON_SIZE);
+		Button btnOne = addButtons(g, scene, myResources.getString("SegregationLabel"), 
+				UI_WIDTH/2 + MARGIN, MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnOne.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		        myStage.setScene(segregationScene());
 		    }
 		});
 		
-		Button btnTwo = addButtons(g, scene, "Fish-Shark", UI_WIDTH/2 + 
+		Button btnTwo = addButtons(g, scene, myResources.getString("FishSharkLabel"), UI_WIDTH/2 + 
 				BUTTON_SIZE + MARGIN, MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnTwo.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
@@ -78,7 +92,7 @@ public class UserInterface {
 		    }
 		});
 		
-		Button btnThree = addButtons(g, scene, "Spreading Fire", UI_WIDTH/2 + MARGIN, 
+		Button btnThree = addButtons(g, scene, myResources.getString("SpreadingFireLabel"), UI_WIDTH/2 + MARGIN, 
 				BUTTON_SIZE + MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnThree.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
@@ -86,7 +100,7 @@ public class UserInterface {
 		    }
 		});
 		
-		Button btnFour = addButtons(g, scene, "Game of Life", UI_WIDTH/2 + 
+		Button btnFour = addButtons(g, scene, myResources.getString("GameOfLifeLabel"), UI_WIDTH/2 + 
 				BUTTON_SIZE + MARGIN, BUTTON_SIZE + MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnFour.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
@@ -94,7 +108,6 @@ public class UserInterface {
 					myStage.setScene(gameOfLifeScene());
 				} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
 						| IllegalArgumentException | InvocationTargetException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 		    }
@@ -168,10 +181,10 @@ public class UserInterface {
 	}
 	
 	public void simScrollBar(Group g, Stage stage, Scene scene){
-		addText(g, "Cell Size", UI_WIDTH * 7/10, MARGIN + 10);
-		addText(g, "Delay", UI_WIDTH * 7/10, 2*MARGIN + 10);
-		addText(g, "---", UI_WIDTH * 7/10, 3*MARGIN + 10);
-		addText(g, "---", UI_WIDTH * 7/10, 4*MARGIN + 10);
+		addText(g, myResources.getString("CellSizeLabel"), UI_WIDTH * 7/10, MARGIN + 10);
+		addText(g, myResources.getString("DelayLabel"), UI_WIDTH * 7/10, 2*MARGIN + 10);
+		addText(g, myResources.getString("BlankLabel"), UI_WIDTH * 7/10, 3*MARGIN + 10);
+		addText(g, myResources.getString("BlankLabel"), UI_WIDTH * 7/10, 4*MARGIN + 10);
 		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, MARGIN);
 		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, 2 * MARGIN);
 		addScrollBar(g, 0, 100, 50, UI_WIDTH * 3/4 + MARGIN, 3 * MARGIN);
@@ -179,7 +192,19 @@ public class UserInterface {
 	}
 	
 	public void simButtons(Group g, Stage stage, Scene scene){
-		addButtons(g, scene, "Reset", UI_WIDTH/2 + MARGIN, MARGIN, SMALL_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
+		Button reset = addButtons(g, scene, "Reset", UI_WIDTH/2 + MARGIN, MARGIN, 
+				SMALL_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
+		reset.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	try {
+					myStage.setScene(gameOfLifeScene());
+				} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException e1) {
+					e1.printStackTrace();
+				}
+		    }
+		});
+		
 		addButtons(g, scene, "Start", UI_WIDTH/2 + MARGIN, MARGIN + SMALL_BUTTON_WIDTH, 
 				SMALL_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
 		addButtons(g, scene, "Stop", UI_WIDTH/2 + MARGIN, MARGIN + 2 * SMALL_BUTTON_WIDTH, 

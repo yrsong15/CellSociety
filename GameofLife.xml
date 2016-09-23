@@ -15,12 +15,12 @@
 	
 	
 	<grid>
-		<width>5</width>
-		<height>5</height>
-		<numCells>25</numCells>
+		<width>6</width>
+		<height>6</height>
+		<numCells>36</numCells>
 		
-		<percentType state = "0">20</percentType>
-		<percentType state = "1">30</percentType>
+		<percentType state = "0">50</percentType>
+		<percentType state = "1">50</percentType>
 		
 	
 	</grid>

@@ -25,8 +25,6 @@ public class GridReader {
 //	}
 	
 	public void displayGrid(Group g, Grid grid, int margin){
-//		Group root = new Group();
-//		Scene scene = new Scene(root, GRID_SIZE, GRID_SIZE);
 		int cellSize = GRID_SIZE / grid.getWidth();
 		
 		for(int i=0;i<grid.getWidth();i++){
