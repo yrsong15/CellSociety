@@ -3,15 +3,20 @@ package Species;
 import java.util.List;
 
 import util.Location;
+import util.Neighborhood;
 
 public class CellofLife extends Species{
 	public CellofLife(){
 		super();
 	}
 	@Override
-	public Location performTask(List<Location> emptyCells){
+	/**
+	 * 0 state = live cells, 1 state = dead cells
+	 */
+	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
+		this.setNeighborhood(myneighbors);
 		int numberofliveneighbors = 0;
-		for (Species tmpspecies : super.getNeighborhood().getMyNeighbors()){
+		for (Species tmpspecies : this.getNeighborhood().getMyNeighbors()){
 			if (tmpspecies.getState() == 0){
 				numberofliveneighbors++;
 			}

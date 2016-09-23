@@ -15,11 +15,8 @@ public abstract class Species {
 		myLocation = null;
 	}
 	
-	public abstract Location performTask(List<Location> emptyCells);
+	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
 	
-	public void moveTo(Location location){
-		
-	}
 	public Location getMyLocation() {
 		return myLocation;
 	}

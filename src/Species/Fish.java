@@ -1,19 +1,22 @@
 package Species;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import util.Location;
+import util.Neighborhood;
 
 public class Fish extends Species {
 	private static int breedTime = 3;
 
 	private static int numofFish = 0;
 	
-	private int timeuntilbreed;
+	private int timeuntilBreed;
 	
 	public Fish(){
 		super();
 		numofFish++;
-		timeuntilbreed = breedTime;
+		timeuntilBreed = breedTime;
 	}
 	
 	public boolean isEdible(){
@@ -21,19 +24,28 @@ public class Fish extends Species {
 	}
 	
 	@Override
-	public Location performTask(List<Location> emptyCells){
-		timeuntilbreed--;
-		List<Location> openspaces = super.getNeighborhood().getEmptySpaces();
-		if (!openspaces.isEmpty()){
-			Location oldLocation = getMyLocation();
-			
+	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
+		List<Location> spaces = emptyCells;
+		this.setNeighborhood(myneighbors);
+		if (gettimeuntilBreed() != 0) {
+			timeuntilBreed--;
+		}
+		if (!spaces.isEmpty()){
+			Collections.shuffle(spaces);
 		}
 		
-		return null;
+		return spaces.get(0);
+	}
+	
+	public int gettimeuntilBreed(){
+		return this.timeuntilBreed;
 	}
 	
 	
-	
+	public void setTimeuntilBreed(int timeuntilBreed) {
+		this.timeuntilBreed = timeuntilBreed;
+	}
+
 	public static void setBreedTime(int newBreedTime){
 		  breedTime = newBreedTime;
 	}
