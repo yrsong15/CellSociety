@@ -8,7 +8,7 @@ import Species.Species;
 
 public class Grid {
 		
-		Species[][] myGrid;
+		public Species[][] myGrid;
 		private int numRows;
 		private int numCols;
 		

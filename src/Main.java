@@ -21,15 +21,18 @@ public class Main extends Application{
 		//UI.startUI(s); //returns when user presses a button?  
 		Simulation mySim = new Simulation();
     	mySim.getXMLDoc("GameofLife.xml");
-    	Grid myGrid = mySim.populateGridTest();
+    	Grid myGrid = mySim.populateGrid();
     	myGrid.outputGridValues();
     	GameLoop myLoop = new GameLoop();
-    	myLoop.updateWorld(myGrid);
-    	System.out.println("-------");
-    	myGrid.outputGridValues();
-	//	while (true){
+
+    	
+		while (true){
+	    	myLoop.updateWorld(myGrid);
+	    	System.out.println("-------");
+	    	myGrid.outputGridValues();
+			
 			//UI.displayGrid(myGrid);
-	//	}
+		}
     	
 		
 
