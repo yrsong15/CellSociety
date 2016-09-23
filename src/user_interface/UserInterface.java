@@ -1,5 +1,7 @@
 package user_interface;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -27,9 +29,11 @@ public class UserInterface {
 	protected static final int RESET_BUTTON_WIDTH = 200;
 	
 	protected Stage myStage;
+	private GridReader gr;
 	
 	public void startUI(Stage s){
 		myStage = s;
+		gr = new GridReader();
 		s.setScene(startScene());
 		s.setTitle(UI_TITLE);
 		s.show();
@@ -51,6 +55,11 @@ public class UserInterface {
 		Rectangle r = new Rectangle(MARGIN, MARGIN, GRID_SIZE, GRID_SIZE);
 		r.setStroke(Color.ROYALBLUE);
 		g.getChildren().add(r);
+	}
+	
+	public void startGrid(Group g) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		gr.testReader();
+		gr.displayGrid(g, gr.getGrid(), MARGIN);	
 	}
 	
 	public void initButtons(Group g, Stage stage, Scene scene){
@@ -81,7 +90,13 @@ public class UserInterface {
 				BUTTON_SIZE + MARGIN, BUTTON_SIZE + MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnFour.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	myStage.setScene(gameOfLifeScene());
+		    	try {
+					myStage.setScene(gameOfLifeScene());
+				} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 		    }
 		});
 		
@@ -125,10 +140,10 @@ public class UserInterface {
 		return scene;
 	}
 	
-	public Scene gameOfLifeScene(){
+	public Scene gameOfLifeScene() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		initGrid(temp);
+		startGrid(temp);
 		simButtons(temp, myStage, scene);
 		simScrollBar(temp, myStage, scene);
 		return scene;
