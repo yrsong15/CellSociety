@@ -1,13 +1,13 @@
+import Species.Species;
 
 public class CellofLife extends Species{
 	public CellofLife(){
 		super();
 	}
 	@Override
-	public void move(){
+	public void act(){
 		int numberofliveneighbors = 0;
-		Iterable<Species> iter = super.getNeighborhood().getMyNeighbors();
-		for (Species tmpspecies : iter ){
+		for (Species tmpspecies : super.getNeighborhood().getMyNeighbors()){
 			if (tmpspecies.getState() == 0){
 				numberofliveneighbors++;
 			}

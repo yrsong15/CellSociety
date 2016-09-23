@@ -1,3 +1,7 @@
+package Species;
+import Location;
+import Neighborhood;
+
 public abstract class Species {
 	private Neighborhood myNeighbors;
 	private int myState; // 0 is initial state
@@ -9,7 +13,9 @@ public abstract class Species {
 		myLocation = null;
 	}
 	
-	public void move(){
+	public abstract void act();
+	
+	public void moveTo(Location location){
 		
 	}
 	public Location getMyLocation() {
@@ -34,4 +40,6 @@ public abstract class Species {
 	public int getState(){
 		return this.myState;
 	}
+
+
 }

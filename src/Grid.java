@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.Random;
 
+import Species.Species;
+
 public class Grid {
 		
 		private Species[][] myGrid;
