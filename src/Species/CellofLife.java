@@ -33,5 +33,4 @@ public class CellofLife extends Species{
 		}
 		return null;
 	}
-	
 }

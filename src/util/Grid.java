@@ -7,7 +7,6 @@ import Species.Species;
 
 
 public class Grid {
-		
 		Species[][] myGrid;
 		private int numRows;
 		private int numCols;
@@ -111,7 +110,4 @@ public class Grid {
 				System.out.println(rowVal);
 			}
 		}
-		
-		
-
 }

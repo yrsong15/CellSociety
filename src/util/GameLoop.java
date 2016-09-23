@@ -1,8 +1,7 @@
 package util;
-import java.util.ArrayList;
-import java.util.List;
 
 import Species.Species;
+import util.Grid;
 
 /***
  *
@@ -14,7 +13,6 @@ public class GameLoop {
 	
 	public void updateWorld(Grid myGrid){
 		Grid copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight());
-		System.out.println("-----");
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
