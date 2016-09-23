@@ -8,7 +8,7 @@ import Species.Species;
 
 public class Grid {
 		
-		private Species[][] myGrid;
+		Species[][] myGrid;
 		private int numRows;
 		private int numCols;
 		
@@ -18,6 +18,10 @@ public class Grid {
 			this.numCols = height;
 		}
 		
+		public Grid(Species[][] myGrid2) {
+			this.myGrid = myGrid2;
+		}
+
 		public int getWidth(){
 			return numRows;
 		}
@@ -53,6 +57,37 @@ public class Grid {
 			}
 			return emptyCells;
 		}
+		
+		public boolean isValidCell(int row, int col){
+			return (row >= 0 && row < numRows &&
+	                col >= 0 && col < numCols);
+			
+		}
+			
+		
+		
+		public Neighborhood getNeighborhood(Location pos){
+			int row = pos.getX();
+			int col = pos.getY();
+		    List<Species> neighbors = new ArrayList<>();
+		    for( int changeRow = -1; changeRow <= 1; ++changeRow) {
+		        for( int changeCol = -1; changeCol <= 1; ++changeCol) {
+		            if( changeRow == 0 && changeCol == 0 ) {
+		            	continue;
+		            }
+		            
+	            	int newRow = changeRow + row;
+		            int newCol = changeCol + col;
+		            if(isValidCell(newRow, newCol) && myGrid[newRow][newCol]!=null) {
+		            	neighbors.add(myGrid[newRow][newCol]);
+		            
+		            }
+		        }
+		    }
+			return new Neighborhood(neighbors);
+		}
+		
+		
 		
 		public Species getCell(Location pos){
 			return myGrid[pos.getX()][pos.getY()];

@@ -79,7 +79,7 @@ public class Simulation {
 	public Species createSpecies(String speciesType, int state) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Species mySpecies = null;
 		try {
-			Class<?> speciesClass = Class.forName(speciesType);
+			Class<?> speciesClass = Class.forName("Species." + speciesType);
 			Constructor<?> constructor = speciesClass.getConstructor();
 			mySpecies = (Species) constructor.newInstance();
 			mySpecies.setState(state);
