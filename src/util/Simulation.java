@@ -20,8 +20,6 @@ import java.io.File;
 
 public class Simulation {
 	private Document myXML;
-	private String simulationName;
-	private String simulationTitle;
 	
 	public Simulation(){
 		
@@ -59,18 +57,25 @@ public class Simulation {
 	
 	//to-do: handle errors in call to createSpecies function
 	public Grid populateGrid() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		int numCreated = 0;
 		String speciesType = getElement("speciesType");
+		int state = 0;
 		Grid myGrid = new Grid(getGridHeight(), getGridWidth());
 	       NodeList nList = myXML.getElementsByTagName("percentType");
 	       int numCells = Integer.parseInt(getElement("numCells"));
 	         for (int temp = 0; temp < nList.getLength(); temp++) {
 	            Element speciesConfig = (Element) nList.item(temp);
 	            int percent = Integer.parseInt(speciesConfig.getTextContent());
-                int state = Integer.parseInt(speciesConfig.getAttribute("state"));
+                state = Integer.parseInt(speciesConfig.getAttribute("state"));
                 int createNum = (int) (numCells*(percent/100.0));//number need to create of species w/ this state
                 for (int created = 0; created < createNum; created++){
+                	numCreated++;
                 	myGrid.addCell(createSpecies(speciesType, state));
                 }
+	         }
+	         while (numCreated < numCells){
+	        	 myGrid.addCell(createSpecies(speciesType, state));
+	        	 numCreated++;
 	         }
 	         return myGrid;
 	}
