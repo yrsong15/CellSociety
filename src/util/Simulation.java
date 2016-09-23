@@ -82,7 +82,7 @@ public class Simulation {
 			Class<?> speciesClass = Class.forName("Species." + speciesType);
 			Constructor<?> constructor = speciesClass.getConstructor();
 			mySpecies = (Species) constructor.newInstance();
-			mySpecies.setState(state);
+			mySpecies.setCurrState(state);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

@@ -43,11 +43,15 @@ public class Shark extends WatorSpecies{
 				possiblemoves.add(s.getMyLocation());
 			}
 		}
-		if(!possiblemoves.isEmpty()){
+		
+		if(possiblemoves.isEmpty()){
 			possiblemoves.addAll(emptyCells);
 		}
-		Collections.shuffle(possiblemoves);
-		return possiblemoves.get(0);
+		if (!possiblemoves.isEmpty()){
+			Collections.shuffle(possiblemoves);
+			return possiblemoves.get(0);
+		}
+		return this.getMyLocation();
 
 	}
 	public boolean toDie(){

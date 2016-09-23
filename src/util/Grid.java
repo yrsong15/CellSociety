@@ -99,7 +99,7 @@ public class Grid {
 				for (int j = 0; j < myGrid[i].length; j++){
 					Species curr= myGrid[i][j];
 					if (curr != null){
-						rowVal+= curr.getState() + " ";
+						rowVal+= curr.getCurrState() + " ";
 					}
 					else{
 						rowVal+=". ";

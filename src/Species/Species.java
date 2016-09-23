@@ -6,13 +6,17 @@ import util.Neighborhood;
 
 public abstract class Species {
 	private Neighborhood myNeighbors;
-	private int myState; // 0 is initial state
+	private int currState; // 0 is initial state
+	private int nextState;
+
+
 	private Location myLocation;
 	
 	public Species(){
 		myNeighbors = null;
-		myState = 0;
+		currState = 0;
 		myLocation = null;
+		
 	}
 	
 	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
@@ -32,12 +36,20 @@ public abstract class Species {
 		return this.myNeighbors;
 	}
 	
-	public void setState(int mystate){
-		this.myState = mystate;
+	public void setCurrState(int mystate){
+		this.currState = mystate;
 	}
 	
-	public int getState(){
-		return this.myState;
+	public int getCurrState(){
+		return this.currState;
+	}
+	
+	public int getNextState() {
+		return nextState;
+	}
+
+	public void setNextState(int nextState) {
+		this.nextState = nextState;
 	}
 
 
