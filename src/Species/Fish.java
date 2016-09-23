@@ -6,53 +6,36 @@ import java.util.List;
 import util.Location;
 import util.Neighborhood;
 
-public class Fish extends Species {
-	private static int breedTime = 3;
-
+public class Fish extends WatorSpecies {
+	private static int standardBreedTime = 3;
 	private static int numofFish = 0;
 	
-	private int timeuntilBreed;
 	
 	public Fish(){
 		super();
 		numofFish++;
-		timeuntilBreed = breedTime;
+		this.setTimeuntilBreed(standardBreedTime + (int) (Math.random() * 3));
 	}
-	
+	@Override
 	public boolean isEdible(){
 		return true;
 	}
 	
 	@Override
 	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
+		if (gettimeuntilBreed() != 0) {
+			this.setTimeuntilBreed(this.gettimeuntilBreed() - 1);
+		}
 		List<Location> spaces = emptyCells;
 		this.setNeighborhood(myneighbors);
-		if (gettimeuntilBreed() != 0) {
-			timeuntilBreed--;
-		}
+		
 		if (!spaces.isEmpty()){
 			Collections.shuffle(spaces);
 		}
-		
 		return spaces.get(0);
 	}
 	
-	public int gettimeuntilBreed(){
-		return this.timeuntilBreed;
-	}
-	
-	
-	public void setTimeuntilBreed(int timeuntilBreed) {
-		this.timeuntilBreed = timeuntilBreed;
-	}
 
-	public static void setBreedTime(int newBreedTime){
-		  breedTime = newBreedTime;
-	}
-	
-	public static int getBreedTime() {
-		return breedTime;
-	}
 
 	
 
