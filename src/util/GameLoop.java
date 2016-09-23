@@ -18,7 +18,7 @@ public class GameLoop {
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Species currSpecies= myGrid.getCell(new Location(i, j));
 				if (currSpecies != null){
-					Location moveTo = currSpecies.move(myGrid.getEmptyCells());
+					Location moveTo = currSpecies.performTask(myGrid.getEmptyCells());
 					myGrid.setCell(moveTo, currSpecies);
 				}
 			}

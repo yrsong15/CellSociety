@@ -21,13 +21,15 @@ public class Fish extends Species {
 	}
 	
 	@Override
-	public void move(){
+	public Location performTask(List<Location> emptyCells){
 		timeuntilbreed--;
 		List<Location> openspaces = super.getNeighborhood().getEmptySpaces();
 		if (!openspaces.isEmpty()){
 			Location oldLocation = getMyLocation();
 			
 		}
+		
+		return null;
 	}
 	
 	

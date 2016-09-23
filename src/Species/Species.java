@@ -1,4 +1,6 @@
 package Species;
+import java.util.List;
+
 import util.Location;
 import util.Neighborhood;
 
@@ -13,7 +15,7 @@ public abstract class Species {
 		myLocation = null;
 	}
 	
-	public abstract void move();
+	public abstract Location performTask(List<Location> emptyCells);
 	
 	public void moveTo(Location location){
 		
