@@ -14,7 +14,7 @@ public class Main extends Application{
 		//UserInterface UI = new UserInterface();
 		//UI.startUI(s); //returns when user presses a button?  
 		Simulation mySim = new Simulation();
-    	mySim.getXMLDoc("GameofLife.xml");
+    	mySim.getXMLDoc("data/GameofLife.xml");
     	Grid myGrid = mySim.populateGrid();
     	myGrid.outputGridValues();
     	GameLoop myLoop = new GameLoop();
