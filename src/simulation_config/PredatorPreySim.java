@@ -1,4 +1,4 @@
-package util;
+package simulation_config;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -8,8 +8,9 @@ import org.w3c.dom.NodeList;
 import species.Shark;
 import species.Species;
 import species.WatorSpecies;
+import util.Grid;
 
-public class PredatorPreySim extends Simulation{
+public class PredatorPreySim extends SimulationConfig{
 
 	public PredatorPreySim() {
 		// TODO Auto-generated constructor stub
