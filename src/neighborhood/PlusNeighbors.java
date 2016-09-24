@@ -9,7 +9,9 @@ import util.Location;
 public class PlusNeighbors extends Neighborhood {
 
 	public PlusNeighbors(List<Species> neighborhood, Location location) {
+		
 		super(neighborhood, location);
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -17,7 +19,7 @@ public class PlusNeighbors extends Neighborhood {
 	public List<Species> findMyNeighbors(List<Species> neighborhood, Location mylocation) {
 		// TODO Auto-generated method stub
 		List<Species> ret = new ArrayList<Species>();
-		for (Species s : ret){
+		for (Species s : neighborhood){
 			if (s.getMyLocation().getX() == mylocation.getX()){
 				if (s.getMyLocation().getY() == (mylocation.getY()-1)
 				|| s.getMyLocation().getY() == (mylocation.getY()+1)){
@@ -31,7 +33,6 @@ public class PlusNeighbors extends Neighborhood {
 				}
 			}
 		}
-		
 		return ret;
 	}
 
