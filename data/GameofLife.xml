@@ -13,14 +13,16 @@
 		</species>
 	</configuration>
 	
+	<speciesType>CellofLife</speciesType>
+	
 	<grid>
 		<width>3</width>
 		<height>3</height>
 		<numCells>9</numCells>
 		
+		<row>0 0 0</row>
 		<row>1 0 0</row>
-		<row>0 1 1</row>
-		<row>1 1 1</row>
+		<row>1 0 1</row>
 		
 	</grid>
 </simulation>

@@ -83,6 +83,7 @@ public abstract class SimulationConfig {
 	            	if (speciesAdded < numCells){
 		            	Species mySpecies = createSpecies(speciesType);
 		            	mySpecies.setCurrState(Integer.parseInt(((Element) percentList.item(i)).getAttribute("state")));
+		            	mySpecies.setNextState(Integer.parseInt(((Element) percentList.item(i)).getAttribute("state")));
 		            	this.setParameters(currSpecies, mySpecies);
 	            		myGrid.addCell((Species) mySpecies);
 	            		speciesAdded++;
@@ -102,18 +103,11 @@ public abstract class SimulationConfig {
 			Node nNode = nList.item(temp);
 			String[] rowVals = nNode.getTextContent().split(" ");
 			for (int i = 0; i < rowVals.length; i++){
-				Species mySpecies = null;
 				Location pos = new Location(temp, i);
-				try {
-					Class<?> speciesClass = Class.forName("Species." + speciesType);
-					Constructor<?> constructor = speciesClass.getConstructor();
-					mySpecies = (Species) constructor.newInstance();
-					mySpecies.setCurrState(Integer.parseInt(rowVals[i]));
-					mySpecies.setNextState(Integer.parseInt(rowVals[i]));
-					mySpecies.setMyLocation(pos);
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
+				Species mySpecies = createSpecies(speciesType);
+				mySpecies.setCurrState(Integer.parseInt(rowVals[i]));
+				mySpecies.setNextState(Integer.parseInt(rowVals[i]));
+				mySpecies.setMyLocation(pos);
 				myGrid.setCell(pos, mySpecies);
 			}
 		}
