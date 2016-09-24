@@ -7,12 +7,12 @@
 	
 	<configuration>
 		<species type ="Shark">
-			<percent>60</percent>
+			<percent>20</percent>
 			<breedTurns>2</breedTurns>
 			<starveTurns>4</starveTurns>
 		</species>
 		<species type = "Fish">     
-			<percent>40</percent>
+			<percent>70</percent>
 			<breedTurns>2</breedTurns>
 		</species>
 	
