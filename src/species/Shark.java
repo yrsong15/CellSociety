@@ -1,11 +1,11 @@
-package Species;
+package species;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import neighborhood.Neighborhood;
 import util.Location;
-import util.Neighborhood;
 
 public class Shark extends WatorSpecies{
 	private static int standardBreedTime = 10;

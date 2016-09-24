@@ -1,6 +1,6 @@
 package util;
 
-import Species.Species;
+import species.Species;
 import util.Grid;
 
 /***

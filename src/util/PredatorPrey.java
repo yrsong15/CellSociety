@@ -5,9 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import Species.Shark;
-import Species.Species;
-import Species.WatorSpecies;
+import species.Shark;
+import species.Species;
+import species.WatorSpecies;
 
 public class PredatorPrey extends Simulation{
 
