@@ -1,27 +1,27 @@
 <simulation>
 	<details>
 		<name> Segregation </name>
-		
 		<title> Segregation Team 3  </title>
 		<author>         </author>
 	</details>
 	
 	<configuration>
+		<species type ="Shark">
+			<percent>60</percent>
+			<breedTurns>2</breedTurns>
+			<starveTurns>4</starveTurns>
+		</species>
+		<species type = "Fish">     
+			<percent>40</percent>
+			<breedTurns>2</breedTurns>
+		</species>
+	
 	</configuration>
 	
-	<speciesType>CellofLife</speciesType>
+	
 	<grid>
 		<width>3</width>
 		<height>3</height>
 		<numCells>9</numCells>
-		
-		<percentType state = "0">60</percentType>
-		<percentType state = "1">40</percentType>
-		
-		<row>1 0 0</row>
-		<row>0 1 1</row>
-		<row>1 1 1</row>
-		
-	
 	</grid>
 </simulation>

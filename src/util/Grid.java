@@ -101,7 +101,8 @@ public class Grid {
 				for (int j = 0; j < myGrid[i].length; j++){
 					Species curr= myGrid[i][j];
 					if (curr != null){
-						rowVal+= curr.getCurrState() + " ";
+					//	rowVal+= curr.getCurrState() + " ";
+						rowVal+= curr.getClass().toString().substring(14, 15) + " ";
 					}
 					else{
 						rowVal+=". ";
