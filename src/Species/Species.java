@@ -6,14 +6,17 @@ import util.Neighborhood;
 
 public abstract class Species {
 	private Neighborhood myNeighbors;
-	private int currState; 
+
+	private int currState; // 0 is initial state
 	private int nextState;
+
 	private Location myLocation;
 	
 	public Species(){
 		myNeighbors = null;
 		currState = 0;
 		myLocation = null;
+		
 	}
 	
 	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
@@ -51,6 +54,7 @@ public abstract class Species {
 	
 	public void updateToLatestState(){
 		setCurrState(getNextState());
+
 	}
 
 
