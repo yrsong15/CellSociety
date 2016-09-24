@@ -31,8 +31,9 @@ public class Fish extends WatorSpecies {
 		
 		if (!spaces.isEmpty()){
 			Collections.shuffle(spaces);
+			return spaces.get(0);
 		}
-		return spaces.get(0);
+		return this.getMyLocation();
 	}
 	
 
