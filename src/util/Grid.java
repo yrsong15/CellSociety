@@ -1,4 +1,6 @@
 package util;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,17 +14,25 @@ public class Grid {
 		Species[][] myGrid;
 		private int numRows;
 		private int numCols;
+		private String neighbType;
 		
-		public Grid(int width, int height){
+		
+		public Grid(int width, int height, String neighbType){
 			myGrid = new Species[width][height];
 			this.numRows = width;
 			this.numCols = height;
+			this.neighbType = neighbType;
 		}
 		
-		public Grid(Species[][] myGrid2, int i, int j) {
+		public Grid(Species[][] myGrid2, int width, int height, String neighbType) {
 			this.myGrid = myGrid2;
-			numRows = i;
-			numCols = j;
+			numRows = width;
+			numCols = height;
+			this.neighbType = neighbType;
+		}
+		
+		public String getNeighbType(){
+			return neighbType;
 		}
 
 		public int getWidth(){
@@ -88,7 +98,28 @@ public class Grid {
 		            }
 		        }
 		    }
-			return new PlusNeighbors(neighbors, pos);
+			return createNeighborhood(neighbors, pos);
+		}
+		
+		
+		public Neighborhood createNeighborhood(List<Species> aroundMe, Location myPos) {
+			Neighborhood myNeighb = null;
+			try {
+				Class<?> neighbClass = Class.forName("neighborhood." + neighbType);
+				Constructor<?> constructor = null;
+				try {
+					constructor = neighbClass.getConstructor(List.class, Location.class);
+				} catch (NoSuchMethodException | SecurityException e) {
+					e.printStackTrace();
+				}
+				myNeighb = (Neighborhood) constructor.newInstance(aroundMe, myPos);
+				
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				System.out.println("Neighborhood provided in simulation configuration class cannot be found, does not have a proper constructor, or is not a valid class");
+				e.printStackTrace();
+			} 
+			
+			return myNeighb;
 		}
 		
 		
