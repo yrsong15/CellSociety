@@ -1,16 +1,15 @@
 package simulation_config;
 
-import java.lang.reflect.InvocationTargetException;
-
-import util.Grid;
+import org.w3c.dom.Element;
+import species.Species;
 
 public class GameofLifeSim extends SimulationConfig{
 
+
 	@Override
-	public Grid populateGrid() throws NoSuchMethodException, SecurityException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public void setParameters(Element speciesInfo, Species mySpecies) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 }
