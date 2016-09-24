@@ -23,6 +23,11 @@ public abstract class SimulationConfig {
 	protected Document myXML;
 	protected int speciesAdded;
 	
+	
+	/**
+	 * prepares given xml document for parsing
+	 * @param filename xml file to be parsed
+	 */
 	public void getXMLDoc(String filename){
 		
 		try{
@@ -41,47 +46,17 @@ public abstract class SimulationConfig {
      }
 	}
 	
-	
+	/**
+	 * @param element name of the tag in the xml file
+	 * @return returns the string value content of the tag in the xml file
+	 */
 	public String getElement(String element){
 		return myXML.getElementsByTagName(element).item(0).getTextContent();
 	}
 	
 	
 	
-	public Grid popGrid() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		Grid myGrid = new Grid(getGridHeight(), getGridWidth());
-	       NodeList nList = myXML.getElementsByTagName("speciesType");
-	       
-         for (int temp = 0; temp < nList.getLength(); temp++) {
-             Node nNode = nList.item(temp);
-             System.out.println("\nCurrent Element :" + nNode.getNodeName());
-         }
-         return myGrid;
-		
-		
-	}
-	
-	
 	public abstract Grid populateGrid() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException;
-	
-	//to-do: handle errors in call to createSpecies function
-	public Grid populateGrid3() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		String speciesType = getElement("speciesType");
-		Grid myGrid = new Grid(getGridHeight(), getGridWidth());
-	       NodeList nList = myXML.getElementsByTagName("percentType");
-	       int numCells = Integer.parseInt(getElement("numCells"));
-	         for (int temp = 0; temp < nList.getLength(); temp++) {
-	            Element speciesConfig = (Element) nList.item(temp);
-	            int percent = Integer.parseInt(speciesConfig.getTextContent());
-                int state = Integer.parseInt(speciesConfig.getAttribute("state"));
-                System.out.println(speciesType);
-                int createNum = (int) (numCells*(percent/100.0));//number need to create of species w/ this state
-                for (int created = 0; created < createNum; created++){
-    //            	myGrid.addCell(createSpecies(speciesType, state));
-                }
-	         }
-	         return myGrid;
-	}
 	
 	//handle these errors better; meaning catch them
 	public Grid populateGridTest() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
@@ -138,12 +113,4 @@ public abstract class SimulationConfig {
 		
 		
 	}
-
-
-
-	
-	
-	
-
-
 }
