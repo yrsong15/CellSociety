@@ -19,9 +19,9 @@ import org.w3c.dom.Element;
 
 
 public abstract class SimulationConfig {
-	protected Document myXML;
+	private Document myXML;
+	private String neighborhoodType;
 	protected int speciesAdded;
-	
 	
 	/**
 	 * prepares given xml document for parsing
@@ -65,11 +65,18 @@ public abstract class SimulationConfig {
 		return myXML.getElementsByTagName(tagName).item(0).getTextContent();
 	}
 	
+	public String getNeighborhoodType() {
+		return this.neighborhoodType;
+	}
+	
+	protected void setNeighborhoodType(String type){
+		neighborhoodType = type;
+	}
 	
 	public abstract void setParameters(Element speciesInfo, Species mySpecies);
 	
 	public Grid populateGrid(){		
-		Grid myGrid = new Grid(getGridHeight(), getGridWidth());
+		Grid myGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
 	    NodeList speciesList = myXML.getElementsByTagName("species");
 	    int numCells = Integer.parseInt(getElement("numCells"));
 	    for (int curr = 0; curr < speciesList.getLength(); curr++) {//for each species
@@ -97,7 +104,7 @@ public abstract class SimulationConfig {
 	//handle these errors better; meaning catch them
 	public Grid populateGridTest() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		String speciesType = getElement("speciesType");
-		Grid myGrid = new Grid(getGridHeight(), getGridWidth());
+		Grid myGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
 		NodeList nList = myXML.getElementsByTagName("row");
 		for (int temp = 0; temp < nList.getLength(); temp++) {
 			Node nNode = nList.item(temp);

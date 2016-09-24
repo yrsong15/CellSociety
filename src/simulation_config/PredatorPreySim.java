@@ -10,7 +10,7 @@ import species.WatorSpecies;
 public class PredatorPreySim extends SimulationConfig{
 
 	public PredatorPreySim() {
-		// TODO Auto-generated constructor stub
+		setNeighborhoodType("AllNeighbors");
 	}
 	
 

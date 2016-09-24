@@ -7,6 +7,10 @@ import species.Species;
 
 public class SegregationSim extends SimulationConfig {
 	
+	public SegregationSim(){
+		setNeighborhoodType("PlusNeighbors");
+	}
+	
 
 	@Override
 	public void setParameters(Element speciesInfo, Species mySpecies) {
