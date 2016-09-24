@@ -1,28 +1,23 @@
 <simulation>
 	<details>
 		<name> Segregation </name>
-		<title>Segregation Team 17</title>
+		<title> Segregation Team 3  </title>
 		<author>         </author>
 	</details>
 	
 	<configuration>
-		<species type ="CellofLife">
-			<percent state="0">60</percent>
+		<species type ="Tree">
+			<percent state="0">20</percent>
 			<percent state="1">40</percent>
-			<threshold>30</threshold>
+			<probCatchFire>30</probCatchFire>
 		</species>
+	
 	</configuration>
 	
-	<speciesType>CellofLife</speciesType>
 	
 	<grid>
 		<width>3</width>
 		<height>3</height>
 		<numCells>9</numCells>
-		
-		<row>0 0 0</row>
-		<row>1 0 0</row>
-		<row>1 0 1</row>
-		
 	</grid>
 </simulation>

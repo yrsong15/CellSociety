@@ -1,7 +1,11 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import util.Simulation;
-import util.GameLoop;
+import simulation_config.FireSim;
+import simulation_config.GameofLifeSim;
+import simulation_config.PredatorPreySim;
+import simulation_config.SegregationSim;
+import simulation_config.SimulationConfig;
+import util.GameEngine;
 import util.Grid;
 
 /*** @author Chalena
@@ -13,12 +17,15 @@ public class Main extends Application{
 	public void start(Stage s) throws Exception {
 		//UserInterface UI = new UserInterface();
 		//UI.startUI(s); //returns when user presses a button?  
-		Simulation mySim = new Simulation();
+		SimulationConfig mySim = new GameofLifeSim();
     	mySim.getXMLDoc("data/GameofLife.xml");
-    	Grid myGrid = mySim.populateGrid();
+    	Grid myGrid = mySim.populateGridTest();
     	myGrid.outputGridValues();
-    	GameLoop myLoop = new GameLoop();
-    	
+    	GameEngine myLoop = new GameEngine();
+    	myLoop.updateWorld(myGrid);
+    	System.out.println("--------");
+    	myGrid.outputGridValues();
+//    	
 		while (true){
 	    	myLoop.updateWorld(myGrid);
 	    	System.out.println("-------");

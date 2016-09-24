@@ -1,23 +1,26 @@
-package util;
+package neighborhood;
 import java.util.ArrayList;
 import java.util.List;
 
-import Species.Species;
+import species.Species;
+import util.Location;
 
-public class Neighborhood {
+public abstract class Neighborhood {
 	private List<Species> myNeighbors;
 
-	Neighborhood(List<Species> neighbors){
-		this.myNeighbors = neighbors;
+	public Neighborhood(List<Species> neighborhood, Location location){
+		setMyNeighbors(findMyNeighbors(neighborhood, location));
+	}
+	
+	public abstract List<Species> findMyNeighbors(List<Species> neighborhood, Location mylocation);
+	public void setMyNeighbors(List<Species> myNeighbors) {
+		this.myNeighbors = myNeighbors;
 	}
 	
 	public List<Species> getMyNeighbors() {
 		return myNeighbors;
 	}
-	public void setMyNeighbors(List<Species> myNeighbors) {
-		this.myNeighbors = myNeighbors;
-	}
-	
+
 	public List<Location> getEmptySpaces(){
 		List <Location> ret = new ArrayList<Location>();
 		for (Species s : myNeighbors){

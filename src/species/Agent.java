@@ -1,17 +1,17 @@
-package Species;
+package species;
 
 import java.util.Collections;
 import java.util.List;
 
+import neighborhood.Neighborhood;
 import util.Location;
-import util.Neighborhood;
 
 public class Agent extends Species {
 	//agent X is satisfied if at least thresholdPercentage of its neighbors are also X
 	//different state means different agents
 	private static int thresholdPercentage;
-	
-	Agent(){
+
+	public Agent(){
 		super();
 	}
 
@@ -30,12 +30,22 @@ public class Agent extends Species {
 				}
 			}
 		}
-		satisfaction = numberofsameagent / numberofneighbors;
+		if (numberofneighbors != 0){
+			satisfaction = numberofsameagent / numberofneighbors;
+		}
 		if(satisfaction < thresholdPercentage && !spaces.isEmpty()){
 			Collections.shuffle(spaces);
 			return spaces.get(0);
 		}
 		return this.getMyLocation();
+	}
+	
+	public int getThresholdPercentage() {
+		return thresholdPercentage;
+	}
+
+	public void setThresholdPercentage(int thresholdPercentage) {
+		Agent.thresholdPercentage = thresholdPercentage;
 	}
 
 }

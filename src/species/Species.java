@@ -1,8 +1,8 @@
-package Species;
+package species;
 import java.util.List;
 
+import neighborhood.Neighborhood;
 import util.Location;
-import util.Neighborhood;
 
 public abstract class Species {
 	private Neighborhood myNeighbors;

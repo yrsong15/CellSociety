@@ -1,0 +1,27 @@
+<simulation>
+	<details>
+		<name> Segregation </name>
+		<title> Segregation Team 3  </title>
+		<author>         </author>
+	</details>
+	
+	<configuration>
+		<species type ="Shark">
+			<percent>20</percent>
+			<breedTurns>2</breedTurns>
+			<starveTurns>4</starveTurns>
+		</species>
+		<species type = "Fish">     
+			<percent>70</percent>
+			<breedTurns>2</breedTurns>
+		</species>
+	
+	</configuration>
+	
+	
+	<grid>
+		<width>3</width>
+		<height>3</height>
+		<numCells>9</numCells>
+	</grid>
+</simulation>

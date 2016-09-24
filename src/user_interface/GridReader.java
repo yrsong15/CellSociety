@@ -2,12 +2,12 @@ package user_interface;
 import java.lang.reflect.InvocationTargetException;
 
 import util.*;
-import Species.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import species.*;
 
 public class GridReader {
 	private Simulation sim;

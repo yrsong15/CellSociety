@@ -1,16 +1,16 @@
-package Species;
+package species;
 
 import java.util.List;
 
+import neighborhood.Neighborhood;
 import util.Location;
-import util.Neighborhood;
 
 public class Tree extends Species {
 	/**
 	 * State0 = healthy tree, State1 = burning tree;
 	 */
 	private static float probabilityBurn = (float) 0.3;
-	Tree(){
+	public Tree(){
 		super();
 		
 	}

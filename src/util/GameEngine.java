@@ -1,6 +1,6 @@
 package util;
 
-import Species.Species;
+import species.Species;
 import util.Grid;
 
 /***
@@ -9,7 +9,7 @@ import util.Grid;
  * @author Chalena
  *
  */
-public class GameLoop {
+public class GameEngine {
 	
 	public void updateWorld(Grid myGrid){
 		Grid copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight());
@@ -18,10 +18,11 @@ public class GameLoop {
 				Location currLoc = new Location(i, j);
 				Species currSpecies= myGrid.getCell(currLoc);
 				if (currSpecies != null){
-					
 					Location moveTo = currSpecies.performTask(copyGrid.getEmptyCells(), copyGrid.getNeighborhood(currLoc));
 					if (moveTo != null){
+						myGrid.setCell(currLoc, null);
 						myGrid.setCell(moveTo, currSpecies);
+						
 					}
 				}
 			}

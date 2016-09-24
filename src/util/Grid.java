@@ -3,7 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Species.Species;
+import neighborhood.Neighborhood;
+import neighborhood.PlusNeighbors;
+import species.Species;
 
 
 public class Grid {
@@ -86,7 +88,7 @@ public class Grid {
 		            }
 		        }
 		    }
-			return new Neighborhood(neighbors);
+			return new PlusNeighbors(neighbors, pos);
 		}
 		
 		
@@ -101,7 +103,9 @@ public class Grid {
 				for (int j = 0; j < myGrid[i].length; j++){
 					Species curr= myGrid[i][j];
 					if (curr != null){
-						rowVal+= curr.getCurrState() + " ";
+						rowVal+= curr.getCurrState() + " "; //for GameOfLife
+					//	rowVal+= curr.getClass().toString().substring(14, 15) + " "; //for Predator-Prey
+						
 					}
 					else{
 						rowVal+=". ";
