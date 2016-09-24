@@ -11,7 +11,7 @@ public class Agent extends Species {
 	//different state means different agents
 	private static int thresholdPercentage;
 	
-	Agent(){
+	public Agent(){
 		super();
 	}
 
@@ -30,7 +30,9 @@ public class Agent extends Species {
 				}
 			}
 		}
-		satisfaction = numberofsameagent / numberofneighbors;
+		if (numberofneighbors != 0){
+			satisfaction = numberofsameagent / numberofneighbors;
+		}
 		if(satisfaction < thresholdPercentage && !spaces.isEmpty()){
 			Collections.shuffle(spaces);
 			return spaces.get(0);

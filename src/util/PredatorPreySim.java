@@ -9,9 +9,9 @@ import species.Shark;
 import species.Species;
 import species.WatorSpecies;
 
-public class PredatorPrey extends Simulation{
+public class PredatorPreySim extends Simulation{
 
-	public PredatorPrey() {
+	public PredatorPreySim() {
 		// TODO Auto-generated constructor stub
 	}
 	

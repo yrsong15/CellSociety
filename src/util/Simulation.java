@@ -114,7 +114,7 @@ public abstract class Simulation {
 	public Species createSpecies(String speciesType) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Species mySpecies = null;
 		try {
-			Class<?> speciesClass = Class.forName("Species." + speciesType);
+			Class<?> speciesClass = Class.forName("species." + speciesType);
 			Constructor<?> constructor = speciesClass.getConstructor();
 			mySpecies = (Species) constructor.newInstance();
 			

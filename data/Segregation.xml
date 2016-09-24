@@ -1,0 +1,22 @@
+<simulation>
+	<details>
+		<name> Segregation </name>
+		<title> Segregation Team 3  </title>
+		<author>         </author>
+	</details>
+	
+	<configuration>
+		<species type ="Agent">
+			<percent state="0">20</percent>
+			<percent state="1">40</percent>
+			<threshold>30</threshold>
+		</species>
+	</configuration>
+	
+	
+	<grid>
+		<width>3</width>
+		<height>3</height>
+		<numCells>9</numCells>
+	</grid>
+</simulation>
