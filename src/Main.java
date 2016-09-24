@@ -1,7 +1,7 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import util.Simulation;
-import util.GameLoop;
+import util.GameEngine;
 import util.Grid;
 import util.PredatorPrey;
 
@@ -18,8 +18,10 @@ public class Main extends Application{
     	mySim.getXMLDoc("data/WatorWorld.xml");
     	Grid myGrid = mySim.populateGrid();
     	myGrid.outputGridValues();
-    	GameLoop myLoop = new GameLoop();
+    	GameEngine myLoop = new GameEngine();
     	myLoop.updateWorld(myGrid);
+    	System.out.println("--------");
+    	myGrid.outputGridValues();
 //    	
 //		while (true){
 //	    	myLoop.updateWorld(myGrid);

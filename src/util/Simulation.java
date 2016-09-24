@@ -20,6 +20,7 @@ import java.io.File;
 
 public abstract class Simulation {
 	protected Document myXML;
+	protected int speciesAdded;
 	
 	public void getXMLDoc(String filename){
 		
