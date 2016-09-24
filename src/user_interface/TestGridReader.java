@@ -3,7 +3,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
 import util.*;
-import Species.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -12,13 +11,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import simulation_config.GameofLifeSim;
+import simulation_config.SimulationConfig;
+import species.*;
 
 public class TestGridReader {
-	private static Simulation sim;
+	private static SimulationConfig sim;
 	private static Grid myGrid;
 	private static Stage myStage;
 	private static Group myRoot;
-	private static GameLoop myLoop;
+	private static GameEngine myEngine;
 	
 	private static final int GRID_SIZE = 420;
 	private static final int CELL_SIZE = 50;
@@ -30,11 +32,11 @@ public class TestGridReader {
 	public static void startGrid(Stage s) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InterruptedException{
 		myStage = s;
 		myRoot = new Group();
-		sim = new Simulation();
+		sim = new GameofLifeSim();
 		sim.getXMLDoc("data/GameofLife.xml");
 
 		myGrid = sim.populateGrid();
-		myLoop = new GameLoop();
+		myEngine = new GameEngine();
 		Scene scene = new Scene(myRoot, 600, 600);
 		displayGrid(myRoot, myGrid, 50);
 		s.setScene(scene);
@@ -53,15 +55,11 @@ public class TestGridReader {
 	
 	
 	public static void step(double elapsedTime){
-//		int count = 0;
-			myRoot.getChildren().clear();
-	    	myLoop.updateWorld(myGrid);
-	    	displayGrid(myRoot, myGrid, 50);
-	    	System.out.println("-------");
-//	    	System.out.println("count:" + count);
-	    	myGrid.outputGridValues();
-//			myStage.setScene(displayGrid(myRoot, myGrid, 50));
-//			break;
+		myRoot.getChildren().clear();
+    	myEngine.updateWorld(myGrid);
+    	displayGrid(myRoot, myGrid, 50);
+    	System.out.println("-------");
+    	myGrid.outputGridValues();
 	}
 	
 	public static void displayGrid(Group g, Grid grid, int margin){

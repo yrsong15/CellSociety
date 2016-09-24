@@ -3,6 +3,8 @@ package user_interface;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -12,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class UserInterface {
 	
@@ -27,18 +30,21 @@ public class UserInterface {
 	protected static final int SMALL_BUTTON_LENGTH = 30;
 	protected static final int RESET_BUTTON_WIDTH = 200;
 	
+	private static final int FRAMES_PER_SECOND = 1;
+    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+	
 	protected Stage myStage;
 	private GridReader gr;
 	private ScrollbarController sbc;
-//	private ButtonController bc;
 	private ResourceBundle myResources;
 	private String state;
 	
+	
 	public void startUI(Stage s){
 		myStage = s;
-		gr = new GridReader();
+		gr = new GridReader(GRID_SIZE);
 		sbc = new ScrollbarController();
-//		bc = new ButtonController();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE+"UILabels");
 		s.setScene(startScene());
 		s.setTitle(myResources.getString("UITitle"));
@@ -59,7 +65,7 @@ public class UserInterface {
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
 		simButtons(temp, myStage, scene);
-		sbc.simScrollBar(temp, myStage, scene, myResources, UI_WIDTH, MARGIN);
+		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -68,7 +74,7 @@ public class UserInterface {
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
 		simButtons(temp, myStage, scene);
-		sbc.simScrollBar(temp, myStage, scene, myResources, UI_WIDTH, MARGIN);
+		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -77,7 +83,7 @@ public class UserInterface {
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
 		simButtons(temp, myStage, scene);
-		sbc.simScrollBar(temp, myStage, scene, myResources, UI_WIDTH, MARGIN);
+		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -86,7 +92,7 @@ public class UserInterface {
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		startGrid(temp);
 		simButtons(temp, myStage, scene);
-		sbc.simScrollBar(temp, myStage, scene, myResources, UI_WIDTH, MARGIN);
+		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -106,8 +112,15 @@ public class UserInterface {
 	}
 	
 	public void startGrid(Group g) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		gr.testReader();
-		gr.displayGrid(g, gr.getGrid(), MARGIN);	
+		gr.startGridReader(g, gr.getGrid(), MARGIN);
+
+		
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+                e -> gr.step(g, gr.getGrid(), MARGIN, sbc, myResources, SECOND_DELAY));
+        Timeline animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        animation.play();
 	}
 	
 	public void initButtons(Group g, Stage stage, Scene scene){

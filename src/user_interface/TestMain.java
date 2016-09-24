@@ -8,11 +8,11 @@ import javafx.stage.Stage;
 public class TestMain extends Application{
 
 	@Override
-	public void start(Stage s) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+	public void start(Stage s) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InterruptedException{
 		UserInterface UI = new UserInterface();
 		UI.startUI(s);
 		
-//		GridReader gr = new GridReader();
+//		TestGridReader gr = new TestGridReader();
 //		gr.startGrid(s);
 	}
 	public static void main(String[] args){

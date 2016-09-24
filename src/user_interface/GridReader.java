@@ -1,30 +1,41 @@
 package user_interface;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ResourceBundle;
 
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 import util.*;
-import Species.*;
 import simulation_config.*;
 
 public class GridReader {
 	private SimulationConfig sim;
 	private Grid myGrid;
-	private Stage myStage;
+	private static GameEngine myEngine;
 	
-	private static final int GRID_SIZE = 420;
-	private static final int CELL_SIZE = 50;
+	private static int GRID_SIZE;
 	
-//	public void startGrid(Stage s) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-//		myStage = s;
-//		testReader();
-//		s.setScene(displayGrid(myGrid));
-//		s.show();
-//	}
+	public GridReader(int gridSize) {
+		myGrid = new Grid(gridSize, gridSize);
+		GRID_SIZE = gridSize;
+	}
+	
+	public void startGridReader(Group g, Grid grid, int margin) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		sim = new GameofLifeSim();
+		sim.getXMLDoc("data/GameofLife.xml");
+		myGrid = sim.populateGrid();
+		myEngine = new GameEngine();
+	}
+	
+	public void step(Group g, Grid grid, int margin, ScrollbarController sbc, ResourceBundle rb, double elapsedTime){
+		g.getChildren().clear();
+		sbc.simScrollBar(g, rb, 1000, 50);
+		myEngine.updateWorld(myGrid);
+    	displayGrid(g, grid, margin);
+	}
 	
 	public void displayGrid(Group g, Grid grid, int margin){
 		int cellSize = GRID_SIZE / grid.getWidth();
@@ -34,7 +45,7 @@ public class GridReader {
 				Rectangle r = new Rectangle(cellSize*i + margin, cellSize*j + margin, cellSize, cellSize);
 				Location curr = new Location(i,j);
 				if(grid.getCell(curr) != null){
-					if(grid.getCell(curr).getState() == 1){
+					if(grid.getCell(curr).getCurrState() == 1){
 						r.setFill(Color.RED);
 					}
 					else{
@@ -47,18 +58,9 @@ public class GridReader {
 		return;
 	}
 	
-	public void testReader() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		sim = new SimulationConfig();
-		sim.getXMLDoc("GameofLife.xml");
-		myGrid = sim.populateGrid();
-	}
 	
 	public Grid getGrid(){
 		return myGrid;
 	}
 	
-//	public static void main(String[] args) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-//		testReader();
-//		myGrid.outputGridValues();
-//	}
 }

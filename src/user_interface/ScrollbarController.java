@@ -35,7 +35,7 @@ public class ScrollbarController {
 		g.getChildren().add(t);
 	}
 	
-	public void simScrollBar(Group g, Stage stage, Scene scene, ResourceBundle bundle, int width, int margin){
+	public void simScrollBar(Group g, ResourceBundle bundle, int width, int margin){
 //		addText(g, bundle.getString("CellSizeLabel"), width * 7/10, margin + 10);
 		addText(g, bundle.getString("DelayLabel"), width * 7/10, 2*margin + 10);
 //		addText(g, bundle.getString("BlankLabel"), width * 7/10, 3*margin + 10);
