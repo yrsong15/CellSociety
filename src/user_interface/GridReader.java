@@ -1,16 +1,18 @@
 package user_interface;
 import java.lang.reflect.InvocationTargetException;
 
-import util.*;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import species.*;
+import util.*;
+import Species.*;
+import simulation_config.*;
 
 public class GridReader {
-	private Simulation sim;
+	private SimulationConfig sim;
 	private Grid myGrid;
 	private Stage myStage;
 	
@@ -46,7 +48,7 @@ public class GridReader {
 	}
 	
 	public void testReader() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		sim = new Simulation();
+		sim = new SimulationConfig();
 		sim.getXMLDoc("GameofLife.xml");
 		myGrid = sim.populateGrid();
 	}
