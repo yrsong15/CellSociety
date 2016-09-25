@@ -10,9 +10,15 @@ import util.Grid;
  * @author Chalena
  */
 public class GameEngine {
+	
+	private Grid myGrid;
+	
+	public GameEngine(Grid myGrid){
+		this.myGrid = myGrid;
+	}
 
 
-	public void updateWorld(Grid myGrid){
+	public void updateWorld(){
 		Grid copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
 		List<Location> toDelete = new ArrayList<Location>();
 		List<Location> emptyCells = copyGrid.getEmptyCells();
@@ -29,7 +35,7 @@ public class GameEngine {
 					}
 					else if(!moveTo.equals(currLoc)){
 						emptyCells.remove(moveTo);
-						move(currLoc, moveTo, currSpecies, myGrid);
+						move(currLoc, moveTo, currSpecies);
 						if (currSpecies.toBreed()){
 							myGrid.setCell(currLoc, currSpecies.clone(currLoc));
 						}
@@ -37,11 +43,11 @@ public class GameEngine {
 				}
 			}
 		}
-		clearFallenSpecies(toDelete, myGrid);
-		updateStates(myGrid);
+		clearFallenSpecies(toDelete);
+		updateStates();
 	}
 	
-	private void move(Location from, Location to, Species moving, Grid myGrid){
+	private void move(Location from, Location to, Species moving){
 		moving.setMyLocation(to);
 		myGrid.setCell(to, moving);
 		myGrid.setCell(from, null);
@@ -49,23 +55,21 @@ public class GameEngine {
 	}
 	
 	
-	private void clearFallenSpecies(List<Location> toDelete, Grid myGrid){
+	private void clearFallenSpecies(List<Location> toDelete){
 		for (int i = 0; i < toDelete.size(); i++){
 			myGrid.setCell(toDelete.get(i), null);
 		}
 	}
 	
-	public void updateStates(Grid myGrid){
+	public void updateStates(){
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
 				Species currSpecies= myGrid.getCell(currLoc);
 				if (currSpecies != null){
 					currSpecies.updateToLatestState();
+				}
 			}
 		}
 	}
-		
-	}
-
 }
