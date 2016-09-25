@@ -21,8 +21,8 @@ public class GridReader {
 	public GridReader(int gridSize, int margin) {
 		sim = new GameofLifeSim();
 		sim.getXMLDoc("data/GameofLife.xml");
-		myGrid = sim.populateGrid();
-//		myGrid = new Grid(gridSize, gridSize);
+//		myGrid = sim.populateGrid();
+		myGrid = new Grid(gridSize, gridSize);
 		GRID_SIZE = gridSize;
 		MARGIN = margin;
 	}

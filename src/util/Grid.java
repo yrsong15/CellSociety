@@ -18,6 +18,11 @@ public class Grid {
 		private int numCols;
 		private String neighbType;
 		
+		public Grid(int width, int height){
+			myGrid = new Species[width][height];
+			this.numRows = width;
+			this.numCols = height;
+		}
 		
 		public Grid(int width, int height, String neighbType){
 			myGrid = new Species[width][height];
