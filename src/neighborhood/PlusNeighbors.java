@@ -14,7 +14,7 @@ public class PlusNeighbors extends Neighborhood {
 		
 		// TODO Auto-generated constructor stub
 	}
-
+	//to-do: implement using isAdjacent function in location
 	@Override
 	public List<Species> findMyNeighbors(List<Species> neighborhood, Location mylocation) {
 		// TODO Auto-generated method stub

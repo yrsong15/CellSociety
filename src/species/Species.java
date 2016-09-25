@@ -19,6 +19,10 @@ public abstract class Species {
 		
 	}
 	
+	public abstract boolean toBreed();
+	
+	public abstract Species clone(Location pos);
+	
 	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
 	
 	public Location getMyLocation() {

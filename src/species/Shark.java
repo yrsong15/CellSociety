@@ -8,7 +8,7 @@ import neighborhood.Neighborhood;
 import util.Location;
 
 public class Shark extends WatorSpecies{
-	private static int standardBreedTime = 10;
+	private int standardBreedTime = 10;
 	private int standardStarveTime = 3;
 	
 	private int  turnsSinceLastAte;
@@ -46,7 +46,8 @@ public class Shark extends WatorSpecies{
 		}
 		
 		if(possiblemoves.isEmpty()){
-			possiblemoves.addAll(emptyCells);
+			List<Location> spaces = this.getMyLocation().getAdjacentCells(emptyCells);
+			possiblemoves.addAll(spaces);
 			turnsSinceLastAte++;
 		}
 		else{//can eat a fish
@@ -71,10 +72,19 @@ public class Shark extends WatorSpecies{
 	
 	public void setStandardBreedTime(int breedTime){
 		standardBreedTime = breedTime;
+		setTimeUntilBreed(breedTime);
 	}
 	
 	public void setStandardStarveTime(int starveTime){
-		standardBreedTime = starveTime;
+		standardStarveTime = starveTime;
+	}
+	@Override
+	public Species clone(Location pos) {
+		Species baby = new Shark();
+		((Shark) baby).setStandardStarveTime(this.standardStarveTime);
+		((Shark) baby).setStandardBreedTime(this.standardBreedTime);
+		baby.setMyLocation(pos);
+		return baby;
 	}
 	
 

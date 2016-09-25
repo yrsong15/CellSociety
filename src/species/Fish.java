@@ -6,7 +6,7 @@ import neighborhood.Neighborhood;
 import util.Location;
 
 public class Fish extends WatorSpecies {
-	private static int standardBreedTime = 3;
+	private int standardBreedTime = 3;
 	
 	
 	public Fish(){
@@ -20,10 +20,12 @@ public class Fish extends WatorSpecies {
 	
 	@Override
 	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
+		
+		
 		if (getTimeUntilBreed() != 0) {
 			setTimeUntilBreed(getTimeUntilBreed() - 1);
 		}
-		List<Location> spaces = emptyCells;
+		List<Location> spaces = this.getMyLocation().getAdjacentCells(emptyCells);
 		this.setNeighborhood(myneighbors);
 		
 		if (!spaces.isEmpty()){
@@ -35,7 +37,16 @@ public class Fish extends WatorSpecies {
 		return this.getMyLocation();
 	}
 	
-	public static void setStandardBreedTime(int breedTime){
-		standardBreedTime = breedTime;
+	public void setStandardBreedTime(int breedTime){
+		this.standardBreedTime = breedTime;
+		this.setTimeUntilBreed(breedTime);
+	}
+	
+	@Override
+	public Species clone(Location pos) {
+		Species baby = new Fish();
+		((Fish) baby).setStandardBreedTime(this.standardBreedTime);
+		baby.setMyLocation(pos);
+		return baby;
 	}
 }

@@ -14,8 +14,11 @@ public abstract class WatorSpecies extends Species{
 	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
 	public abstract boolean isEdible();
 	
-	public boolean toBreed(Location location){
-		return (roomToBreed && getTimeUntilBreed() == 0);
+	/**
+	 * @return true if it is time to breed and there is also space to breed
+	 */
+	public boolean toBreed(){
+		return (roomToBreed && getTimeUntilBreed() <= 0);
 	}
 	public int getTimeUntilBreed(){
 		return this.timeUntilBreed;
@@ -27,7 +30,7 @@ public abstract class WatorSpecies extends Species{
 	
 	
 	public void setTimeUntilBreed(int timeuntilBreed) {
-		this.timeUntilBreed = timeuntilBreed;
+		timeUntilBreed = timeuntilBreed;
 	}
 	
 }

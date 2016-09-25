@@ -43,4 +43,16 @@ public class Tree extends Species {
 		Tree.probabilityBurn = probabilityBurn/100;
 	}
 
+	@Override
+	public boolean toBreed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Species clone(Location pos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
