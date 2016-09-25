@@ -7,26 +7,27 @@ import util.Location;
 
 public abstract class WatorSpecies extends Species{
 	
-	private int timeuntilBreed;
+	private int timeUntilBreed;
+	private boolean roomToBreed;
+
 	@Override
 	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
 	public abstract boolean isEdible();
+	
 	public boolean toBreed(Location location){
-		//To be fixed, check whether a location is empty
-		if (location.equals(null) && gettimeuntilBreed() == 0){
-			return true;
-		}
-		return false;
+		return (roomToBreed && getTimeUntilBreed() == 0);
 	}
-	public int gettimeuntilBreed(){
-		return this.timeuntilBreed;
+	public int getTimeUntilBreed(){
+		return this.timeUntilBreed;
+	}
+	
+	public void setRoomToBreed(boolean room){
+		roomToBreed = room;
 	}
 	
 	
-	public void setTimeuntilBreed(int timeuntilBreed) {
-		this.timeuntilBreed = timeuntilBreed;
+	public void setTimeUntilBreed(int timeuntilBreed) {
+		this.timeUntilBreed = timeuntilBreed;
 	}
-
-
-
+	
 }

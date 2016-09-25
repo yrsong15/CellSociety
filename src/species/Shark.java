@@ -9,19 +9,16 @@ import util.Location;
 
 public class Shark extends WatorSpecies{
 	private static int standardBreedTime = 10;
-	private static int standardStarveTime = 3;
-	private static int numofShark = 0;
+	private int standardStarveTime = 3;
 	
 	private int  turnsSinceLastAte;
-	private int  myStarveTime;
 	
 
 
 	public Shark(){
 		super();
-		numofShark++;
-		this.setTimeuntilBreed(standardBreedTime + (int) (Math.random() * 10));
-		this.setMyStarveTime(standardStarveTime + (int) (Math.random() * 5));
+		this.setTimeUntilBreed(standardBreedTime + (int) (Math.random() * 10));
+		this.setStandardStarveTime(standardStarveTime + (int) (Math.random() * 5));
 		turnsSinceLastAte = 0;
 	}
 	@Override
@@ -31,10 +28,14 @@ public class Shark extends WatorSpecies{
 
 	@Override
 	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors) {
-		// TODO Auto-generated method stub
+		
+		if (toDie()){
+			return null;
+		}
+		 
 		turnsSinceLastAte++;
-		if (gettimeuntilBreed() != 0) {
-			this.setTimeuntilBreed(this.gettimeuntilBreed() - 1);
+		if (getTimeUntilBreed() != 0) {
+			setTimeUntilBreed(getTimeUntilBreed()-1);
 		}
 		this.setNeighborhood(myneighbors);
 		List<Location> possiblemoves = new ArrayList<Location>();
@@ -46,25 +47,34 @@ public class Shark extends WatorSpecies{
 		
 		if(possiblemoves.isEmpty()){
 			possiblemoves.addAll(emptyCells);
+			turnsSinceLastAte++;
 		}
+		else{//can eat a fish
+			turnsSinceLastAte = 0;
+		}
+		
 		if (!possiblemoves.isEmpty()){
 			Collections.shuffle(possiblemoves);
+			setRoomToBreed(true);
 			return possiblemoves.get(0);
 		}
+		setRoomToBreed(false);
 		return this.getMyLocation();
 
 	}
 	public boolean toDie(){
-		if (turnsSinceLastAte == this.getMyStarveTime()){
+		if ((standardStarveTime - turnsSinceLastAte) == 0){
 			return true;
 		}
 		return false;
 	}
-	public int getMyStarveTime() {
-		return myStarveTime;
+	
+	public void setStandardBreedTime(int breedTime){
+		standardBreedTime = breedTime;
 	}
-	public void setMyStarveTime(int myStarveTime) {
-		this.myStarveTime = myStarveTime;
+	
+	public void setStandardStarveTime(int starveTime){
+		standardBreedTime = starveTime;
 	}
 	
 
