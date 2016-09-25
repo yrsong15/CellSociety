@@ -8,7 +8,7 @@ import species.Species;
 public class SegregationSim extends SimulationConfig {
 	
 	public SegregationSim(){
-		setNeighborhoodType("PlusNeighbors");
+		setNeighborhoodType("AllNeighbors");
 	}
 	
 
