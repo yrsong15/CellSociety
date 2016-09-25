@@ -25,10 +25,19 @@ public class Grid {
 		}
 		
 		public Grid(Species[][] myGrid2, int width, int height, String neighbType) {
-			this.myGrid = myGrid2;
+			this.myGrid = new Species[width][height];
 			numRows = width;
 			numCols = height;
 			this.neighbType = neighbType;
+			copyFill(myGrid2);
+		}
+		
+		public void copyFill(Species[][] myOrig){
+			for (int i = 0; i < numRows; i++){
+				for (int j = 0; j <numCols; j++){
+					this.myGrid[i][j] = myOrig[i][j];
+				}
+			}
 		}
 		
 		public String getNeighbType(){

@@ -18,20 +18,27 @@ public class GameEngine {
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
-				Species currSpecies= myGrid.getCell(currLoc);
+				Species currSpecies= copyGrid.getCell(currLoc);
 				if (currSpecies != null){
-					Location moveTo = currSpecies.performTask(copyGrid.getEmptyCells(), copyGrid.getNeighborhood(currLoc));
+					Location moveTo = currSpecies.performTask(myGrid.getEmptyCells(), copyGrid.getNeighborhood(currLoc));
 					if (moveTo == null){
 						toDelete.add(currLoc);
 					}
 					else if(!moveTo.equals(currLoc)){
-						myGrid.setCell(currLoc, currSpecies);
+						move(currLoc, moveTo, currSpecies, myGrid);
 					}
 				}
 			}
 		}
 		clearFallenSpecies(toDelete, myGrid);
 		updateStates(myGrid);
+	}
+	
+	private void move(Location from, Location to, Species moving, Grid myGrid){
+		moving.setMyLocation(to);
+		myGrid.setCell(to, moving);
+		myGrid.setCell(from, null);
+		
 	}
 	
 	
