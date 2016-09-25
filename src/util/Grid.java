@@ -139,19 +139,33 @@ public class Grid {
 		}
 		
 		
-		
+		/**
+		 * 
+		 * @param pos
+		 * @return
+		 */
 		public Species getCell(Location pos){
 			return myGrid[pos.getX()][pos.getY()];
 		}
 		
-		public void outputGridValues(){
+		
+		/**
+		 * Outputs the current grid; print output based on state parameter
+		 * @param state if true, outputs state of each species. Else, outputs first letter of each species type
+		 */
+		public void outputGridValues(Boolean state){
 			for (int i = 0; i < myGrid.length; i++){
 				String rowVal = "";
 				for (int j = 0; j < myGrid[i].length; j++){
 					Species curr= myGrid[i][j];
 					if (curr != null){
-						rowVal+= curr.getCurrState() + " "; //for GameOfLife
-					//	rowVal+= curr.getClass().toString().substring(14, 15) + " "; //for Predator-Prey
+						if (state){//for GameOfLifeSim, FireSim
+							rowVal+= curr.getCurrState() + " "; 
+						}
+						else{//for Predator-PreySim, SegregationSim
+							rowVal+= curr.getClass().toString().substring(14, 15) + " "; 
+						}
+					
 						
 					}
 					else{

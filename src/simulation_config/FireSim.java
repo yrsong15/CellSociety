@@ -14,6 +14,8 @@ public class FireSim extends SimulationConfig{
 		setNeighborhoodType("PlusNeighbors");
 	}
 
+	
+
 	@Override
 	public void setParameters(Element speciesInfo, Species mySpecies) {
 		float probCatchFire = Float.parseFloat(super.getElement(speciesInfo, "probCatchFire"));

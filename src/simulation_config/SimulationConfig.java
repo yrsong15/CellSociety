@@ -23,6 +23,7 @@ public abstract class SimulationConfig {
 	private String neighborhoodType;
 	protected int speciesAdded;
 	
+	
 	/**
 	 * prepares given xml document for parsing
 	 * @param filename xml file to be parsed
@@ -46,6 +47,7 @@ public abstract class SimulationConfig {
 	}
 	
 	
+	
 	/**
 	 * 
 	 * @param parent parent tag of the tag to retrieve string value from
@@ -65,16 +67,33 @@ public abstract class SimulationConfig {
 		return myXML.getElementsByTagName(tagName).item(0).getTextContent();
 	}
 	
+	
+	/** 
+	 * @return type of neighborhood this simulation takes into account (how many neighbors and which ones)
+	 */
 	public String getNeighborhoodType() {
 		return this.neighborhoodType;
 	}
 	
+	
+	/**
+	 * @param type sets type of neighborhood this simulation takes into account (how many neighbors and which ones)
+	 * parameter has to exactly correspond to subclass of Neighborhood super class
+	 */
 	protected void setNeighborhoodType(String type){
 		neighborhoodType = type;
 	}
 	
+	
+	/**
+	 * Sets any additional parameters needed for each specific simulation
+	 */
 	public abstract void setParameters(Element speciesInfo, Species mySpecies);
 	
+	
+	/**
+	 * @return populated grid based on values and configuration settings in given XML file
+	 */
 	public Grid populateGrid(){		
 		Grid myGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
 	    NodeList speciesList = myXML.getElementsByTagName("species");
@@ -101,7 +120,18 @@ public abstract class SimulationConfig {
 	    return myGrid;
 	}
 	
-	//handle these errors better; meaning catch them
+	/**
+	 * Populates grid according to exact initialization specifications in XML file 
+	 * (have to specify location and state of each species in simulation)
+	 * testing currently only works for GameofLifeSim
+	 * @return
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
 	public Grid populateGridTest() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		String speciesType = getElement("speciesType");
 		Grid myGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
@@ -118,12 +148,15 @@ public abstract class SimulationConfig {
 				myGrid.setCell(pos, mySpecies);
 			}
 		}
-		
 		return myGrid;
-		
 	}
 	
-	//to-do: handle errors better
+	
+	/**  
+	 * @param speciesType String representing object that needs to be initialized; needs to exactly
+	 * match spelling and be a subclass of Species in the species package
+	 * @return instance of species given as String
+	 */
 	public Species createSpecies(String speciesType) {
 		Species mySpecies = null;
 		try {
@@ -145,14 +178,18 @@ public abstract class SimulationConfig {
 	}
 
 	
+	/**
+	 * @return height of the grid, or how many rows it contains
+	 */
 	public int getGridHeight(){
 		return Integer.parseInt(getElement("height"));
-		
 	}
 	
+	
+	/**
+	 * @return width of the grid, or how many columns it contains
+	 */
 	public int getGridWidth(){
 		return Integer.parseInt(getElement("width"));
-		
-		
 	}
 }

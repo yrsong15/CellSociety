@@ -17,20 +17,24 @@ public class Main extends Application{
 	public void start(Stage s) throws Exception {
 		//UserInterface UI = new UserInterface();
 		//UI.startUI(s); //returns when user presses a button?  
+
 		SimulationConfig mySim = new GameofLifeSim();
     	mySim.getXMLDoc("data/GameofLife.xml");
+
     	Grid myGrid = mySim.populateGrid();
     	myGrid.outputGridValues();
-    	GameEngine myLoop = new GameEngine();
-    	myLoop.updateWorld(myGrid);
+    	GameEngine myLoop = new GameEngine(myGrid);
+    	myLoop.updateWorld();
     	System.out.println("--------");
     	myGrid.outputGridValues();
+    	
+    	
 //    	
-		while (true){
-	    	myLoop.updateWorld(myGrid);
-	    	System.out.println("-------");
-	    	myGrid.outputGridValues();
-		}
+//		while (true){
+//	    	myLoop.updateWorld(myGrid);
+//	    	System.out.println("-------");
+//	    	myGrid.outputGridValues();
+//		}
 	}
 	
 	
