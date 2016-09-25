@@ -33,4 +33,14 @@ public class CellofLife extends Species{
 		}
 		return this.getMyLocation();
 	}
+	@Override
+	public boolean toBreed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public Species clone(Location pos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -48,4 +48,16 @@ public class Agent extends Species {
 		Agent.thresholdPercentage = thresholdPercentage/100.0;
 	}
 
+	@Override
+	public boolean toBreed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Species clone(Location pos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
