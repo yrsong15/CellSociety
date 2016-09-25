@@ -37,14 +37,14 @@ public class GridReader {
 		
 		sim.getXMLDoc(path);
 		myGrid = sim.populateGrid();
-		myEngine = new GameEngine();
+		myEngine = new GameEngine(myGrid);
 	}
 	
 	public void step(Group g, Grid grid, int margin, ScrollbarController sbc, ButtonController bc, ResourceBundle rb, double elapsedTime){
 		g.getChildren().clear();
 		sbc.simScrollBar(g, rb, 1000, 50);
 		bc.simButtons(g, rb);
-		myEngine.updateWorld(myGrid);
+		myEngine.updateWorld();
     	displayGrid(g, grid, margin);
 	}
 	

@@ -146,18 +146,18 @@ public class OneFileUI {
 		}
 		sim.getXMLDoc(path);
 		myGrid = sim.populateGrid();
-		myGrid.outputGridValues();
+		myGrid.outputGridValues(true);
 		System.out.println("--------------------");
-		myEngine = new GameEngine();
+		myEngine = new GameEngine(myGrid);
 	}
 	
 	public void step(Group g, Grid grid, int margin, ResourceBundle rb, double elapsedTime){
 		g.getChildren().clear();
 		simScrollBar(g, rb, 1000, 50);
 		simButtons(g, myStage);
-		myEngine.updateWorld(myGrid);
+		myEngine.updateWorld();
     	displayGrid(g, myGrid, margin);
-    	myGrid.outputGridValues();
+    	myGrid.outputGridValues(true);
 		System.out.println("--------------------");
 	}
 	

@@ -22,11 +22,11 @@ public class Main extends Application{
     	mySim.getXMLDoc("data/GameofLife.xml");
 
     	Grid myGrid = mySim.populateGrid();
-    	myGrid.outputGridValues();
+    	myGrid.outputGridValues(false);
     	GameEngine myLoop = new GameEngine(myGrid);
     	myLoop.updateWorld();
     	System.out.println("--------");
-    	myGrid.outputGridValues();
+    	myGrid.outputGridValues(false);
     	
     	
 //    	

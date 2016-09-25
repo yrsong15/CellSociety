@@ -7,9 +7,9 @@
 	
 	<configuration>
 		<species type ="Shark">
-			<percent state ="0">20</percent>
+			<percent state ="1">20</percent>
 			<breedTurns>2</breedTurns>
-			<starveTurns>4</starveTurns>
+			<starveTurns>50</starveTurns>
 		</species>
 		<species type = "Fish">     
 			<percent state="0">70</percent>
@@ -20,8 +20,8 @@
 	
 	
 	<grid>
-		<width>3</width>
-		<height>3</height>
-		<numCells>9</numCells>
+		<width>10</width>
+		<height>10</height>
+		<numCells>100</numCells>
 	</grid>
 </simulation>

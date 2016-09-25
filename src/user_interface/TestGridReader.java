@@ -36,12 +36,12 @@ public class TestGridReader {
 		sim.getXMLDoc("data/Fire.xml");
 
 		myGrid = sim.populateGrid();
-		myEngine = new GameEngine();
+		myEngine = new GameEngine(myGrid);
 		Scene scene = new Scene(myRoot, 600, 600);
 		displayGrid(myRoot, myGrid, 50);
 		s.setScene(scene);
 		s.show();
-		myGrid.outputGridValues();
+		myGrid.outputGridValues(false);
 		
 		
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
@@ -56,10 +56,10 @@ public class TestGridReader {
 	
 	public static void step(double elapsedTime){
 		myRoot.getChildren().clear();
-    	myEngine.updateWorld(myGrid);
+    	myEngine.updateWorld();
     	displayGrid(myRoot, myGrid, 50);
     	System.out.println("-------");
-    	myGrid.outputGridValues();
+    	myGrid.outputGridValues(false);
 	}
 	
 	public static void displayGrid(Group g, Grid grid, int margin){
