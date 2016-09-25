@@ -1,6 +1,5 @@
 package user_interface;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
@@ -21,6 +20,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import simulation_config.FireSim;
 import simulation_config.GameofLifeSim;
+import simulation_config.PredatorPreySim;
+import simulation_config.SegregationSim;
 import simulation_config.SimulationConfig;
 import util.GameEngine;
 import util.Grid;
@@ -63,7 +64,7 @@ public class OneFileUI {
 //		sbc = new ScrollbarController();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE+"UILabels");
 //		bc = new ButtonController();
-		myGrid = new Grid(GRID_SIZE, GRID_SIZE);
+//		myGrid = new Grid(GRID_SIZE, GRID_SIZE);
 		s.setScene(startScene());
 		s.setTitle(myResources.getString("UITitle"));
 		s.show();
@@ -83,21 +84,23 @@ public class OneFileUI {
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
+		startGrid(temp,  myResources.getString("SegregationXMLPath"));
 		simButtons(temp, myStage);
 		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
-	public Scene fishSharkScene(){
+	public Scene fishSharkScene() {
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
+		startGrid(temp,  myResources.getString("FishSharkXMLPath"));
 		simButtons(temp, myStage);
 		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
-	public Scene fireScene() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+	public Scene fireScene(){
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
@@ -107,7 +110,7 @@ public class OneFileUI {
 		return scene;
 	}
 	
-	public Scene gameOfLifeScene() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+	public Scene gameOfLifeScene(){
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
@@ -117,18 +120,45 @@ public class OneFileUI {
 		return scene;
 	}
 	
-	public void startGrid(Group g, String path) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-//		Grid newGrid = new Grid(GRID_SIZE, GRID_SIZE);
-		startGridReader(g, myGrid, myResources, MARGIN, path);
+	public void startGrid(Group g, String path){
+		startGridReader(g, myResources, MARGIN, path);
 
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                 e -> step(g, myGrid, MARGIN, myResources, SECOND_DELAY));
         
-        //TODO: keyframe
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
-//        animation.play();
+	}
+	
+	public void startGridReader(Group g, ResourceBundle rb, int margin, String path){
+		if(path.equals(rb.getString("GameOfLifeXMLPath"))){
+			sim = new GameofLifeSim();
+		}
+		else if(path.equals(rb.getString("SpreadingFireXMLPath"))){
+			sim = new FireSim();
+		}
+		else if(path.equals(rb.getString("FishSharkXMLPath"))){
+			sim = new PredatorPreySim();
+		}
+		else if(path.equals(rb.getString("SegregationXMLPath"))){
+			sim = new SegregationSim();
+		}
+		sim.getXMLDoc(path);
+		myGrid = sim.populateGrid();
+		myGrid.outputGridValues();
+		System.out.println("--------------------");
+		myEngine = new GameEngine();
+	}
+	
+	public void step(Group g, Grid grid, int margin, ResourceBundle rb, double elapsedTime){
+		g.getChildren().clear();
+		simScrollBar(g, rb, 1000, 50);
+		simButtons(g, myStage);
+		myEngine.updateWorld(myGrid);
+    	displayGrid(g, myGrid, margin);
+    	myGrid.outputGridValues();
+		System.out.println("--------------------");
 	}
 	
 	public void initButtons(Group g, Stage stage){
@@ -146,7 +176,7 @@ public class OneFileUI {
 		btnTwo.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	setState(myResources.getString("FishSharkLabel"));
-		    stage.setScene(fishSharkScene());
+		    	stage.setScene(fishSharkScene());
 		    }
 		});
 		
@@ -155,12 +185,7 @@ public class OneFileUI {
 		btnThree.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	setState(myResources.getString("SpreadingFireLabel"));
-		    	try {
-					stage.setScene(fireScene());
-				} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-						| IllegalArgumentException | InvocationTargetException e1) {
-					e1.printStackTrace();
-				}
+				stage.setScene(fireScene());
 		    }
 		});
 		
@@ -168,13 +193,8 @@ public class OneFileUI {
 				BUTTON_SIZE + MARGIN, BUTTON_SIZE + MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnFour.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	try {
-		    		setState(myResources.getString("GameOfLifeLabel"));
-					stage.setScene(gameOfLifeScene());
-				} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-						| IllegalArgumentException | InvocationTargetException e1) {
-					e1.printStackTrace();
-				}
+	    		setState(myResources.getString("GameOfLifeLabel"));
+				stage.setScene(gameOfLifeScene());
 		    }
 		});
 		
@@ -186,24 +206,20 @@ public class OneFileUI {
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	if(getState().equals(myResources.getString("GameOfLifeLabel"))){
-		    		try {
-						myStage.setScene(gameOfLifeScene());
-					} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-							| IllegalArgumentException | InvocationTargetException e1) {
-						e1.printStackTrace();
-					}
+	    			animation.stop();
+					myStage.setScene(gameOfLifeScene());
 		    	}
 		    	else if(getState().equals(myResources.getString("SpreadingFireLabel"))){
-		    		try {
-						myStage.setScene(fireScene());
-					} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-							| IllegalArgumentException | InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+	    			animation.stop();
+					myStage.setScene(fireScene());
 		    	}
 		    	else if (getState().equals(myResources.getString("FishSharkLabel"))){
+		    		animation.stop();
 		    		myStage.setScene(fishSharkScene());
+		    	}
+		    	else if (getState().equals(myResources.getString("SegregationLabel"))){
+		    		animation.stop();
+		    		myStage.setScene(segregationScene());
 		    	}
 		    }
 		});
@@ -240,6 +256,7 @@ public class OneFileUI {
 		anotherSim.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	setState("Start");
+		    	animation.stop();
 		    	stage.setScene(startScene());
 		    }
 		});
@@ -255,26 +272,7 @@ public class OneFileUI {
 		return btn;
 	}
 	
-	
-	public void startGridReader(Group g, Grid grid, ResourceBundle rb, int margin, String path) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		if(path.equals(rb.getString("GameOfLifeXMLPath"))){
-			sim = new GameofLifeSim();
-		}
-		else if(path.equals(rb.getString("SpreadingFireXMLPath"))){
-			sim = new FireSim();
-		}
-		sim.getXMLDoc(path);
-		myGrid = sim.populateGrid();
-		myEngine = new GameEngine();
-	}
-	
-	public void step(Group g, Grid grid, int margin, ResourceBundle rb, double elapsedTime){
-		g.getChildren().clear();
-		simScrollBar(g, rb, 1000, 50);
-		simButtons(g, myStage);
-		myEngine.updateWorld(myGrid);
-    	displayGrid(g, myGrid, margin);
-	}
+
 	
 	public void displayGrid(Group g, Grid grid, int margin){
 		int cellSize = GRID_SIZE / grid.getWidth();
