@@ -10,11 +10,20 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import simulation_config.FireSim;
+import simulation_config.GameofLifeSim;
+import simulation_config.SimulationConfig;
+import util.GameEngine;
+import util.Grid;
+import util.Location;
 
-public class UserInterface {
+public class OneFileUI {
 	
 	protected static final int UI_WIDTH = 1000;
 	protected static final int UI_HEIGHT = 500;
@@ -33,19 +42,25 @@ public class UserInterface {
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	
 	protected Stage myStage;
-	private GridReader gr;
+//	private GridReader gr;
 	private ScrollbarController sbc;
-	private ButtonController bc;
+//	private ButtonController bc;
 	private ResourceBundle myResources;
 	private String state;
+	
+	private SimulationConfig sim;
+	private Grid myGrid;
+	private static GameEngine myEngine;
+	private Timeline animation;
 	
 	
 	public void startUI(Stage s){
 		myStage = s;
-		gr = new GridReader(GRID_SIZE, MARGIN);
+//		gr = new GridReader(GRID_SIZE, MARGIN);
 		sbc = new ScrollbarController();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE+"UILabels");
-		bc = new ButtonController();
+//		bc = new ButtonController();
+		myGrid = new Grid(GRID_SIZE, GRID_SIZE);
 		s.setScene(startScene());
 		s.setTitle(myResources.getString("UITitle"));
 		s.show();
@@ -54,7 +69,7 @@ public class UserInterface {
 	public Scene startScene(){
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		gr.initGrid(temp);
+		initGrid(temp);
 		initButtons(temp, myStage);
 //		bc.initButtons(temp, myStage, myResources);
 		return scene;
@@ -64,7 +79,7 @@ public class UserInterface {
 		//make another scene that's attached to another root, change scene using setScene
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		gr.initGrid(temp);
+		initGrid(temp);
 		simButtons(temp, myStage);
 		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
@@ -73,7 +88,7 @@ public class UserInterface {
 	public Scene fishSharkScene(){
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		gr.initGrid(temp);
+		initGrid(temp);
 		simButtons(temp, myStage);
 		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
@@ -98,11 +113,13 @@ public class UserInterface {
 	}
 	
 	public void startGrid(Group g, String path) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		gr.startGridReader(g, gr.getGrid(), myResources, MARGIN, path);
+		startGridReader(g, getGrid(), myResources, MARGIN, path);
 
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                e -> gr.step(g, gr.getGrid(), MARGIN, sbc, bc, myResources, SECOND_DELAY));
-        Timeline animation = new Timeline();
+                e -> step(g, getGrid(), MARGIN, sbc, myResources, SECOND_DELAY));
+        
+        //TODO: keyframe
+        animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
@@ -170,21 +187,43 @@ public class UserInterface {
 						e1.printStackTrace();
 					}
 		    	}
-		    	else if(getState().equals(myResources.getString("SegregationLabel"))){
-		    		System.out.println(sbc.getScrollBar("two").getValue());
+		    	else if(getState().equals(myResources.getString("SpreadingFireLabel"))){
+		    		try {
+						myStage.setScene(fireScene());
+					} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+							| IllegalArgumentException | InvocationTargetException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		    	}
+		    	else if (getState().equals(myResources.getString("FishSharkLabel"))){
+		    		myStage.setScene(fishSharkScene());
 		    	}
 		    }
 		});
 		
-		addButtons(g, myResources.getString("StartLabel"), UI_WIDTH/2 + MARGIN, MARGIN + SMALL_BUTTON_WIDTH, 
+		Button play = addButtons(g, myResources.getString("StartLabel"), UI_WIDTH/2 + MARGIN, MARGIN + SMALL_BUTTON_WIDTH, 
 				SMALL_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
-		addButtons(g, myResources.getString("StopLabel"), UI_WIDTH/2 + MARGIN, MARGIN + 2 * SMALL_BUTTON_WIDTH, 
+		play.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	animation.play();
+		    }
+		});
+		
+		
+		Button stop = addButtons(g, myResources.getString("StopLabel"), UI_WIDTH/2 + MARGIN, MARGIN + 2 * SMALL_BUTTON_WIDTH, 
 				SMALL_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
+		stop.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	animation.stop();
+		    }
+		});
+		
 		Button step = addButtons(g, myResources.getString("StepLabel"), UI_WIDTH/2 + MARGIN, MARGIN + 3 * SMALL_BUTTON_WIDTH, 
 				SMALL_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
 		step.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	stage.setScene(startScene());
+		    	step(g, getGrid(), MARGIN, sbc, myResources, SECOND_DELAY);
 		    }
 		});
 		
@@ -194,6 +233,7 @@ public class UserInterface {
 		
 		anotherSim.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	setState("Start");
 		    	stage.setScene(startScene());
 		    }
 		});
@@ -207,6 +247,68 @@ public class UserInterface {
 		btn.setLayoutY(yPos);
 		root.getChildren().add(btn);
 		return btn;
+	}
+	
+	
+	public void startGridReader(Group g, Grid grid, ResourceBundle rb, int margin, String path) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		if(path.equals(rb.getString("GameOfLifeXMLPath"))){
+			sim = new GameofLifeSim();
+		}
+		else if(path.equals(rb.getString("SpreadingFireXMLPath"))){
+			sim = new FireSim();
+		}
+		sim.getXMLDoc(path);
+		myGrid = sim.populateGrid();
+		myEngine = new GameEngine();
+	}
+	
+	public void step(Group g, Grid grid, int margin, ScrollbarController sbc, ResourceBundle rb, double elapsedTime){
+		g.getChildren().clear();
+		sbc.simScrollBar(g, rb, 1000, 50);
+		simButtons(g, myStage);
+		myEngine.updateWorld(myGrid);
+    	displayGrid(g, grid, margin);
+	}
+	
+	public void displayGrid(Group g, Grid grid, int margin){
+		int cellSize = GRID_SIZE / grid.getWidth();
+		
+		for(int i=0;i<grid.getWidth();i++){
+			for(int j=0;j<grid.getHeight();j++){
+				Rectangle r = new Rectangle(cellSize*i + margin, cellSize*j + margin, cellSize, cellSize);
+				Location curr = new Location(i,j);
+				if(grid.getCell(curr) != null){
+					if(grid.getCell(curr).getCurrState() == 1){
+						r.setFill(Color.RED);
+					}
+					else{
+						r.setFill(Color.YELLOW);
+					}
+				}
+				g.getChildren().add(r);
+			}
+		}
+		return;
+	}
+	
+	public void initGrid(Group g){
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/duvall.jpg"));
+		ImageView theMan = new ImageView(image);
+		theMan = setPosition(theMan, GRID_SIZE, GRID_SIZE, MARGIN, MARGIN);
+		g.getChildren().add(theMan);
+	}
+	
+	public ImageView setPosition(ImageView temp, int width, int height, double d, double e){
+		temp.setFitWidth(width);
+		temp.setFitHeight(height);
+		temp.setX(d);
+		temp.setY(e);
+		return temp;
+	}
+	
+	
+	public Grid getGrid(){
+		return myGrid;
 	}
 	
 	public void setState(String str){

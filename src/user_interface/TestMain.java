@@ -9,7 +9,10 @@ public class TestMain extends Application{
 
 	@Override
 	public void start(Stage s) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InterruptedException{
-		UserInterface UI = new UserInterface();
+//		UserInterface UI = new UserInterface();
+//		UI.startUI(s);
+		
+		OneFileUI UI = new OneFileUI();
 		UI.startUI(s);
 		
 //		TestGridReader gr = new TestGridReader();

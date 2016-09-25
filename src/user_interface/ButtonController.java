@@ -27,6 +27,7 @@ public class ButtonController extends UserInterface{
 	
 	private String state;
 	
+	
 	public void initButtons(Group g, Stage stage, ResourceBundle rb){
 		Button btnOne = addButtons(g, rb.getString("SegregationLabel"), 
 				UI_WIDTH/2 + MARGIN, MARGIN, BUTTON_SIZE, BUTTON_SIZE);
