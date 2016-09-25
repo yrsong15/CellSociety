@@ -1,18 +1,18 @@
 <simulation>
 	<details>
-		<name> Segregation </name>
-		<title> Segregation Team 3  </title>
+		<name>Segregation</name>
+		<title>Segregation Team 17</title>
 		<author>         </author>
 	</details>
 	
 	<configuration>
 		<species type ="Shark">
-			<percent>20</percent>
+			<percent state ="0">20</percent>
 			<breedTurns>2</breedTurns>
 			<starveTurns>4</starveTurns>
 		</species>
 		<species type = "Fish">     
-			<percent>70</percent>
+			<percent state="0">70</percent>
 			<breedTurns>2</breedTurns>
 		</species>
 	

@@ -26,9 +26,7 @@ public class Tree extends Species {
 		for (Species s : this.getNeighborhood().getMyNeighbors()){
 			if (s.getCurrState() == 1){
 				hasFire = 1;
-				double temp = Math.random();
-				System.out.println(temp);
-				if(temp < this.getProbabilityBurn()){
+				if(Math.random() < this.getProbabilityBurn()){
 					this.setNextState(1);
 				}
 				break;

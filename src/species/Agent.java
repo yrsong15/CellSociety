@@ -9,7 +9,7 @@ import util.Location;
 public class Agent extends Species {
 	//agent X is satisfied if at least thresholdPercentage of its neighbors are also X
 	//different state means different agents
-	private static int thresholdPercentage;
+	private static double thresholdPercentage;
 
 	public Agent(){
 		super();
@@ -31,7 +31,7 @@ public class Agent extends Species {
 			}
 		}
 		if (numberofneighbors != 0){
-			satisfaction = numberofsameagent / numberofneighbors;
+			satisfaction = numberofsameagent / (float) numberofneighbors;
 		}
 		if(satisfaction < thresholdPercentage && !spaces.isEmpty()){
 			Collections.shuffle(spaces);
@@ -40,12 +40,12 @@ public class Agent extends Species {
 		return this.getMyLocation();
 	}
 	
-	public int getThresholdPercentage() {
+	public double getThresholdPercentage() {
 		return thresholdPercentage;
 	}
 
 	public void setThresholdPercentage(int thresholdPercentage) {
-		Agent.thresholdPercentage = thresholdPercentage;
+		Agent.thresholdPercentage = thresholdPercentage/100.0;
 	}
 
 }
