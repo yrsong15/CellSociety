@@ -55,8 +55,8 @@ public class UserInterface {
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		gr.initGrid(temp);
-		initButtons(temp, myStage);
-//		bc.initButtons(temp, myResources);
+//		initButtons(temp, myStage);
+		bc.initButtons(temp, myStage, myResources);
 		return scene;
 	}
 	
@@ -79,10 +79,10 @@ public class UserInterface {
 		return scene;
 	}
 	
-	public Scene fireScene(){
+	public Scene fireScene() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		gr.initGrid(temp);
+		startGrid(temp,  myResources.getString("SpreadingFireXMLPath"));
 		simButtons(temp, myStage);
 		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
@@ -91,14 +91,14 @@ public class UserInterface {
 	public Scene gameOfLifeScene() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		startGrid(temp);
+		startGrid(temp, myResources.getString("GameOfLifeXMLPath"));
 		simButtons(temp, myStage);
 		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
-	public void startGrid(Group g) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		gr.startGridReader(g, gr.getGrid(), MARGIN);
+	public void startGrid(Group g, String path) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		gr.startGridReader(g, gr.getGrid(), myResources, MARGIN, path);
 
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                 e -> gr.step(g, gr.getGrid(), MARGIN, sbc, bc, myResources, SECOND_DELAY));
@@ -132,7 +132,12 @@ public class UserInterface {
 		btnThree.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	setState(myResources.getString("SpreadingFireLabel"));
-		    	stage.setScene(fireScene());
+		    	try {
+					stage.setScene(fireScene());
+				} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException e1) {
+					e1.printStackTrace();
+				}
 		    }
 		});
 		

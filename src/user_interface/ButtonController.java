@@ -1,5 +1,6 @@
 package user_interface;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -10,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class ButtonController {
+public class ButtonController extends UserInterface{
 	
 	protected static final int UI_WIDTH = 1000;
 	protected static final int UI_HEIGHT = 500;
@@ -26,7 +27,7 @@ public class ButtonController {
 	
 	private String state;
 	
-	public void initButtons(Group g, ResourceBundle rb){
+	public void initButtons(Group g, Stage stage, ResourceBundle rb){
 		Button btnOne = addButtons(g, rb.getString("SegregationLabel"), 
 				UI_WIDTH/2 + MARGIN, MARGIN, BUTTON_SIZE, BUTTON_SIZE);
 		btnOne.setOnAction(new EventHandler<ActionEvent>() {
@@ -49,7 +50,12 @@ public class ButtonController {
 		btnThree.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 //		    	setState(rb.getString("SpreadingFireLabel"));
-//		    	myStage.setScene(fireScene());
+		    	try {
+					stage.setScene(fireScene());
+				} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException e1) {
+					e1.printStackTrace();
+				}
 		    }
 		});
 		
@@ -58,8 +64,12 @@ public class ButtonController {
 		btnFour.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 //		    		setState(rb.getString("GameOfLifeLabel"));
-//					myStage.setScene(gameOfLifeScene());
-
+					try {
+						myStage.setScene(gameOfLifeScene());
+					} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+							| IllegalArgumentException | InvocationTargetException e1) {
+						e1.printStackTrace();
+					}
 		    }
 		});
 		

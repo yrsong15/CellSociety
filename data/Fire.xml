@@ -9,15 +9,15 @@
 		<species type ="Tree">
 			<percent state="0">40</percent>
 			<percent state="1">20</percent>
-			<probCatchFire>30</probCatchFire>
+			<probCatchFire>100</probCatchFire>
 		</species>
 	
 	</configuration>
 	
 	
 	<grid>
-		<width>3</width>
-		<height>3</height>
-		<numCells>9</numCells>
+		<width>8</width>
+		<height>8</height>
+		<numCells>64</numCells>
 	</grid>
 </simulation>

@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import simulation_config.GameofLifeSim;
+import simulation_config.*;
 import simulation_config.SimulationConfig;
 import species.*;
 
@@ -32,8 +32,8 @@ public class TestGridReader {
 	public static void startGrid(Stage s) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InterruptedException{
 		myStage = s;
 		myRoot = new Group();
-		sim = new GameofLifeSim();
-		sim.getXMLDoc("data/GameofLife.xml");
+		sim = new FireSim();
+		sim.getXMLDoc("data/Fire.xml");
 
 		myGrid = sim.populateGrid();
 		myEngine = new GameEngine();
