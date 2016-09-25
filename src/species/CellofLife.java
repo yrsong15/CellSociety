@@ -31,6 +31,6 @@ public class CellofLife extends Species{
 				super.setNextState(0);
 			}
 		}
-		return null;
+		return this.getMyLocation();
 	}
 }

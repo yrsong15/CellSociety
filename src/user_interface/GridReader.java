@@ -19,14 +19,15 @@ public class GridReader {
 	private static int MARGIN;
 	
 	public GridReader(int gridSize, int margin) {
-		myGrid = new Grid(gridSize, gridSize);
+		sim = new GameofLifeSim();
+		sim.getXMLDoc("data/GameofLife.xml");
+		myGrid = sim.populateGrid();
+//		myGrid = new Grid(gridSize, gridSize);
 		GRID_SIZE = gridSize;
 		MARGIN = margin;
 	}
 	
 	public void startGridReader(Group g, Grid grid, int margin) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		sim = new GameofLifeSim();
-		sim.getXMLDoc("data/GameofLife.xml");
 		myGrid = sim.populateGrid();
 		myEngine = new GameEngine();
 	}

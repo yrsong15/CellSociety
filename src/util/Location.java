@@ -7,6 +7,10 @@ public class Location {
 		this.y = y;
 	}
 	
+	public boolean equals(Location check){
+		return (this.getX()==check.getX() && this.getY() == check.getY());
+	}
+	
 	public int getX() {
 		return x;
 	}

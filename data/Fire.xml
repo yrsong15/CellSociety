@@ -7,8 +7,8 @@
 	
 	<configuration>
 		<species type ="Tree">
-			<percent state="0">20</percent>
-			<percent state="1">40</percent>
+			<percent state="0">40</percent>
+			<percent state="1">20</percent>
 			<probCatchFire>30</probCatchFire>
 		</species>
 	

@@ -17,19 +17,24 @@ public class Tree extends Species {
 
 	@Override
 	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {
-		// TODO Auto-generated method stub
 		int hasFire = 0;
 		this.setNeighborhood(neighbors);
+		if (this.getCurrState() == 1){
+			this.setNextState(0);
+			return null;
+		}
 		for (Species s : this.getNeighborhood().getMyNeighbors()){
 			if (s.getCurrState() == 1){
 				hasFire = 1;
+				double temp = Math.random();
+				System.out.println(temp);
+				if(temp < this.getProbabilityBurn()){
+					this.setNextState(1);
+				}
 				break;
 			}
 		}
-		if((hasFire * Math.random()) < this.getProbabilityBurn()){
-			this.setNextState(1);
-		}
-		return null;
+		return this.getMyLocation();
 	}
 	
 	public float getProbabilityBurn() {
@@ -37,7 +42,7 @@ public class Tree extends Species {
 	}
 
 	public void setProbabilityBurn(float probabilityBurn) {
-		Tree.probabilityBurn = probabilityBurn;
+		Tree.probabilityBurn = probabilityBurn/100;
 	}
 
 }
