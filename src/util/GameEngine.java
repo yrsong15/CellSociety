@@ -18,6 +18,12 @@ public class GameEngine {
 	}
 
 
+	/**
+	 * Responsible for updating the state of the world by looping through the grid and passing each species instance
+	 * the information required for their update algorithm. If the species returns a new location, the grid moves
+	 * them to it, and also queries each species to see if it needs to reproduce. If so, it completes the necessary
+	 * actions to do this.
+	 */
 	public void updateWorld(){
 		Grid copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
 		List<Location> toDelete = new ArrayList<Location>();
@@ -47,6 +53,12 @@ public class GameEngine {
 		updateStates();
 	}
 	
+	
+	/**
+	 * @param from Location species object is moving from
+	 * @param to Location species object is moving to
+	 * @param moving species object that would like to move
+	 */
 	private void move(Location from, Location to, Species moving){
 		moving.setMyLocation(to);
 		myGrid.setCell(to, moving);
@@ -55,12 +67,19 @@ public class GameEngine {
 	}
 	
 	
+	/**
+	 * Removes species that have died from the grid
+	 * @param toDelete a list of locations that species need to be removed from (or set to null)
+	 */
 	private void clearFallenSpecies(List<Location> toDelete){
 		for (int i = 0; i < toDelete.size(); i++){
 			myGrid.setCell(toDelete.get(i), null);
 		}
 	}
 	
+	/**
+	 * Updates the current states of all species to their next states.
+	 */
 	public void updateStates(){
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
