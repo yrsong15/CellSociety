@@ -5,8 +5,8 @@ import simulation_config.GameofLifeSim;
 import simulation_config.PredatorPreySim;
 import simulation_config.SegregationSim;
 import simulation_config.SimulationConfig;
-import util.GameEngine;
-import util.Grid;
+import util.*;
+
 
 /*** @author Chalena
  *
@@ -19,7 +19,7 @@ public class Main extends Application{
 		//UI.startUI(s); //returns when user presses a button?  
 		SimulationConfig mySim = new GameofLifeSim();
     	mySim.getXMLDoc("data/GameofLife.xml");
-    	Grid myGrid = mySim.populateGridTest();
+    	Grid myGrid = mySim.populateGrid();
     	myGrid.outputGridValues();
     	GameEngine myLoop = new GameEngine();
     	myLoop.updateWorld(myGrid);

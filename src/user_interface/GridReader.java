@@ -2,12 +2,11 @@ package user_interface;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import util.*;
 import simulation_config.*;
 
@@ -17,10 +16,12 @@ public class GridReader {
 	private static GameEngine myEngine;
 	
 	private static int GRID_SIZE;
+	private static int MARGIN;
 	
-	public GridReader(int gridSize) {
+	public GridReader(int gridSize, int margin) {
 		myGrid = new Grid(gridSize, gridSize);
 		GRID_SIZE = gridSize;
+		MARGIN = margin;
 	}
 	
 	public void startGridReader(Group g, Grid grid, int margin) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -30,9 +31,10 @@ public class GridReader {
 		myEngine = new GameEngine();
 	}
 	
-	public void step(Group g, Grid grid, int margin, ScrollbarController sbc, ResourceBundle rb, double elapsedTime){
+	public void step(Group g, Grid grid, int margin, ScrollbarController sbc, ButtonController bc, ResourceBundle rb, double elapsedTime){
 		g.getChildren().clear();
 		sbc.simScrollBar(g, rb, 1000, 50);
+		bc.simButtons(g, rb);
 		myEngine.updateWorld(myGrid);
     	displayGrid(g, grid, margin);
 	}
@@ -56,6 +58,21 @@ public class GridReader {
 			}
 		}
 		return;
+	}
+	
+	public void initGrid(Group g){
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/duvall.jpg"));
+		ImageView theMan = new ImageView(image);
+		theMan = setPosition(theMan, GRID_SIZE, GRID_SIZE, MARGIN, MARGIN);
+		g.getChildren().add(theMan);
+	}
+	
+	public ImageView setPosition(ImageView temp, int width, int height, double d, double e){
+		temp.setFitWidth(width);
+		temp.setFitHeight(height);
+		temp.setX(d);
+		temp.setY(e);
+		return temp;
 	}
 	
 	

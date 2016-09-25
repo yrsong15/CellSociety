@@ -1,11 +1,13 @@
 package util;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import neighborhood.Neighborhood;
 import neighborhood.PlusNeighbors;
-import species.Species;
+import simulation_config.*;
+import species.*;
 
 
 public class Grid {
