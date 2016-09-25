@@ -10,10 +10,13 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import simulation_config.FireSim;
@@ -43,7 +46,7 @@ public class OneFileUI {
 	
 	protected Stage myStage;
 //	private GridReader gr;
-	private ScrollbarController sbc;
+//	private ScrollbarController sbc;
 //	private ButtonController bc;
 	private ResourceBundle myResources;
 	private String state;
@@ -57,7 +60,7 @@ public class OneFileUI {
 	public void startUI(Stage s){
 		myStage = s;
 //		gr = new GridReader(GRID_SIZE, MARGIN);
-		sbc = new ScrollbarController();
+//		sbc = new ScrollbarController();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE+"UILabels");
 //		bc = new ButtonController();
 		myGrid = new Grid(GRID_SIZE, GRID_SIZE);
@@ -81,7 +84,7 @@ public class OneFileUI {
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
 		simButtons(temp, myStage);
-		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
+		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -90,39 +93,42 @@ public class OneFileUI {
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
 		simButtons(temp, myStage);
-		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
+		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
 	public Scene fireScene() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
+		initGrid(temp);
 		startGrid(temp,  myResources.getString("SpreadingFireXMLPath"));
 		simButtons(temp, myStage);
-		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
+		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
 	public Scene gameOfLifeScene() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
+		initGrid(temp);
 		startGrid(temp, myResources.getString("GameOfLifeXMLPath"));
 		simButtons(temp, myStage);
-		sbc.simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
+		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
 	public void startGrid(Group g, String path) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		startGridReader(g, getGrid(), myResources, MARGIN, path);
+//		Grid newGrid = new Grid(GRID_SIZE, GRID_SIZE);
+		startGridReader(g, myGrid, myResources, MARGIN, path);
 
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                e -> step(g, getGrid(), MARGIN, sbc, myResources, SECOND_DELAY));
+                e -> step(g, myGrid, MARGIN, myResources, SECOND_DELAY));
         
         //TODO: keyframe
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
-        animation.play();
+//        animation.play();
 	}
 	
 	public void initButtons(Group g, Stage stage){
@@ -223,7 +229,7 @@ public class OneFileUI {
 				SMALL_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
 		step.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	step(g, getGrid(), MARGIN, sbc, myResources, SECOND_DELAY);
+		    	step(g, getGrid(), MARGIN, myResources, SECOND_DELAY);
 		    }
 		});
 		
@@ -262,12 +268,12 @@ public class OneFileUI {
 		myEngine = new GameEngine();
 	}
 	
-	public void step(Group g, Grid grid, int margin, ScrollbarController sbc, ResourceBundle rb, double elapsedTime){
+	public void step(Group g, Grid grid, int margin, ResourceBundle rb, double elapsedTime){
 		g.getChildren().clear();
-		sbc.simScrollBar(g, rb, 1000, 50);
+		simScrollBar(g, rb, 1000, 50);
 		simButtons(g, myStage);
 		myEngine.updateWorld(myGrid);
-    	displayGrid(g, grid, margin);
+    	displayGrid(g, myGrid, margin);
 	}
 	
 	public void displayGrid(Group g, Grid grid, int margin){
@@ -304,6 +310,29 @@ public class OneFileUI {
 		temp.setX(d);
 		temp.setY(e);
 		return temp;
+	}
+	
+	public ScrollBar addScrollBar(Group g, int min, int max, int base, double xPos, double yPos){
+		ScrollBar sc = new ScrollBar();
+		sc.setMin(min);
+		sc.setMax(max);
+		sc.setValue(base);
+		sc.setLayoutX(xPos);
+		sc.setLayoutY(yPos);
+		g.getChildren().add(sc);
+		return sc;
+	}
+	
+	public void addText(Group g, String msg, double xPos, double yPos){
+		Text t = new Text(xPos, yPos, msg);
+		t.setFont(Font.font ("Verdana", 15));
+		t.setFill(Color.ROYALBLUE);
+		g.getChildren().add(t);
+	}
+	
+	public void simScrollBar(Group g, ResourceBundle bundle, int width, int margin){
+		addText(g, bundle.getString("DelayLabel"), width * 7/10, 2*margin + 10);
+		addScrollBar(g, 0, 100, 50, width * 3/4 + margin, 2 * margin);
 	}
 	
 	
