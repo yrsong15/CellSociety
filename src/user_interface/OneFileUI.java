@@ -78,7 +78,6 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp,  myResources.getString("SegregationXMLPath"));
 		simButtons(temp, myStage);
-//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -88,7 +87,6 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp,  myResources.getString("FishSharkXMLPath"));
 		simButtons(temp, myStage);
-//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -98,7 +96,6 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp,  myResources.getString("SpreadingFireXMLPath"));
 		simButtons(temp, myStage);
-//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -108,7 +105,6 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp, myResources.getString("GameOfLifeXMLPath"));
 		simButtons(temp, myStage);
-//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -142,19 +138,14 @@ public class OneFileUI {
 		}
 		sim.getXMLDoc(path);
 		myGrid = sim.populateGrid();
-		myGrid.outputGridValues(true);
-		System.out.println("--------------------");
 		myEngine = new GameEngine(myGrid);
 	}
 	
 	public void step(Group g, Grid grid, int margin, ResourceBundle rb, double elapsedTime){
 		g.getChildren().clear();
-//		simScrollBar(g, rb, 1000, 50);
 		simButtons(g, myStage);
 		myEngine.updateWorld();
     	displayGrid(g, myGrid, margin);
-    	myGrid.outputGridValues(true);
-		System.out.println("--------------------");
 	}
 	
 	public void initButtons(Group g, Stage stage){
