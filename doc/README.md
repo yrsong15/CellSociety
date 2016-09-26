@@ -1,3 +1,3 @@
-# cellsociety 
+# CellSociety Documentation
 
-Put any written documents related to your project here, including lab discussions.
+Repo containing DESIGN.md, which outlines the team's software design for Cell Society.

@@ -1,4 +1,4 @@
-# cellsociety 
+# CellSociety Team 17
 
 
 Duke CompSci 308 Cell Society Project
