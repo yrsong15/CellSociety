@@ -21,6 +21,20 @@ public class Shark extends WatorSpecies{
 		this.setStandardStarveTime(standardStarveTime + (int) (Math.random() * 5));
 		turnsSinceLastAte = 0;
 	}
+	
+	/**
+	 * @return true if it is time to breed and there is also space to breed
+	 */
+	public boolean toBreed(){
+		boolean breed = getRoomToBreed() && getTimeUntilBreed() <= 0;
+		if (breed){
+			setTimeUntilBreed(standardBreedTime);
+		}
+		else{
+			setTimeUntilBreed(getTimeUntilBreed()-1);
+		}
+		return breed;
+	}
 	@Override
 	public boolean isEdible(){
 		return false;
@@ -33,10 +47,6 @@ public class Shark extends WatorSpecies{
 			return null;
 		}
 		 
-		turnsSinceLastAte++;
-		if (getTimeUntilBreed() != 0) {
-			setTimeUntilBreed(getTimeUntilBreed()-1);
-		}
 		this.setNeighborhood(myneighbors);
 		List<Location> possiblemoves = new ArrayList<Location>();
 		for (Species s : this.getNeighborhood().getMyNeighbors()){
@@ -64,7 +74,7 @@ public class Shark extends WatorSpecies{
 
 	}
 	public boolean toDie(){
-		if ((standardStarveTime - turnsSinceLastAte) == 0){
+		if ((standardStarveTime - turnsSinceLastAte) <= 0){
 			return true;
 		}
 		return false;
@@ -84,6 +94,8 @@ public class Shark extends WatorSpecies{
 		((Shark) baby).setStandardStarveTime(this.standardStarveTime);
 		((Shark) baby).setStandardBreedTime(this.standardBreedTime);
 		baby.setMyLocation(pos);
+		baby.setCurrState(this.getCurrState());
+		baby.setNextState(this.getNextState());
 		return baby;
 	}
 	

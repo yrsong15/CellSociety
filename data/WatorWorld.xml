@@ -15,9 +15,7 @@
 			<percent state="0">70</percent>
 			<breedTurns>2</breedTurns>
 		</species>
-	
 	</configuration>
-	
 	
 	<grid>
 		<width>10</width>
