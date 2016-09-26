@@ -46,9 +46,6 @@ public class OneFileUI {
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	
 	protected Stage myStage;
-//	private GridReader gr;
-//	private ScrollbarController sbc;
-//	private ButtonController bc;
 	private ResourceBundle myResources;
 	private String state;
 	
@@ -60,11 +57,7 @@ public class OneFileUI {
 	
 	public void startUI(Stage s){
 		myStage = s;
-//		gr = new GridReader(GRID_SIZE, MARGIN);
-//		sbc = new ScrollbarController();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE+"UILabels");
-//		bc = new ButtonController();
-//		myGrid = new Grid(GRID_SIZE, GRID_SIZE);
 		s.setScene(startScene());
 		s.setTitle(myResources.getString("UITitle"));
 		s.show();
@@ -75,12 +68,10 @@ public class OneFileUI {
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);
 		initButtons(temp, myStage);
-//		bc.initButtons(temp, myStage, myResources);
 		return scene;
 	}
 	
 	public Scene segregationScene(){
-		//make another scene that's attached to another root, change scene using setScene
 		Group temp = new Group();
 		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
 		initGrid(temp);

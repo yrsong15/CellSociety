@@ -1,9 +1,6 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import simulation_config.FireSim;
 import simulation_config.GameofLifeSim;
-import simulation_config.PredatorPreySim;
-import simulation_config.SegregationSim;
 import simulation_config.SimulationConfig;
 import util.*;
 
@@ -36,7 +33,6 @@ public class Main extends Application{
 //	    	myGrid.outputGridValues();
 //		}
 	}
-	
 	
 	public static void main (String[] args) {
 	    launch(args);
