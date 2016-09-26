@@ -12,7 +12,7 @@ import util.Grid;
 public class GameEngine {
 	
 	private Grid myGrid;
-	
+
 	public GameEngine(Grid myGrid){
 		this.myGrid = myGrid;
 	}
@@ -25,10 +25,18 @@ public class GameEngine {
 	 * actions to do this.
 	 */
 	public void updateWorld(){
-		Grid copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
+		Grid copyGrid = new Grid(myGrid.getMyGrid(), myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
 		List<Location> toDelete = new ArrayList<Location>();
 		List<Location> emptyCells = copyGrid.getEmptyCells();
 		List<Species> alreadyVisited = new ArrayList<Species>();
+		performUpdate(copyGrid, toDelete, emptyCells, alreadyVisited);
+		clearFallenSpecies(toDelete);
+		updateStates();
+	}
+
+
+	private void performUpdate(Grid copyGrid, List<Location> toDelete, List<Location> emptyCells,
+			List<Species> alreadyVisited) {
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
@@ -49,8 +57,6 @@ public class GameEngine {
 				}
 			}
 		}
-		clearFallenSpecies(toDelete);
-		updateStates();
 	}
 	
 	
@@ -80,7 +86,7 @@ public class GameEngine {
 	/**
 	 * Updates the current states of all species to their next states.
 	 */
-	public void updateStates(){
+	private void updateStates(){
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);

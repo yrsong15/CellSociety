@@ -5,6 +5,10 @@ import java.util.List;
 import species.Species;
 import util.Location;
 
+/***
+ * @author Owen
+ */
+
 public class AllNeighbors extends Neighborhood{
 
 	public AllNeighbors(List<Species> neighborhood, Location location) {

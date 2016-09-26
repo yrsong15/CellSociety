@@ -14,6 +14,9 @@ import species.*;
 
 public class Grid {
 		Species[][] myGrid;
+
+
+
 		private int numRows;
 		private int numCols;
 		private String neighbType;
@@ -39,7 +42,7 @@ public class Grid {
 			copyFill(myGrid2);
 		}
 		
-		public void copyFill(Species[][] myOrig){
+		private void copyFill(Species[][] myOrig){
 			for (int i = 0; i < numRows; i++){
 				for (int j = 0; j <numCols; j++){
 					this.myGrid[i][j] = myOrig[i][j];
@@ -47,7 +50,7 @@ public class Grid {
 			}
 		}
 		
-		public String getNeighbType(){
+		protected String getNeighbType(){
 			return neighbType;
 		}
 
@@ -174,5 +177,12 @@ public class Grid {
 				}
 				System.out.println(rowVal);
 			}
+		}
+		public Species[][] getMyGrid() {
+			return myGrid;
+		}
+
+		public void setMyGrid(Species[][] myGrid) {
+			this.myGrid = myGrid;
 		}
 }

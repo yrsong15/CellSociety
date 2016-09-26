@@ -5,6 +5,10 @@ import java.util.List;
 import neighborhood.Neighborhood;
 import util.Location;
 
+/***
+ * @author Owen
+ */
+
 public class CellofLife extends Species{
 	public CellofLife(){
 		super();

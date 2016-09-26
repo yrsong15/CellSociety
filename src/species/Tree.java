@@ -2,8 +2,13 @@ package species;
 
 import java.util.List;
 
+
 import neighborhood.Neighborhood;
 import util.Location;
+
+/***
+ * @author Owen
+ */
 
 public class Tree extends Species {
 	/**

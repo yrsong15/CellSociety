@@ -5,6 +5,10 @@ import java.util.List;
 import species.Species;
 import util.Location;
 
+/***
+ * @author Owen
+ */
+
 public abstract class Neighborhood {
 	private List<Species> myNeighbors;
 

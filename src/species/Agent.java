@@ -1,10 +1,15 @@
 package species;
 
 import java.util.Collections;
+
 import java.util.List;
 
 import neighborhood.Neighborhood;
 import util.Location;
+
+/***
+ * @author Owen
+ */
 
 public class Agent extends Species {
 	//agent X is satisfied if at least thresholdPercentage of its neighbors are also X
