@@ -35,19 +35,20 @@ public class OneFileUI {
 	protected static final int BUTTON_SIZE = 200;
 	protected static final int GRID_SIZE = 420;
 	protected static final int MARGIN = 60;
-	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	
 	protected static final int SMALL_BUTTON_WIDTH = 70;
 	protected static final int SMALL_BUTTON_LENGTH = 30;
 	protected static final int RESET_BUTTON_WIDTH = 200;
 	
-	private static final int FRAMES_PER_SECOND = 1;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+	private static double FRAMES_PER_SECOND = 1;
+    private static double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	
 	protected Stage myStage;
 	private ResourceBundle myResources;
 	private String state;
+	private ScrollBar delayBar;
 	
 	private SimulationConfig sim;
 	private Grid myGrid;
@@ -77,7 +78,7 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp,  myResources.getString("SegregationXMLPath"));
 		simButtons(temp, myStage);
-		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
+//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -87,7 +88,7 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp,  myResources.getString("FishSharkXMLPath"));
 		simButtons(temp, myStage);
-		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
+//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -97,7 +98,7 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp,  myResources.getString("SpreadingFireXMLPath"));
 		simButtons(temp, myStage);
-		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
+//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -107,12 +108,16 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp, myResources.getString("GameOfLifeXMLPath"));
 		simButtons(temp, myStage);
-		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
+//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
 	public void startGrid(Group g, String path){
 		startGridReader(g, myResources, MARGIN, path);
+		
+		if(delayBar!=null){
+			updateDelay(delayBar.getValue());
+		}
 
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                 e -> step(g, myGrid, MARGIN, myResources, SECOND_DELAY));
@@ -144,7 +149,7 @@ public class OneFileUI {
 	
 	public void step(Group g, Grid grid, int margin, ResourceBundle rb, double elapsedTime){
 		g.getChildren().clear();
-		simScrollBar(g, rb, 1000, 50);
+//		simScrollBar(g, rb, 1000, 50);
 		simButtons(g, myStage);
 		myEngine.updateWorld();
     	displayGrid(g, myGrid, margin);
@@ -240,13 +245,22 @@ public class OneFileUI {
 		    }
 		});
 		
+		Button delay = addButtons(g, myResources.getString("DelayLabel"), UI_WIDTH/2 + MARGIN, MARGIN + 4 * SMALL_BUTTON_WIDTH, 
+				SMALL_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
+		delay.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+//		    	setState(myResources.getString("DelayLabel"));
+		    	animation.stop();
+		    	simScrollBar(g, myResources, UI_WIDTH, MARGIN);
+		    }
+		});
+		
 		Button anotherSim = addButtons(g, "Run Another Simulation", 
 				UI_WIDTH-RESET_BUTTON_WIDTH, UI_HEIGHT-SMALL_BUTTON_LENGTH, 
 				RESET_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
 		
 		anotherSim.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	setState("Start");
 		    	animation.stop();
 		    	stage.setScene(startScene());
 		    }
@@ -301,7 +315,7 @@ public class OneFileUI {
 		return temp;
 	}
 	
-	public ScrollBar addScrollBar(Group g, int min, int max, int base, double xPos, double yPos){
+	public ScrollBar addScrollBar(Group g, double min, double max, double base, double xPos, double yPos){
 		ScrollBar sc = new ScrollBar();
 		sc.setMin(min);
 		sc.setMax(max);
@@ -321,7 +335,7 @@ public class OneFileUI {
 	
 	public void simScrollBar(Group g, ResourceBundle bundle, int width, int margin){
 		addText(g, bundle.getString("DelayLabel"), width * 7/10, 2*margin + 10);
-		addScrollBar(g, 0, 100, 50, width * 3/4 + margin, 2 * margin);
+		delayBar = addScrollBar(g, 0.1, 10, 1, width * 3/4 + margin, 2 * margin);
 	}
 	
 	
@@ -339,5 +353,10 @@ public class OneFileUI {
 	
 	public String getTitle(){
 		return myResources.getString("UITitle");
+	}
+	
+	public void updateDelay(double fps){
+		MILLISECOND_DELAY = 1000 / fps;
+	    SECOND_DELAY = 1.0 / fps;
 	}
 }
