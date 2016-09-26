@@ -1,0 +1,71 @@
+[1mdiff --git a/src/util/Grid.java b/src/util/Grid.java[m
+[1mindex d06a0fe..7c59f96 100644[m
+[1m--- a/src/util/Grid.java[m
+[1m+++ b/src/util/Grid.java[m
+[36m@@ -1,4 +1,6 @@[m
+ package util;[m
+[32m+[m[32mimport java.lang.reflect.Constructor;[m
+[32m+[m[32mimport java.lang.reflect.InvocationTargetException;[m
+ import java.util.ArrayList;[m
+ import java.util.List;[m
+ import java.util.Random;[m
+[36m@@ -12,17 +14,25 @@[m [mpublic class Grid {[m
+ 		Species[][] myGrid;[m
+ 		private int numRows;[m
+ 		private int numCols;[m
+[32m+[m		[32mprivate String neighbType;[m
+ 		[m
+[31m-		public Grid(int width, int height){[m
+[32m+[m[41m		[m
+[32m+[m		[32mpublic Grid(int width, int height, String neighbType){[m
+ 			myGrid = new Species[width][height];[m
+ 			this.numRows = width;[m
+ 			this.numCols = height;[m
+[32m+[m			[32mthis.neighbType = neighbType;[m
+ 		}[m
+ 		[m
+[31m-		public Grid(Species[][] myGrid2, int i, int j) {[m
+[32m+[m		[32mpublic Grid(Species[][] myGrid2, int width, int height, String neighbType) {[m
+ 			this.myGrid = myGrid2;[m
+[31m-			numRows = i;[m
+[31m-			numCols = j;[m
+[32m+[m			[32mnumRows = width;[m
+[32m+[m			[32mnumCols = height;[m
+[32m+[m			[32mthis.neighbType = neighbType;[m
+[32m+[m		[32m}[m
+[32m+[m[41m		[m
+[32m+[m		[32mpublic String getNeighbType(){[m
+[32m+[m			[32mreturn neighbType;[m
+ 		}[m
+ [m
+ 		public int getWidth(){[m
+[36m@@ -88,7 +98,28 @@[m [mpublic class Grid {[m
+ 		            }[m
+ 		        }[m
+ 		    }[m
+[31m-			return new PlusNeighbors(neighbors, pos);[m
+[32m+[m			[32mreturn createNeighborhood(neighbors, pos);[m
+[32m+[m		[32m}[m
+[32m+[m[41m		[m
+[32m+[m[41m		[m
+[32m+[m		[32mpublic Neighborhood createNeighborhood(List<Species> aroundMe, Location myPos) {[m
+[32m+[m			[32mNeighborhood myNeighb = null;[m
+[32m+[m			[32mtry {[m
+[32m+[m				[32mClass<?> neighbClass = Class.forName("neighborhood." + neighbType);[m
+[32m+[m				[32mConstructor<?> constructor = null;[m
+[32m+[m				[32mtry {[m
+[32m+[m					[32mconstructor = neighbClass.getConstructor(List.class, Location.class);[m
+[32m+[m				[32m} catch (NoSuchMethodException | SecurityException e) {[m
+[32m+[m					[32me.printStackTrace();[m
+[32m+[m				[32m}[m
+[32m+[m				[32mmyNeighb = (Neighborhood) constructor.newInstance(aroundMe, myPos);[m
+[32m+[m[41m				[m
+[32m+[m			[32m} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {[m
+[32m+[m				[32mSystem.out.println("Neighborhood provided in simulation configuration class cannot be found, does not have a proper constructor, or is not a valid class");[m
+[32m+[m				[32me.printStackTrace();[m
+[32m+[m			[32m}[m[41m [m
+[32m+[m[41m			[m
+[32m+[m			[32mreturn myNeighb;[m
+ 		}[m
+ 		[m
+ 		[m
