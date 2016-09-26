@@ -13,6 +13,21 @@ public class Fish extends WatorSpecies {
 		super();
 		this.setTimeUntilBreed(standardBreedTime + (int) (Math.random() * 3));
 	}
+	
+	/**
+	 * @return true if it is time to breed and there is also space to breed
+	 */
+	public boolean toBreed(){
+		boolean breed = getRoomToBreed() && getTimeUntilBreed() <= 0;
+		if (breed){
+			setTimeUntilBreed(standardBreedTime);
+		}
+		else{
+			setTimeUntilBreed(getTimeUntilBreed()-1);
+		}
+		return breed;
+	}
+	
 	@Override
 	public boolean isEdible(){
 		return true;
@@ -22,9 +37,6 @@ public class Fish extends WatorSpecies {
 	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
 		
 		
-		if (getTimeUntilBreed() != 0) {
-			setTimeUntilBreed(getTimeUntilBreed() - 1);
-		}
 		List<Location> spaces = this.getMyLocation().getAdjacentCells(emptyCells);
 		this.setNeighborhood(myneighbors);
 		
@@ -47,6 +59,8 @@ public class Fish extends WatorSpecies {
 		Species baby = new Fish();
 		((Fish) baby).setStandardBreedTime(this.standardBreedTime);
 		baby.setMyLocation(pos);
+		baby.setCurrState(this.getCurrState());
+		baby.setNextState(this.getCurrState());
 		return baby;
 	}
 }

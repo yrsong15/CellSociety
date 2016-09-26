@@ -20,22 +20,12 @@ public class Main extends Application{
 		SimulationConfig mySim = new SegregationSim();
     	mySim.getXMLDoc("data/Segregation.xml");
     	Grid myGrid = mySim.populateGrid();
-    	myGrid.outputGridValues();
+    	myGrid.outputGridValues(true);
     	GameEngine myLoop = new GameEngine(myGrid);
     	myLoop.updateWorld();
     	System.out.println("--------");
-    	myGrid.outputGridValues();
+    	myGrid.outputGridValues(true);
     	
-    	
-    	myLoop.updateWorld();
-    	System.out.println("--------");
-    	myGrid.outputGridValues();
-//    	
-//		while (true){
-//	    	myLoop.updateWorld(myGrid);
-//	    	System.out.println("-------");
-//	    	myGrid.outputGridValues();
-//		}
 	}
 	
 	
