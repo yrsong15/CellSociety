@@ -8,8 +8,8 @@
 	<configuration>
 		<species type ="Shark">
 			<percent state ="1">20</percent>
-			<breedTurns>2</breedTurns>
-			<starveTurns>50</starveTurns>
+			<breedTurns>10</breedTurns>
+			<starveTurns>5</starveTurns>
 		</species>
 		<species type = "Fish">     
 			<percent state="0">70</percent>
