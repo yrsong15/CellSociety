@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import simulation_config.GameofLifeSim;
 import simulation_config.SimulationConfig;
+import user_interface.OneFileUI;
 import util.*;
 
 
@@ -12,18 +13,18 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage s) throws Exception {
-		//UserInterface UI = new UserInterface();
-		//UI.startUI(s); //returns when user presses a button?  
+		OneFileUI UI = new OneFileUI();
+		UI.startUI(s);
 
-		SimulationConfig mySim = new GameofLifeSim();
-    	mySim.getXMLDoc("data/GameofLife.xml");
-
-    	Grid myGrid = mySim.populateGrid();
-    	myGrid.outputGridValues(false);
-    	GameEngine myLoop = new GameEngine(myGrid);
-    	myLoop.updateWorld();
-    	System.out.println("--------");
-    	myGrid.outputGridValues(false);
+//		SimulationConfig mySim = new GameofLifeSim();
+//    	mySim.getXMLDoc("data/GameofLife.xml");
+//
+//    	Grid myGrid = mySim.populateGrid();
+//    	myGrid.outputGridValues(false);
+//    	GameEngine myLoop = new GameEngine(myGrid);
+//    	myLoop.updateWorld();
+//    	System.out.println("--------");
+//    	myGrid.outputGridValues(false);
     	
     	
 //    	
