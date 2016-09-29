@@ -12,8 +12,11 @@ public class TestMain extends Application{
 //		UserInterface UI = new UserInterface();
 //		UI.startUI(s);
 		
-		OneFileUI UI = new OneFileUI();
-		UI.startUI(s);
+		Controller ctrl = new Controller();
+		ctrl.startController(s);
+		
+//		OneFileUI UI = new OneFileUI();
+//		UI.startUI(s);
 		
 //		TestGridReader gr = new TestGridReader();
 //		gr.startGrid(s);

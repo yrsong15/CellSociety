@@ -29,21 +29,21 @@ import util.Location;
 
 public class OneFileUI {
 	
-	protected static final int UI_WIDTH = 1000;
-	protected static final int UI_HEIGHT = 500;
-	protected static final Color BG_COLOR = Color.LIGHTGRAY;
-	protected static final int BUTTON_SIZE = 200;
-	protected static final int GRID_SIZE = 420;
-	protected static final int MARGIN = 60;
-	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+	protected final int UI_WIDTH = 1000;
+	protected final int UI_HEIGHT = 500;
+	protected final Color BG_COLOR = Color.LIGHTGRAY;
+	protected final int BUTTON_SIZE = 200;
+	protected final int GRID_SIZE = 420;
+	protected final int MARGIN = 60;
+	private final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	
-	protected static final int SMALL_BUTTON_WIDTH = 70;
-	protected static final int SMALL_BUTTON_LENGTH = 30;
-	protected static final int RESET_BUTTON_WIDTH = 200;
+	protected final int SMALL_BUTTON_WIDTH = 70;
+	protected final int SMALL_BUTTON_LENGTH = 30;
+	protected final int RESET_BUTTON_WIDTH = 200;
 	
-	private static double FRAMES_PER_SECOND = 1;
-    private static double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private static double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+	private double FRAMES_PER_SECOND = 1;
+    private double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	
 	protected Stage myStage;
 	private ResourceBundle myResources;
@@ -78,7 +78,6 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp,  myResources.getString("SegregationXMLPath"));
 		simButtons(temp, myStage);
-//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -88,7 +87,6 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp,  myResources.getString("FishSharkXMLPath"));
 		simButtons(temp, myStage);
-//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -98,7 +96,6 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp,  myResources.getString("SpreadingFireXMLPath"));
 		simButtons(temp, myStage);
-//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -108,7 +105,6 @@ public class OneFileUI {
 		initGrid(temp);
 		startGrid(temp, myResources.getString("GameOfLifeXMLPath"));
 		simButtons(temp, myStage);
-//		simScrollBar(temp, myResources, UI_WIDTH, MARGIN);
 		return scene;
 	}
 	
@@ -142,19 +138,14 @@ public class OneFileUI {
 		}
 		sim.getXMLDoc(path);
 		myGrid = sim.populateGrid();
-		myGrid.outputGridValues(true);
-		System.out.println("--------------------");
 		myEngine = new GameEngine(myGrid);
 	}
 	
 	public void step(Group g, Grid grid, int margin, ResourceBundle rb, double elapsedTime){
 		g.getChildren().clear();
-//		simScrollBar(g, rb, 1000, 50);
 		simButtons(g, myStage);
 		myEngine.updateWorld();
     	displayGrid(g, myGrid, margin);
-    	myGrid.outputGridValues(true);
-		System.out.println("--------------------");
 	}
 	
 	public void initButtons(Group g, Stage stage){
@@ -255,7 +246,7 @@ public class OneFileUI {
 		    }
 		});
 		
-		Button anotherSim = addButtons(g, "Run Another Simulation", 
+		Button anotherSim = addButtons(g, myResources.getString("AnotherSimLabel"), 
 				UI_WIDTH-RESET_BUTTON_WIDTH, UI_HEIGHT-SMALL_BUTTON_LENGTH, 
 				RESET_BUTTON_WIDTH, SMALL_BUTTON_LENGTH);
 		

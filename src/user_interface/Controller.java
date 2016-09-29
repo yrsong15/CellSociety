@@ -1,35 +1,27 @@
 package user_interface;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
+import java.util.ResourceBundle;
 
-public class Controller implements ActionListener{
-	private UserInterface UI;
-    private EventListener eventlistener;
-    private ActionListener actionlistener;
+import javafx.stage.Stage;
+
+public class Controller{
+	
+	private final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+
+	private Stage myStage;
+	private ResourceBundle myResources;
+	private SceneController mySC;
+  
     
-    public Controller(UserInterface UI){
-        this.UI = UI;  
+    public void startController(Stage s){
+    	myStage = s;
+    	myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE+"UILabels");
+    	mySC = new SceneController(myStage, myResources);
+		myStage.setScene(mySC.startScene());
+		myStage.setTitle(myResources.getString("UITitle"));
+		myStage.show();
     }
     
-//    public void control(){        
-//        actionlistener = new ActionListener() {
-//              public void actionPerformed(ActionEvent actionEvent) {                  
-//                  System.out.println("aaa");
-//              }
-//        };                
-//        UI.getButton().setOnAction((event) -> {
-//		    System.out.println("Button Action");
-//		}); 
-//
-//    }
     
 
-	@Override
-	public void actionPerformed(java.awt.event.ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 }
