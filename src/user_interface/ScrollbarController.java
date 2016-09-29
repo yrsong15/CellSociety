@@ -10,12 +10,13 @@ import javafx.scene.text.Text;
 
 public class ScrollbarController {
 	
-	private ScrollBar one, two, three, four;
-//	ScrollbarController(){
-//		one = new ScrollBar();
-//	}
 	
-	public ScrollBar addScrollBar(Group g, int min, int max, int base, double xPos, double yPos){
+	private final double MIN_VALUE = 0.1;
+	private final double MAX_VALUE = 10;
+	private final double START_VALUE = 1;
+	private ScrollBar delayBar;
+	
+	public ScrollBar addScrollBar(Group g, double min, double max, double base, double xPos, double yPos){
 		ScrollBar sc = new ScrollBar();
 		sc.setMin(min);
 		sc.setMax(max);
@@ -34,21 +35,16 @@ public class ScrollbarController {
 	}
 	
 	public void simScrollBar(Group g, ResourceBundle bundle, int width, int margin){
-//		addText(g, bundle.getString("CellSizeLabel"), width * 7/10, margin + 10);
 		addText(g, bundle.getString("DelayLabel"), width * 7/10, 2*margin + 10);
-//		addText(g, bundle.getString("BlankLabel"), width * 7/10, 3*margin + 10);
-//		addText(g, bundle.getString("BlankLabel"), width * 7/10, 4*margin + 10);
-//		one = addScrollBar(g, 0, 100, 50, width * 3/4 + margin, margin);
-		two = addScrollBar(g, 0, 100, 50, width * 3/4 + margin, 2 * margin);
-//		three = addScrollBar(g, 0, 100, 50, width * 3/4 + margin, 3 * margin);
-//		four = addScrollBar(g, 0, 100, 50, width * 3/4 + margin, 4 * margin);
+		delayBar = addScrollBar(g, MIN_VALUE, MAX_VALUE, START_VALUE, width * 3/4 + margin, 2 * margin);
 	}
 	
-	public ScrollBar getScrollBar(String input){
-		if(input.equals("one")) return one;
-		else if(input.equals("two")) return two;
-		else if(input.equals("three")) return three;
-		else return four;
-		
+	public double getDelayValue(){
+		return delayBar.getValue();
 	}
+	
+	public boolean delayBarExists(){
+		return delayBar != null;
+	}
+	
 }
