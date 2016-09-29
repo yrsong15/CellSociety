@@ -15,6 +15,9 @@ import simulation_config.*;
 import simulation_config.SimulationConfig;
 import species.*;
 
+/*** @author Ray Song(ys101)
+ * 
+*/
 public class TestGridReader {
 	private static SimulationConfig sim;
 	private static Grid myGrid;

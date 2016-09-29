@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.Grid;
 
+/*** @author Ray Song(ys101)
+ * 
+*/
 public class Controller{
 	
 	private final String DEFAULT_RESOURCE_PACKAGE = "resources/";

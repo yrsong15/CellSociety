@@ -4,7 +4,7 @@ import user_interface.Controller;
 
 
 
-/*** @author Chalena
+/*** @author Chalena, Ray
  *
  */
 public class Main extends Application{

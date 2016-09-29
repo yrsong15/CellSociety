@@ -13,6 +13,9 @@ import util.GameEngine;
 import util.Grid;
 import util.Location;
 
+/*** @author Ray Song(ys101)
+ * 
+*/
 public class GridController {
 
 	private SimulationConfig mySim;

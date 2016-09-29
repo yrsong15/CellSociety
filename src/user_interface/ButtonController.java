@@ -3,6 +3,9 @@ package user_interface;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 
+/*** @author Ray Song(ys101)
+ * 
+*/
 public class ButtonController{
 	
 	private final int BUTTON_SIZE = 150;

@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/*** @author Ray Song(ys101)
+ * 
+*/
 public class SceneController {
 	
 	private final int UI_WIDTH = 1000;
