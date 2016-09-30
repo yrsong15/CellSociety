@@ -9,7 +9,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import species.Agent;
+import species.CellofLife;
+import species.Fish;
+import species.Shark;
 import species.Species;
+import species.Tree;
+import species.WatorSpecies;
 import util.Grid;
 import util.Location;
 
@@ -125,14 +131,8 @@ public abstract class SimulationConfig {
 	 * (have to specify location and state of each species in simulation)
 	 * testing currently only works for GameofLifeSim
 	 * @return
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws InvocationTargetException
 	 */
-	public Grid populateGridTest() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+	public Grid populateGridTest(){
 		String speciesType = getElement("speciesType");
 		Grid myGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
 		NodeList nList = myXML.getElementsByTagName("row");
@@ -159,21 +159,22 @@ public abstract class SimulationConfig {
 	 */
 	public Species createSpecies(String speciesType) {
 		Species mySpecies = null;
-		try {
-			Class<?> speciesClass = Class.forName("species." + speciesType);
-			Constructor<?> constructor = null;
-			try {
-				constructor = speciesClass.getConstructor();
-			} catch (NoSuchMethodException | SecurityException e) {
-				e.printStackTrace();
-			}
-			mySpecies = (Species) constructor.newInstance();
+		if (speciesType.equals("Agent")){
+			mySpecies = new Agent();
+		}
+		else if(speciesType.equals("CellofLife")){
+			mySpecies = new CellofLife();
+		}
+		else if(speciesType.equals("Fish")){
+			mySpecies = new Fish();
+		}
+		else if(speciesType.equals("Shark")){
+			mySpecies = new Shark();
+		}
+		else if(speciesType.equals("Tree")){
+			mySpecies = new Tree();
+		}
 			
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			System.out.println("Species provided in XML file cannot be found, does not have a proper constructor, or is not a valid class");
-			e.printStackTrace();
-		} 
-		
 		return mySpecies;
 	}
 
