@@ -2,11 +2,14 @@ package simulation_config;
 
 
 import org.w3c.dom.Element;
-
 import species.Fish;
 import species.Shark;
 import species.Species;
 
+
+/**
+ * @author Chalena Scholl
+ */
 public class PredatorPreySim extends SimulationConfig{
 
 	public PredatorPreySim() {

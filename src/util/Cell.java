@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import species.Species;
 
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
+
 public class Cell {
 	private List<Species> myOccupants;
 	private int maxOccupants;

@@ -1,10 +1,8 @@
 package species;
 
-import java.util.List;
-
-import neighborhood.Neighborhood;
-import util.Location;
-
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public abstract class WatorSpecies extends Species{
 	
 	private int timeUntilBreed;

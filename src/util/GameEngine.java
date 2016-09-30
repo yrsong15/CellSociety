@@ -7,7 +7,7 @@ import species.Species;
 import util.Grid;
 
 /***
- * @author Chalena
+ * @author Chalena Scholl, Owen Chung
  */
 public class GameEngine {
 	

@@ -2,11 +2,14 @@ package neighborhood;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import util.Cell;
 import util.Grid;
 import util.Location;
 
+
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public class PlusNeighborhood extends Neighborhood {
 
 	public PlusNeighborhood(Grid mainGrid, Location currLoc) {

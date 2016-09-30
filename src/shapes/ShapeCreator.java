@@ -2,6 +2,9 @@ package shapes;
 
 import javafx.scene.shape.Shape;
 
+/***
+ * @author Chalena Scholl
+ */
 public abstract class ShapeCreator {
 	private Shape myShape;
 	

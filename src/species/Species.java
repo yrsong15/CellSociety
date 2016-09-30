@@ -4,6 +4,9 @@ import java.util.List;
 import neighborhood.Neighborhood;
 import util.Location;
 
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public abstract class Species {
 	private int currState; // 0 is initial state
 	private int nextState;

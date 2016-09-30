@@ -7,6 +7,9 @@ import util.Cell;
 import util.Grid;
 import util.Location;
 
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public abstract class Neighborhood {
 	private List<Cell> myNeighbors;
 

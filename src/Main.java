@@ -10,7 +10,7 @@ import util.Grid;
 
 
 
-/*** @author Chalena, Ray
+/*** @author Chalena Scholl, Ray Song
  *
  */
 public class Main extends Application{

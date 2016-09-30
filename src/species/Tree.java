@@ -5,7 +5,7 @@ import neighborhood.Neighborhood;
 import util.Location;
 
 /**
- * @author Owen, Chalena
+ * @author Owen Chung, Chalena Scholl
  */
 public class Tree extends Species {
 	/**

@@ -6,6 +6,9 @@ import util.Cell;
 import util.Grid;
 import util.Location;
 
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public class HexagonNeighborhood extends Neighborhood{
 
 	
