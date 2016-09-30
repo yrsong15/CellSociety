@@ -21,13 +21,14 @@ public class Agent extends Species {
 	}
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {
+	public Location selectLocation(List<Location> emptyCells, Neighborhood neighbors) {
 		int numberofneighbors = 0;
 		int numberofsameagent = 0;
 		float satisfaction = 0;
 		List<Location> spaces = emptyCells;
 		this.setNeighborhood(neighbors);
-		for (Species s : this.getNeighborhood().getMyNeighbors()){
+		for (int i = 0; i < this.getNeighborhood().getMyNeighbors().size(); i++){
+			Species s = this.getNeighborhood().getMyNeighbors().get(i).get(0);
 			if (!s.equals(null)){
 				numberofneighbors++;
 				if (s.getCurrState() == this.getCurrState()){
@@ -35,6 +36,7 @@ public class Agent extends Species {
 				}
 			}
 		}
+		
 		if (numberofneighbors != 0){
 			satisfaction = numberofsameagent / (float) numberofneighbors;
 		}

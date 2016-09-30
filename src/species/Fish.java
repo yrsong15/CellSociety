@@ -38,7 +38,7 @@ public class Fish extends WatorSpecies {
 	}
 	
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
+	public Location selectLocation(List<Location> emptyCells, Neighborhood myneighbors){
 		
 		
 		List<Location> spaces = this.getMyLocation().getAdjacentCells(emptyCells);

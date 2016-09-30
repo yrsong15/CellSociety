@@ -28,7 +28,7 @@ public class GameEngine {
 		Grid copyGrid = new Grid(myGrid.getMyGrid(), myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
 		List<Location> toDelete = new ArrayList<Location>();
 		List<Location> emptyCells = copyGrid.getEmptyCells();
-		List<Species> alreadyVisited = new ArrayList<Species>();
+		List<List<Species>> alreadyVisited = new ArrayList<List<Species>>();
 		performUpdate(copyGrid, toDelete, emptyCells, alreadyVisited);
 		clearFallenSpecies(toDelete);
 		updateStates();
@@ -36,14 +36,17 @@ public class GameEngine {
 
 
 	private void performUpdate(Grid copyGrid, List<Location> toDelete, List<Location> emptyCells,
-			List<Species> alreadyVisited) {
+			List<List<Species>> alreadyVisited) {
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
+				for (int k = 0; k < myGrid.getCell(currLoc).size(); k++){
+					
+				}
 				Species currSpecies= myGrid.getCell(currLoc);
 				if (currSpecies != null && !alreadyVisited.contains(currSpecies)){
 					alreadyVisited.add(currSpecies);
-					Location moveTo = currSpecies.performTask(emptyCells, copyGrid.getNeighborhood(currLoc));
+					Location moveTo = currSpecies.selectLocation(emptyCells, copyGrid.getNeighborhood(currLoc));
 					if (moveTo == null){
 						toDelete.add(currLoc);
 					}

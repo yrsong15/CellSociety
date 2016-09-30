@@ -21,14 +21,15 @@ public class Tree extends Species {
 	}
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {
+	public Location selectLocation(List<Location> emptyCells, Neighborhood neighbors) {
 		int hasFire = 0;
 		this.setNeighborhood(neighbors);
 		if (this.getCurrState() == 1){
 			this.setNextState(0);
 			return null;
 		}
-		for (Species s : this.getNeighborhood().getMyNeighbors()){
+		for (int i = 0; i < this.getNeighborhood().getMyNeighbors().size(); i++){
+			Species s = this.getNeighborhood().getMyNeighbors().get(i).get(0);
 			if (s.getCurrState() == 1){
 				hasFire = 1;
 				if(Math.random() < this.getProbabilityBurn()){

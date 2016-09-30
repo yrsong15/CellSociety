@@ -16,7 +16,7 @@ public abstract class WatorSpecies extends Species{
 	
 
 	@Override
-	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
+	public abstract Location selectLocation(List<Location> emptyCells, Neighborhood neighbors);
 	public abstract boolean isEdible();
 	
 	public abstract boolean toBreed();

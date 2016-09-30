@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Random;
 
 import neighborhood.Neighborhood;
-import neighborhood.PlusNeighbors;
+import neighborhood.PlusNeighborhood;
 import simulation_config.*;
 import species.*;
 
 
 public class Grid {
-		Species[][] myGrid;
+		List<Species>[][] myGrid;
 
 
 
@@ -22,27 +22,37 @@ public class Grid {
 		private String neighbType;
 		
 		public Grid(int width, int height){
-			myGrid = new Species[width][height];
+			myGrid = initGrid(width, height);
 			this.numRows = width;
 			this.numCols = height;
 		}
+		private List<Species>[][] initGrid(int width, int height){
+			List<Species>[][] Grid = null;
+			for (int i = 0; i < width ; i++){
+				for (int j = 0; j < height; j++){
+					List<Species> temp = new ArrayList<>();
+					Grid[i][j] = temp;
+				}
+			}
+			return Grid;
+		}
 		
 		public Grid(int width, int height, String neighbType){
-			myGrid = new Species[width][height];
+			myGrid = initGrid(width, height);
 			this.numRows = width;
 			this.numCols = height;
 			this.neighbType = neighbType;
 		}
 		
-		public Grid(Species[][] myGrid2, int width, int height, String neighbType) {
-			this.myGrid = new Species[width][height];
+		public Grid(List<Species>[][] myGrid2, int width, int height, String neighbType) {
+			this.myGrid = initGrid(width, height);
 			numRows = width;
 			numCols = height;
 			this.neighbType = neighbType;
 			copyFill(myGrid2);
 		}
 		
-		private void copyFill(Species[][] myOrig){
+		private void copyFill(List<Species>[][] myOrig){
 			for (int i = 0; i < numRows; i++){
 				for (int j = 0; j <numCols; j++){
 					this.myGrid[i][j] = myOrig[i][j];
@@ -62,7 +72,7 @@ public class Grid {
 			return numCols;
 		}
 		
-		public void setCell(Location pos, Species mySpecies){
+		public void setCell(Location pos, List<Species> mySpecies){
 			myGrid[pos.getX()][pos.getY()] = mySpecies;
 		}
 		
@@ -74,7 +84,7 @@ public class Grid {
 				row = rand.nextInt(numRows); 
 				col = rand.nextInt(numCols);
 			}
-			myGrid[row][col] = mySpecies;
+			myGrid[row][col].add(mySpecies);
 			mySpecies.setMyLocation(new Location(row, col));
 		}
 		
@@ -82,8 +92,8 @@ public class Grid {
 			List<Location> emptyCells = new ArrayList<Location>();
 			for (int i = 0; i < myGrid.length; i++){
 				for (int j = 0; j < myGrid[i].length; j++){
-					Species curr= myGrid[i][j];
-					if (curr == null){
+					List<Species> curr= myGrid[i][j];
+					if (curr.isEmpty()){
 						emptyCells.add(new Location(i, j));
 					}
 				}
@@ -102,7 +112,7 @@ public class Grid {
 		public Neighborhood getNeighborhood(Location pos){
 			int row = pos.getX();
 			int col = pos.getY();
-		    List<Species> neighbors = new ArrayList<>();
+		    List<List<Species>> neighbors = new ArrayList<>();
 		    for( int changeRow = -1; changeRow <= 1; ++changeRow) {
 		        for( int changeCol = -1; changeCol <= 1; ++changeCol) {
 		            if( changeRow == 0 && changeCol == 0 ) {
@@ -121,7 +131,7 @@ public class Grid {
 		}
 		
 		
-		public Neighborhood createNeighborhood(List<Species> aroundMe, Location myPos) {
+		public Neighborhood createNeighborhood(List<List<Species>> aroundMe, Location myPos) {
 			Neighborhood myNeighb = null;
 			try {
 				Class<?> neighbClass = Class.forName("neighborhood." + neighbType);
@@ -147,20 +157,21 @@ public class Grid {
 		 * @param pos
 		 * @return
 		 */
-		public Species getCell(Location pos){
+		public List<Species> getCell(Location pos){
 			return myGrid[pos.getX()][pos.getY()];
 		}
 		
 		
 		/**
 		 * Outputs the current grid; print output based on state parameter
+		 * ONLY WORK FOR SIMULATION THAT ALLOWS ONLY ONE SPECIES PER CELL
 		 * @param state if true, outputs state of each species. Else, outputs first letter of each species type
 		 */
 		public void outputGridValues(Boolean state){
 			for (int i = 0; i < myGrid.length; i++){
 				String rowVal = "";
 				for (int j = 0; j < myGrid[i].length; j++){
-					Species curr= myGrid[i][j];
+					Species curr= myGrid[i][j].get(0);
 					if (curr != null){
 						if (state){//for GameOfLifeSim, FireSim
 							rowVal+= curr.getCurrState() + " "; 
@@ -178,11 +189,11 @@ public class Grid {
 				System.out.println(rowVal);
 			}
 		}
-		public Species[][] getMyGrid() {
+		public List<Species>[][] getMyGrid() {
 			return myGrid;
 		}
 
-		public void setMyGrid(Species[][] myGrid) {
+		public void setMyGrid(List<Species>[][] myGrid) {
 			this.myGrid = myGrid;
 		}
 }

@@ -46,7 +46,7 @@ public class Shark extends WatorSpecies{
 	}
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors) {
+	public Location selectLocation(List<Location> emptyCells, Neighborhood myneighbors) {
 		
 		if (toDie()){
 			return null;
@@ -54,7 +54,8 @@ public class Shark extends WatorSpecies{
 		 
 		this.setNeighborhood(myneighbors);
 		List<Location> possiblemoves = new ArrayList<Location>();
-		for (Species s : this.getNeighborhood().getMyNeighbors()){
+		for (int i = 0; i < this.getNeighborhood().getMyNeighbors().size(); i++){
+			Species s = this.getNeighborhood().getMyNeighbors().get(i).get(0);
 			if (s instanceof Fish){
 				possiblemoves.add(s.getMyLocation());
 			}

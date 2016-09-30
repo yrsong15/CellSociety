@@ -10,7 +10,6 @@ import util.Location;
 
 public abstract class Species {
 	private Neighborhood myNeighbors;
-
 	private int currState; // 0 is initial state
 	private int nextState;
 
@@ -27,10 +26,10 @@ public abstract class Species {
 	
 	public abstract Species clone(Location pos);
 	
-	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
+	public abstract Location selectLocation(List<Location> emptyCells, Neighborhood neighbors);
 	
 	public Location getMyLocation() {
-		return myLocation;
+		return this.myLocation;
 	}
 
 	public void setMyLocation(Location myLocation) {

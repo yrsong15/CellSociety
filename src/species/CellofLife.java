@@ -17,10 +17,10 @@ public class CellofLife extends Species{
 	/**
 	 * 0 state = live cells, 1 state = dead cells
 	 */
-	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
+	public Location selectLocation(List<Location> emptyCells, Neighborhood myneighbors){
 		this.setNeighborhood(myneighbors);
 		int numberofliveneighbors = 0;
-		for (Species tmpspecies : this.getNeighborhood().getMyNeighbors()){
+		for (Species tmpspecies : this.getNeighborhood().getMyNeighbors().get(0)){
 			if (tmpspecies.getCurrState() == 0){
 				numberofliveneighbors++;
 			}
