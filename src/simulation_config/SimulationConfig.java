@@ -20,7 +20,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 
-
+/*** @author Chalena Maess-Scholl, Ray Song(ys101)
+ * 
+*/
 public abstract class SimulationConfig {
 	private Document myXML;
 	private String neighborhoodType;
