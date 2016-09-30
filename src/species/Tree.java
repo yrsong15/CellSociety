@@ -57,5 +57,14 @@ public class Tree extends Species {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public boolean isPrey(){
+		return false;
+	}
+	
+	@Override
+	public boolean isPredator() {
+		return false;
+	}
 
 }

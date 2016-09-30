@@ -49,4 +49,14 @@ public class CellofLife extends Species{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public boolean isPrey() {
+		return false;
+	}
+
+	@Override
+	public boolean isPredator() {
+		return false;
+	}
 }

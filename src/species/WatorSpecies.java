@@ -10,8 +10,6 @@ public abstract class WatorSpecies extends Species{
 	private int timeUntilBreed;
 	private boolean roomToBreed;
 	
-	public abstract boolean isEdible();
-	
 	public abstract boolean toBreed();
 	
 	

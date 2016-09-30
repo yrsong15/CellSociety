@@ -35,10 +35,7 @@ public class Shark extends WatorSpecies{
 		}
 		return breed;
 	}
-	@Override
-	public boolean isEdible(){
-		return false;
-	}
+	
 
 	@Override
 	public void performTask(List<Location> emptyCells, Neighborhood neighbors) {
@@ -90,6 +87,17 @@ public class Shark extends WatorSpecies{
 		baby.setCurrState(this.getCurrState());
 		baby.setNextState(this.getNextState());
 		return baby;
+	}
+	
+	@Override
+	public boolean isPrey() {
+		return false;
+	}
+
+	
+	@Override
+	public boolean isPredator() {
+		return true;
 	}
 	
 

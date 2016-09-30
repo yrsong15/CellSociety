@@ -22,6 +22,10 @@ public abstract class Species {
 	
 	public abstract Species clone(Location pos);
 	
+	public abstract boolean isPrey();
+	
+	public abstract boolean isPredator();
+	
 	public abstract void performTask(List<Location> emptyCells, Neighborhood neighbors);
 	
 	public Location getCurrLocation() {

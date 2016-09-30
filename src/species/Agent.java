@@ -57,4 +57,14 @@ public class Agent extends Species {
 		return null;
 	}
 
+	@Override
+	public boolean isPrey() {
+		return false;
+	}
+
+	@Override
+	public boolean isPredator() {
+		return false;
+	}
+
 }

@@ -38,7 +38,7 @@ public class GameEngine {
 				}
 			}
 		}
-		implementDecisions();
+		applyDecisions();
 	}
 
 	public void updateCell(Cell currCell, List<Species> alreadyVisited, List<Location> availableCells){
@@ -55,7 +55,7 @@ public class GameEngine {
 	
 	
 	//do we really need this function since we are now making a deep copy of grid?
-	public void implementDecisions(){
+	public void applyDecisions(){
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
@@ -71,6 +71,7 @@ public class GameEngine {
 						}
 						
 						else if(!moveTo.equals(currLoc)){
+							myGrid.getCell(moveTo).applyEffect(currSpecies);
 							if (!myGrid.getCell(moveTo).hasFreeSpace()){
 								currSpecies.setCurrLocation(currSpecies.getNextLocation());
 							}
@@ -90,4 +91,6 @@ public class GameEngine {
 			}
 		}
 	}
+	
+	
 }

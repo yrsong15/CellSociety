@@ -148,10 +148,7 @@ public class Grid {
 		 * @return
 		 */
 		public Cell getCell(Location pos){
-			if (isValidCell(pos.getX(), pos.getY())){
-				return myGrid[pos.getX()][pos.getY()];
-			}
-			return null;
+			return myGrid[pos.getX()][pos.getY()];
 		}
 		
 		

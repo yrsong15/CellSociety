@@ -32,8 +32,8 @@ public class Fish extends WatorSpecies {
 	}
 	
 	@Override
-	public boolean isEdible(){
-		return true;
+	public boolean isPredator() {
+		return false;
 	}
 	
 	@Override
@@ -64,4 +64,10 @@ public class Fish extends WatorSpecies {
 		baby.setNextState(this.getCurrState());
 		return baby;
 	}
+	
+	@Override
+	public boolean isPrey() {
+		return true;
+	}
+
 }

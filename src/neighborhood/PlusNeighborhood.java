@@ -18,11 +18,20 @@ public class PlusNeighborhood extends Neighborhood {
 	@Override
 	public List<Cell> findMyNeighbors(Grid mainGrid, Location currLoc) {
 		List<Cell> ret = new ArrayList<Cell>();
-		ret.add(mainGrid.getCell(new Location(currLoc.getX()-1, currLoc.getY())));
-		ret.add(mainGrid.getCell(new Location(currLoc.getX()+1, currLoc.getY())));
-		ret.add(mainGrid.getCell(new Location(currLoc.getX(), currLoc.getY()-1)));
-		ret.add(mainGrid.getCell(new Location(currLoc.getX(), currLoc.getY()+1)));
-		
+		int currX = currLoc.getX();
+		int currY = currLoc.getY();
+		if (mainGrid.isValidCell(currX-1, currY)){
+			ret.add(mainGrid.getCell(new Location(currX-1, currY)));
+		}
+		if (mainGrid.isValidCell(currX+1, currY)){
+			ret.add(mainGrid.getCell(new Location(currX+1, currY)));
+		}
+		if (mainGrid.isValidCell(currX, currY-1)){
+			ret.add(mainGrid.getCell(new Location(currX, currY-1)));
+		}
+		if (mainGrid.isValidCell(currX, currY+1)){
+			ret.add(mainGrid.getCell(new Location(currX, currY+1)));
+		}
 		for (int i = 0; i < ret.size(); i++){
 			if (!ret.get(i).hasOccupants()){
 				ret.remove(i);
