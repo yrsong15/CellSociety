@@ -23,6 +23,15 @@ public abstract class SimulationConfig {
 	private String neighborhoodType;
 	protected int speciesAdded;
 	
+	private int numRows;
+	private int numCols;
+	private int numCells;
+	
+	public SimulationConfig(){
+		numRows = Integer.parseInt(getElement("height"));
+		numCols = Integer.parseInt(getElement("width"));
+		numCells = Integer.parseInt(getElement("numCells"));
+	}
 	
 	/**
 	 * prepares given xml document for parsing
@@ -97,7 +106,7 @@ public abstract class SimulationConfig {
 	public Grid populateGrid(){		
 		Grid myGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
 	    NodeList speciesList = myXML.getElementsByTagName("species");
-	    int numCells = Integer.parseInt(getElement("numCells"));
+	    numCells = Integer.parseInt(getElement("numCells"));
 	    for (int curr = 0; curr < speciesList.getLength(); curr++) {//for each species
             Element currSpecies= (Element) speciesList.item(curr);
             String speciesType = currSpecies.getAttribute("type");	            
@@ -182,14 +191,19 @@ public abstract class SimulationConfig {
 	 * @return height of the grid, or how many rows it contains
 	 */
 	public int getGridHeight(){
-		return Integer.parseInt(getElement("height"));
+		return numRows;
 	}
-	
 	
 	/**
 	 * @return width of the grid, or how many columns it contains
 	 */
 	public int getGridWidth(){
-		return Integer.parseInt(getElement("width"));
+		return numCols;
+	}
+	
+	public void setCells(int input){
+		numCells = input;
+		numRows = (int)Math.sqrt(input);
+		numCols = (int)Math.sqrt(input);
 	}
 }
