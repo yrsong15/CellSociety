@@ -5,6 +5,9 @@ import java.util.List;
 import neighborhood.Neighborhood;
 import util.Location;
 
+/**
+ * @author Owen, Chalena
+ */
 public class CellofLife extends Species{
 	public CellofLife(){
 		super();
@@ -13,26 +16,29 @@ public class CellofLife extends Species{
 	/**
 	 * 0 state = live cells, 1 state = dead cells
 	 */
-	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
-		this.setNeighborhood(myneighbors);
-		int numberofliveneighbors = 0;
-		for (Species tmpspecies : this.getNeighborhood().getMyNeighbors()){
-			if (tmpspecies.getCurrState() == 0){
-				numberofliveneighbors++;
-			}
+	public Location performTask(List<Location> emptyCells, Neighborhood neighbors){
+		List<Location> liveNeighbors = neighbors.findNeighborsOfState(0);
+		int numLiveNeighbors = liveNeighbors.size();
+		
+		if (isAlive() && numLiveNeighbors < 2 || numLiveNeighbors > 3){
+				this.setNextState(1);
 		}
-		if (super.getCurrState() == 0){
-			if (numberofliveneighbors < 2 || numberofliveneighbors > 3){
-				super.setNextState(1);
-			}
+		
+		else if(isDead() && numLiveNeighbors==3){
+			this.setNextState(0);
 		}
-		else{
-			if (numberofliveneighbors == 3){
-				super.setNextState(0);
-			}
-		}
+		
 		return this.getMyLocation();
 	}
+	
+	public boolean isDead(){
+		return this.getCurrState()==1;
+	}
+	
+	public boolean isAlive(){
+		return this.getCurrState()==0;
+	}
+	
 	@Override
 	public boolean toBreed() {
 		// TODO Auto-generated method stub

@@ -1,10 +1,12 @@
 package species;
 
 import java.util.List;
-
 import neighborhood.Neighborhood;
 import util.Location;
 
+/**
+ * @author Owen, Chalena
+ */
 public class Tree extends Species {
 	/**
 	 * State0 = healthy tree, State1 = burning tree;
@@ -16,21 +18,17 @@ public class Tree extends Species {
 	}
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {
-		int hasFire = 0;
-		this.setNeighborhood(neighbors);
-		if (this.getCurrState() == 1){
+	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {		
+		if (isBurning()){
 			this.setNextState(0);
 			return null;
 		}
-		for (Species s : this.getNeighborhood().getMyNeighbors()){
-			if (s.getCurrState() == 1){
-				hasFire = 1;
-				if(Math.random() < this.getProbabilityBurn()){
-					this.setNextState(1);
-				}
-				break;
+		List<Location> burningNeighbors = neighbors.findNeighborsOfState(1);
+		for(int i = 0; i< burningNeighbors.size(); i++){
+			if(Math.random() < this.getProbabilityBurn()){
+				this.setNextState(1);
 			}
+			break;
 		}
 		return this.getMyLocation();
 	}
@@ -41,6 +39,10 @@ public class Tree extends Species {
 
 	public void setProbabilityBurn(float probabilityBurn) {
 		Tree.probabilityBurn = probabilityBurn/100;
+	}
+	
+	public boolean isBurning(){
+		return this.getCurrState()==1;
 	}
 
 	@Override

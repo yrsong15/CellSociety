@@ -1,20 +1,20 @@
 package species;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import neighborhood.Neighborhood;
 import util.Location;
 
+/**
+ * @author Owen, Chalena
+ */
 public class Shark extends WatorSpecies{
 	private int standardBreedTime = 10;
 	private int standardStarveTime = 3;
-	
 	private int  turnsSinceLastAte;
 	
-
-
+	
 	public Shark(){
 		super();
 		this.setTimeUntilBreed(standardBreedTime + (int) (Math.random() * 10));
@@ -41,39 +41,30 @@ public class Shark extends WatorSpecies{
 	}
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors) {
-		
-		if (toDie()){
+	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {
+		if (reachedStarvation()){
 			return null;
 		}
-		 
-		this.setNeighborhood(myneighbors);
-		List<Location> possiblemoves = new ArrayList<Location>();
-		for (Species s : this.getNeighborhood().getMyNeighbors()){
-			if (s instanceof Fish){
-				possiblemoves.add(s.getMyLocation());
-			}
-		}
+		List<Location> possibleMoves = neighbors.findNeighborsOfState(0);
 		
-		if(possiblemoves.isEmpty()){
-			List<Location> spaces = this.getMyLocation().getAdjacentCells(emptyCells);
-			possiblemoves.addAll(spaces);
+		if(possibleMoves.isEmpty()){
+			possibleMoves.addAll(this.getMyLocation().getAdjacentCells(emptyCells));
 			turnsSinceLastAte++;
 		}
 		else{//can eat a fish
 			turnsSinceLastAte = 0;
 		}
 		
-		if (!possiblemoves.isEmpty()){
-			Collections.shuffle(possiblemoves);
+		if (!possibleMoves.isEmpty()){
+			Collections.shuffle(possibleMoves);
 			setRoomToBreed(true);
-			return possiblemoves.get(0);
+			return possibleMoves.get(0);
 		}
 		setRoomToBreed(false);
 		return this.getMyLocation();
 
 	}
-	public boolean toDie(){
+	public boolean reachedStarvation(){
 		if ((standardStarveTime - turnsSinceLastAte) <= 0){
 			return true;
 		}

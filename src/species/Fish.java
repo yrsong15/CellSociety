@@ -5,6 +5,9 @@ import java.util.List;
 import neighborhood.Neighborhood;
 import util.Location;
 
+/**
+ * @author Owen, Chalena
+ */
 public class Fish extends WatorSpecies {
 	private int standardBreedTime = 3;
 	
@@ -35,10 +38,7 @@ public class Fish extends WatorSpecies {
 	
 	@Override
 	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
-		
-		
 		List<Location> spaces = this.getMyLocation().getAdjacentCells(emptyCells);
-		this.setNeighborhood(myneighbors);
 		
 		if (!spaces.isEmpty()){
 			Collections.shuffle(spaces);
