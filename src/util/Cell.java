@@ -5,18 +5,18 @@ import java.util.List;
 import species.Species;
 
 public class Cell {
-	private List<Species> occupants;
+	private List<Species> myOccupants;
 	private int maxOccupants;
 	private Location myLocation;
 	
 	public Cell(){
-		occupants = new ArrayList<Species>();
+		myOccupants = new ArrayList<Species>();
 		maxOccupants = 1;
 	}
 	
 	
 	public List<Species> getOccupants(){
-		return occupants;
+		return myOccupants;
 	}
 
 	
@@ -37,10 +37,14 @@ public class Cell {
 	}
 	
 	public int getSize(){
-		return occupants.size();
+		return myOccupants.size();
 	}
 	
 	public Location getLocation(){
 		return myLocation;
+	}
+	
+	public int getState(){
+		return myOccupants.get(0).getCurrState();
 	}
 }

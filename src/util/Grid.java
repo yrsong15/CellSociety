@@ -21,6 +21,7 @@ public class Grid {
 			myGrid = new Cell[width][height];
 			this.numRows = width;
 			this.numCols = height;
+			initializeGrid();
 		}
 		
 		public Grid(int width, int height, String neighbType){
@@ -28,6 +29,15 @@ public class Grid {
 			this.numRows = width;
 			this.numCols = height;
 			this.neighbType = neighbType;
+			initializeGrid();
+		}
+		
+		public void initializeGrid(){
+			for (int i = 0; i < numRows; i++){
+				for (int j = 0; j <numCols; j++){
+					this.myGrid[i][j] = new Cell();
+				}
+			}
 		}
 		
 		public Grid(Cell[][] myGrid2, int width, int height, String neighbType) {
@@ -144,26 +154,19 @@ public class Grid {
 		 * Outputs the current grid; print output based on state parameter
 		 * @param state if true, outputs state of each species. Else, outputs first letter of each species type
 		 */
-//		public void outputGridValues(Boolean state){
-//			for (int i = 0; i < myGrid.length; i++){
-//				String rowVal = "";
-//				for (int j = 0; j < myGrid[i].length; j++){
-//					Species curr= myGrid[i][j];
-//					if (curr != null){
-//						if (state){//for GameOfLifeSim, FireSim
-//							rowVal+= curr.getCurrState() + " "; 
-//						}
-//						else{//for Predator-PreySim, SegregationSim
-//							rowVal+= curr.getClass().toString().substring(14, 15) + " "; 
-//						}
-//					
-//						
-//					}
-//					else{
-//						rowVal+=". ";
-//					}
-//				}
-//				System.out.println(rowVal);
-//			}
-//		}
+		public void outputGridValues(){
+			for (int i = 0; i < myGrid.length; i++){
+				String rowVal = "";
+				for (int j = 0; j < myGrid[i].length; j++){
+					Cell curr= myGrid[i][j];
+					if (curr.hasOccupants()){
+						rowVal+= curr.getState() + " "; 
+					}
+					else{
+						rowVal+=". ";
+					}
+				}
+				System.out.println(rowVal);
+			}
+		}
 }

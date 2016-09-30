@@ -54,8 +54,8 @@ public class GridController {
 			for(int j=0;j<grid.getHeight();j++){
 				Rectangle r = new Rectangle(cellSize*i + margin, cellSize*j + margin, cellSize, cellSize);
 				Location curr = new Location(i,j);
-				if(grid.getCell(curr) != null){
-					if(grid.getCell(curr).getCurrState() == 1){
+				if(grid.getCell(curr).hasOccupants()){
+					if(grid.getCell(curr).getState()==1){
 						r.setFill(Color.RED);
 					}
 					else{

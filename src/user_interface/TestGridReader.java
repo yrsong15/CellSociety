@@ -44,7 +44,7 @@ public class TestGridReader {
 		displayGrid(myRoot, myGrid, 50);
 		s.setScene(scene);
 		s.show();
-		myGrid.outputGridValues(false);
+		myGrid.outputGridValues();
 		
 		
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
@@ -62,7 +62,7 @@ public class TestGridReader {
     	myEngine.updateWorld();
     	displayGrid(myRoot, myGrid, 50);
     	System.out.println("-------");
-    	myGrid.outputGridValues(false);
+    	myGrid.outputGridValues();
 	}
 	
 	public static void displayGrid(Group g, Grid grid, int margin){
@@ -74,7 +74,7 @@ public class TestGridReader {
 				Rectangle r = new Rectangle(cellSize*i + margin, cellSize*j + margin, cellSize, cellSize);
 				Location curr = new Location(i,j);
 				if(grid.getCell(curr) != null){
-					if(grid.getCell(curr).getCurrState() == 1){
+					if(grid.getCell(curr).getState() == 1){
 						r.setFill(Color.RED);
 					}
 					else{
