@@ -18,10 +18,11 @@ public class Tree extends Species {
 	}
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {		
+	public void performTask(List<Location> emptyCells, Neighborhood neighbors) {		
 		if (isBurning()){
 			this.setNextState(0);
-			return null;
+			setNextLocation(null);
+			return;
 		}
 		List<Location> burningNeighbors = neighbors.findNeighborsOfState(1);
 		for(int i = 0; i< burningNeighbors.size(); i++){
@@ -30,7 +31,7 @@ public class Tree extends Species {
 			}
 			break;
 		}
-		return this.getMyLocation();
+		setNextLocation(getCurrLocation());
 	}
 	
 	public float getProbabilityBurn() {

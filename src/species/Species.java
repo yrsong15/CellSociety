@@ -8,11 +8,13 @@ public abstract class Species {
 	private int currState; // 0 is initial state
 	private int nextState;
 
-	private Location myLocation;
-	
+	private Location currLocation;
+	private Location nextLocation;
+
+
 	public Species(){
 		currState = 0;
-		myLocation = null;
+		currLocation = null;
 		
 	}
 	
@@ -20,14 +22,22 @@ public abstract class Species {
 	
 	public abstract Species clone(Location pos);
 	
-	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
+	public abstract void performTask(List<Location> emptyCells, Neighborhood neighbors);
 	
-	public Location getMyLocation() {
-		return myLocation;
+	public Location getCurrLocation() {
+		return currLocation;
 	}
 
-	public void setMyLocation(Location myLocation) {
-		this.myLocation = myLocation;
+	public void setCurrLocation(Location myLocation) {
+		this.currLocation = myLocation;
+	}
+	
+	public Location getNextLocation() {
+		return nextLocation;
+	}
+
+	public void setNextLocation(Location nextLocation) {
+		this.nextLocation = nextLocation;
 	}
 	
 	public void setCurrState(int mystate){
@@ -45,11 +55,4 @@ public abstract class Species {
 	public int getNextState(){
 		return this.nextState;
 	}
-	
-	public void updateToLatestState(){
-		setCurrState(getNextState());
-
-	}
-
-
 }

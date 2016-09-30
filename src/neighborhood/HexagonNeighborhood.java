@@ -26,7 +26,7 @@ public class HexagonNeighborhood extends Neighborhood{
 		ret.add(mainGrid.getCell(new Location(currLoc.getX()+1, currLoc.getY()-1)));
 		
 		for (int i = 0; i < ret.size(); i++){
-			if (!ret.get(i).hasOccupants()){
+			if (!ret.get(i).hasOccupants() || ret.get(i) == null){
 				ret.remove(i);
 			}
 		}

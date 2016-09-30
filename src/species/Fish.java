@@ -37,16 +37,17 @@ public class Fish extends WatorSpecies {
 	}
 	
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors){
-		List<Location> spaces = this.getMyLocation().getAdjacentCells(emptyCells);
+	public void performTask(List<Location> emptyCells, Neighborhood myneighbors){
+		List<Location> spaces = this.getCurrLocation().getAdjacentCells(emptyCells);
 		
 		if (!spaces.isEmpty()){
 			Collections.shuffle(spaces);
 			setRoomToBreed(true);
-			return spaces.get(0);
+			setNextLocation(spaces.get(0));
+			return;
 		}
 		setRoomToBreed(false);
-		return this.getMyLocation();
+		setNextLocation(getCurrLocation());
 	}
 	
 	public void setStandardBreedTime(int breedTime){
@@ -58,7 +59,7 @@ public class Fish extends WatorSpecies {
 	public Species clone(Location pos) {
 		Species baby = new Fish();
 		((Fish) baby).setStandardBreedTime(this.standardBreedTime);
-		baby.setMyLocation(pos);
+		baby.setCurrLocation(pos);
 		baby.setCurrState(this.getCurrState());
 		baby.setNextState(this.getCurrState());
 		return baby;

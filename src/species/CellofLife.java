@@ -16,7 +16,7 @@ public class CellofLife extends Species{
 	/**
 	 * 0 state = live cells, 1 state = dead cells
 	 */
-	public Location performTask(List<Location> emptyCells, Neighborhood neighbors){
+	public void performTask(List<Location> emptyCells, Neighborhood neighbors){
 		List<Location> liveNeighbors = neighbors.findNeighborsOfState(0);
 		int numLiveNeighbors = liveNeighbors.size();
 		
@@ -28,7 +28,7 @@ public class CellofLife extends Species{
 			this.setNextState(0);
 		}
 		
-		return this.getMyLocation();
+		setNextLocation(getCurrLocation());
 	}
 	
 	public boolean isDead(){

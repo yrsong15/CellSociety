@@ -41,14 +41,15 @@ public class Shark extends WatorSpecies{
 	}
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {
+	public void performTask(List<Location> emptyCells, Neighborhood neighbors) {
 		if (reachedStarvation()){
-			return null;
+			setNextLocation(null);
+			return;
 		}
 		List<Location> possibleMoves = neighbors.findNeighborsOfState(0);
 		
 		if(possibleMoves.isEmpty()){
-			possibleMoves.addAll(this.getMyLocation().getAdjacentCells(emptyCells));
+			possibleMoves.addAll(this.getCurrLocation().getAdjacentCells(emptyCells));
 			turnsSinceLastAte++;
 		}
 		else{//can eat a fish
@@ -58,10 +59,11 @@ public class Shark extends WatorSpecies{
 		if (!possibleMoves.isEmpty()){
 			Collections.shuffle(possibleMoves);
 			setRoomToBreed(true);
-			return possibleMoves.get(0);
+			setNextLocation(possibleMoves.get(0));
+			return;
 		}
 		setRoomToBreed(false);
-		return this.getMyLocation();
+		setNextLocation(getCurrLocation());
 
 	}
 	public boolean reachedStarvation(){
@@ -84,7 +86,7 @@ public class Shark extends WatorSpecies{
 		Species baby = new Shark();
 		((Shark) baby).setStandardStarveTime(this.standardStarveTime);
 		((Shark) baby).setStandardBreedTime(this.standardBreedTime);
-		baby.setMyLocation(pos);
+		baby.setCurrLocation(pos);
 		baby.setCurrState(this.getCurrState());
 		baby.setNextState(this.getNextState());
 		return baby;

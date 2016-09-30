@@ -35,7 +35,8 @@ public class Grid {
 		public void initializeGrid(){
 			for (int i = 0; i < numRows; i++){
 				for (int j = 0; j <numCols; j++){
-					this.myGrid[i][j] = new Cell();
+					Cell init = new Cell(new Location(i,j));
+					this.myGrid[i][j] = init;
 				}
 			}
 		}
@@ -51,7 +52,8 @@ public class Grid {
 		public void copyFill(Cell[][] myOrig){
 			for (int i = 0; i < numRows; i++){
 				for (int j = 0; j <numCols; j++){
-					this.myGrid[i][j] = myOrig[i][j];
+					Cell oldCell = myOrig[i][j];
+					this.myGrid[i][j] = new Cell(oldCell.getOccupants(), oldCell.getMaxOccupants(), oldCell.getLocation());
 				}
 			}
 		}
@@ -74,7 +76,7 @@ public class Grid {
 		 * @param moving species object that would like to move
 		 */
 		public void moveSpecies(Location from, Location to, Species moving){
-			moving.setMyLocation(to);
+			moving.setCurrLocation(to);
 			myGrid[from.getX()][from.getY()].removeOccupant(moving);
 			myGrid[to.getX()][to.getY()].addOccupant(moving);
 		}
@@ -96,7 +98,7 @@ public class Grid {
 				col = rand.nextInt(numCols);
 			}
 			myGrid[row][col].addOccupant(currSpecies);
-			currSpecies.setMyLocation(new Location(row, col));
+			currSpecies.setCurrLocation(new Location(row, col));
 		}
 		
 		
@@ -146,7 +148,10 @@ public class Grid {
 		 * @return
 		 */
 		public Cell getCell(Location pos){
-			return myGrid[pos.getX()][pos.getY()];
+			if (isValidCell(pos.getX(), pos.getY())){
+				return myGrid[pos.getX()][pos.getY()];
+			}
+			return null;
 		}
 		
 		

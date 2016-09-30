@@ -21,7 +21,7 @@ public abstract class Neighborhood {
 		for (Cell currCell: myNeighbors){
 			for (Species currSpecies : currCell.getOccupants()){
 				if (currSpecies.getCurrState() == state){
-					matches.add(currSpecies.getMyLocation());
+					matches.add(currSpecies.getCurrLocation());
 				}
 			}
 		}

@@ -9,9 +9,16 @@ public class Cell {
 	private int maxOccupants;
 	private Location myLocation;
 	
-	public Cell(){
+	public Cell(Location where){
 		myOccupants = new ArrayList<Species>();
 		maxOccupants = 1;
+		myLocation = where;
+	}
+	
+	public Cell(List<Species> occupants, int max, Location loc){
+		myOccupants = occupants;
+		maxOccupants = max;
+		myLocation = loc;
 	}
 	
 	
@@ -21,11 +28,11 @@ public class Cell {
 
 	
 	public void addOccupant(Species toAdd){
-		
+		myOccupants.add(toAdd);
 	}
 	
 	public void removeOccupant(Species toRemove){
-		
+		myOccupants.remove(toRemove);
 	}
 	
 	public boolean hasFreeSpace(){
@@ -46,5 +53,9 @@ public class Cell {
 	
 	public int getState(){
 		return myOccupants.get(0).getCurrState();
+	}
+
+	public int getMaxOccupants() {
+		return maxOccupants;
 	}
 }

@@ -20,7 +20,7 @@ public class Agent extends Species {
 	}
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {
+	public void performTask(List<Location> emptyCells, Neighborhood neighbors) {
 		List<Location> sameAgents = neighbors.findNeighborsOfState(this.getCurrState());
 		int numberofneighbors = neighbors.getTotalNeighbors();
 		int numberofsameagent = sameAgents.size();
@@ -31,9 +31,10 @@ public class Agent extends Species {
 		}
 		if(satisfaction < thresholdPercentage && !emptyCells.isEmpty()){
 			Collections.shuffle(emptyCells);
-			return emptyCells.get(0);
+			setNextLocation(emptyCells.get(0));
+			return;
 		}
-		return this.getMyLocation();
+		setNextLocation(getCurrLocation());
 	}
 	
 	public double getThresholdPercentage() {
