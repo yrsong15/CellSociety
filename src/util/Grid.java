@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import neighborhood.AllNeighbors;
+import neighborhood.HexagonNeighbors;
 import neighborhood.Neighborhood;
 import neighborhood.PlusNeighbors;
 import simulation_config.*;
@@ -120,21 +122,17 @@ public class Grid {
 		
 		public Neighborhood createNeighborhood(List<Species> aroundMe, Location myPos) {
 			Neighborhood myNeighb = null;
-			try {
-				Class<?> neighbClass = Class.forName("neighborhood." + neighbType);
-				Constructor<?> constructor = null;
-				try {
-					constructor = neighbClass.getConstructor(List.class, Location.class);
-				} catch (NoSuchMethodException | SecurityException e) {
-					e.printStackTrace();
-				}
-				myNeighb = (Neighborhood) constructor.newInstance(aroundMe, myPos);
-				
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				System.out.println("Neighborhood provided in simulation configuration class cannot be found, does not have a proper constructor, or is not a valid class");
-				e.printStackTrace();
-			} 
+			if (neighbType.equals("AllNeighbors")){
+				myNeighb = new AllNeighbors(aroundMe, myPos);
+			}
 			
+			else if(neighbType.equals("HexagonNeighbors")){
+				myNeighb = new HexagonNeighbors(aroundMe, myPos);
+			}
+			
+			else if(neighbType.equals("PlusNeighbors")){
+				myNeighb = new PlusNeighbors(aroundMe, myPos);
+			}
 			return myNeighb;
 		}
 		
