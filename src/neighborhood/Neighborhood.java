@@ -1,36 +1,25 @@
 package neighborhood;
-import java.util.ArrayList;
 import java.util.List;
 
-import species.Species;
+import util.Cell;
+import util.Grid;
 import util.Location;
 
 public abstract class Neighborhood {
-	private List<Species> myNeighbors;
+	private List<Cell> myNeighbors;
 
-	public Neighborhood(List<Species> neighborhood, Location location){
-		setMyNeighbors(findMyNeighbors(neighborhood, location));
+	public Neighborhood(Grid mainGrid, Location currLoc){
+		setMyNeighbors(findMyNeighbors(mainGrid, currLoc));
 	}
 	
-	public abstract List<Species> findMyNeighbors(List<Species> neighborhood, Location mylocation);
-	public void setMyNeighbors(List<Species> myNeighbors) {
+	public abstract List<Cell> findMyNeighbors(Grid mainGrid, Location currLoc);
+	
+	public void setMyNeighbors(List<Cell> myNeighbors) {
 		this.myNeighbors = myNeighbors;
 	}
 	
-	public List<Species> getMyNeighbors() {
+	public List<Cell> getMyNeighbors() { 
 		return myNeighbors;
 	}
 
-	public List<Location> getEmptySpaces(){
-		List <Location> ret = new ArrayList<Location>();
-		for (Species s : myNeighbors){
-			if (s.getMyLocation().equals(null)){
-				ret.add(s.getMyLocation());
-			}
-		}
-		return ret;
-	}
-	
-	
-	
 }

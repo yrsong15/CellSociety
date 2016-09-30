@@ -12,6 +12,7 @@ import util.Grid;
 public class GameEngine {
 	
 	private Grid myGrid;
+	private Grid copyGrid;
 	
 	public GameEngine(Grid myGrid){
 		this.myGrid = myGrid;
@@ -25,68 +26,62 @@ public class GameEngine {
 	 * actions to do this.
 	 */
 	public void updateWorld(){
-		Grid copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
-		List<Location> toDelete = new ArrayList<Location>();
-		List<Location> emptyCells = copyGrid.getEmptyCells();
+		copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
+		List<Location> availableCells = copyGrid.getAvailableCells();
 		List<Species> alreadyVisited = new ArrayList<Species>();
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
-				Species currSpecies= myGrid.getCell(currLoc);
-				if (currSpecies != null && !alreadyVisited.contains(currSpecies)){
-					alreadyVisited.add(currSpecies);
-					Location moveTo = currSpecies.performTask(emptyCells, copyGrid.getNeighborhood(currLoc));
-					if (moveTo == null){
-						toDelete.add(currLoc);
+				Cell currCell = myGrid.getCell(currLoc);
+				if (currCell.hasOccupants()){
+					updateCell(currCell, alreadyVisited, availableCells);
+				}
+			}
+		}
+		updateStates();
+	}
+	
+	public void updateCell(Cell currCell, List<Species> alreadyVisited, List<Location> availableCells){
+		List<Species> occupants = currCell.getOccupants();
+		for (Species currSpecies : occupants){
+			if (!alreadyVisited.contains(currSpecies)){
+				alreadyVisited.add(currSpecies);
+				Location currLoc = currCell.getLocation();
+				
+				Location moveTo = currSpecies.performTask(availableCells, copyGrid.createNeighborhood(currLoc));
+				if (moveTo == null){
+					currCell.removeOccupant(currSpecies);
+				}
+				else if(!moveTo.equals(currLoc)){
+					myGrid.moveSpecies(currLoc, moveTo, currSpecies);
+					Cell newCell = myGrid.getCell(moveTo);
+					if (!newCell.hasFreeSpace()){
+						availableCells.remove(moveTo);
 					}
-					else if(!moveTo.equals(currLoc)){
-						emptyCells.remove(moveTo);
-						move(currLoc, moveTo, currSpecies);
-						if (currSpecies.toBreed()){
-							myGrid.setCell(currLoc, currSpecies.clone(currLoc));
-						}
+					if (currSpecies.toBreed()){
+						//stopping point, check from here
+						myGrid.addToGrid(currCell.getLocation(), currSpecies.clone(currLoc));
 					}
 				}
 			}
 		}
-		clearFallenSpecies(toDelete);
-		updateStates();
 	}
-	
-	
-	/**
-	 * @param from Location species object is moving from
-	 * @param to Location species object is moving to
-	 * @param moving species object that would like to move
-	 */
-	private void move(Location from, Location to, Species moving){
-		moving.setMyLocation(to);
-		myGrid.setCell(to, moving);
-		myGrid.setCell(from, null);
 		
-	}
 	
-	
-	/**
-	 * Removes species that have died from the grid
-	 * @param toDelete a list of locations that species need to be removed from (or set to null)
-	 */
-	private void clearFallenSpecies(List<Location> toDelete){
-		for (int i = 0; i < toDelete.size(); i++){
-			myGrid.setCell(toDelete.get(i), null);
-		}
-	}
-	
-	/**
-	 * Updates the current states of all species to their next states.
-	 */
+	//do we really need this function since we are now making a deep copy of grid?
 	public void updateStates(){
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
-				Species currSpecies= myGrid.getCell(currLoc);
-				if (currSpecies != null){
-					currSpecies.updateToLatestState();
+				Cell currCell = myGrid.getCell(currLoc);
+				if (currCell.hasOccupants()){
+					List<Species> occupants = currCell.getOccupants();
+					for (int k = 0; k < currCell.getSize(); k++){
+						Species currSpecies = occupants.get(k);
+						if (currSpecies != null){
+							currSpecies.updateToLatestState();
+						}
+					}
 				}
 			}
 		}

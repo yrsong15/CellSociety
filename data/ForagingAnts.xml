@@ -1,0 +1,35 @@
+<simulation>
+	<details>
+		<name>Segregation</name>
+		<title>Segregation Team 17</title>
+		<author>         </author>
+	</details>
+	
+	<configuration>
+		<species type ="Ant">
+			<percent state="0">40</percent>
+			<percent state="1">20</percent>
+			<foodLocation></foodLocation>
+			<nestLocation></nestLocation>
+			<lifeTime></lifeTime>
+			<orientation></orientation>
+			<numberInitAnts></numberInitAnts>
+			<antsBornePerTimeStep></antsBornePerTimeStep>
+			<minPheromone></minPheromone>
+			<maxPheromone></maxPheromone>
+			<evapRatio></evapRatio>
+			<diffuseRatio></diffuseRatio>
+			<k></k>
+			<n></n>
+			<maxAntsInSimulation>1000</maxAntsInSimulation>
+			<maxAntsInLocation>10</maxAntsInLocation>
+		</species>
+	</configuration>
+	
+	
+	<grid>
+		<width>8</width>
+		<height>8</height>
+		<numCells>64</numCells>
+	</grid>
+</simulation>

@@ -1,47 +1,44 @@
 package util;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import neighborhood.AllNeighbors;
-import neighborhood.HexagonNeighbors;
+import neighborhood.WholeNeighborhood;
+import neighborhood.HexagonNeighborhood;
 import neighborhood.Neighborhood;
-import neighborhood.PlusNeighbors;
-import simulation_config.*;
+import neighborhood.PlusNeighborhood;
 import species.*;
 
 
 public class Grid {
-		Species[][] myGrid;
+		Cell[][] myGrid;
 		private int numRows;
 		private int numCols;
 		private String neighbType;
 		
 		public Grid(int width, int height){
-			myGrid = new Species[width][height];
+			myGrid = new Cell[width][height];
 			this.numRows = width;
 			this.numCols = height;
 		}
 		
 		public Grid(int width, int height, String neighbType){
-			myGrid = new Species[width][height];
+			myGrid = new Cell[width][height];
 			this.numRows = width;
 			this.numCols = height;
 			this.neighbType = neighbType;
 		}
 		
-		public Grid(Species[][] myGrid2, int width, int height, String neighbType) {
-			this.myGrid = new Species[width][height];
+		public Grid(Cell[][] myGrid2, int width, int height, String neighbType) {
+			this.myGrid = new Cell[width][height];
 			numRows = width;
 			numCols = height;
 			this.neighbType = neighbType;
 			copyFill(myGrid2);
 		}
 		
-		public void copyFill(Species[][] myOrig){
+		public void copyFill(Cell[][] myOrig){
 			for (int i = 0; i < numRows; i++){
 				for (int j = 0; j <numCols; j++){
 					this.myGrid[i][j] = myOrig[i][j];
@@ -61,28 +58,44 @@ public class Grid {
 			return numCols;
 		}
 		
-		public void setCell(Location pos, Species mySpecies){
-			myGrid[pos.getX()][pos.getY()] = mySpecies;
+		/**
+		 * @param from Location species object is moving from
+		 * @param to Location species object is moving to
+		 * @param moving species object that would like to move
+		 */
+		public void moveSpecies(Location from, Location to, Species moving){
+			moving.setMyLocation(to);
+			myGrid[from.getX()][from.getY()].removeOccupant(moving);
+			myGrid[to.getX()][to.getY()].addOccupant(moving);
 		}
 		
-		public void addCell(Species mySpecies){
+		
+		public void addToGrid(Location to, Species toAdd){
+			myGrid[to.getX()][to.getY()].addOccupant(toAdd);
+		}
+		
+		
+		
+		public void addRandomly(Species currSpecies){
 			Random rand = new Random(); 
 			int row = rand.nextInt(numRows); 
 			int col = rand.nextInt(numCols);
-			while (myGrid[row][col]!= null){
+			
+			while (!myGrid[row][col].hasFreeSpace()){
 				row = rand.nextInt(numRows); 
 				col = rand.nextInt(numCols);
 			}
-			myGrid[row][col] = mySpecies;
-			mySpecies.setMyLocation(new Location(row, col));
+			myGrid[row][col].addOccupant(currSpecies);
+			currSpecies.setMyLocation(new Location(row, col));
 		}
 		
-		public List<Location> getEmptyCells(){
+		
+		public List<Location> getAvailableCells(){
 			List<Location> emptyCells = new ArrayList<Location>();
 			for (int i = 0; i < myGrid.length; i++){
 				for (int j = 0; j < myGrid[i].length; j++){
-					Species curr= myGrid[i][j];
-					if (curr == null){
+					Cell curr= myGrid[i][j];
+					if (curr.hasFreeSpace()){
 						emptyCells.add(new Location(i, j));
 					}
 				}
@@ -93,56 +106,36 @@ public class Grid {
 		public boolean isValidCell(int row, int col){
 			return (row >= 0 && row < numRows &&
 	                col >= 0 && col < numCols);
-			
 		}
-			
+
 		
 		
-		public Neighborhood getNeighborhood(Location pos){
-			int row = pos.getX();
-			int col = pos.getY();
-		    List<Species> neighbors = new ArrayList<>();
-		    for( int changeRow = -1; changeRow <= 1; ++changeRow) {
-		        for( int changeCol = -1; changeCol <= 1; ++changeCol) {
-		            if( changeRow == 0 && changeCol == 0 ) {
-		            	continue;
-		            }
-		            
-	            	int newRow = changeRow + row;
-		            int newCol = changeCol + col;
-		            if(isValidCell(newRow, newCol) && myGrid[newRow][newCol]!=null) {
-		            	neighbors.add(myGrid[newRow][newCol]);
-		            
-		            }
-		        }
-		    }
-			return createNeighborhood(neighbors, pos);
-		}
-		
-		
-		public Neighborhood createNeighborhood(List<Species> aroundMe, Location myPos) {
+		/**
+		 * @param myPos
+		 * @return neighborhood of given position depending on neighborhood type for this simulation
+		 */
+		public Neighborhood createNeighborhood(Location myPos) {
 			Neighborhood myNeighb = null;
 			if (neighbType.equals("AllNeighbors")){
-				myNeighb = new AllNeighbors(aroundMe, myPos);
+				myNeighb = new WholeNeighborhood(this, myPos);
 			}
 			
 			else if(neighbType.equals("HexagonNeighbors")){
-				myNeighb = new HexagonNeighbors(aroundMe, myPos);
+				myNeighb = new HexagonNeighborhood(this, myPos);
 			}
 			
 			else if(neighbType.equals("PlusNeighbors")){
-				myNeighb = new PlusNeighbors(aroundMe, myPos);
+				myNeighb = new PlusNeighborhood(this, myPos);
 			}
 			return myNeighb;
 		}
 		
 		
 		/**
-		 * 
 		 * @param pos
 		 * @return
 		 */
-		public Species getCell(Location pos){
+		public Cell getCell(Location pos){
 			return myGrid[pos.getX()][pos.getY()];
 		}
 		
@@ -151,26 +144,26 @@ public class Grid {
 		 * Outputs the current grid; print output based on state parameter
 		 * @param state if true, outputs state of each species. Else, outputs first letter of each species type
 		 */
-		public void outputGridValues(Boolean state){
-			for (int i = 0; i < myGrid.length; i++){
-				String rowVal = "";
-				for (int j = 0; j < myGrid[i].length; j++){
-					Species curr= myGrid[i][j];
-					if (curr != null){
-						if (state){//for GameOfLifeSim, FireSim
-							rowVal+= curr.getCurrState() + " "; 
-						}
-						else{//for Predator-PreySim, SegregationSim
-							rowVal+= curr.getClass().toString().substring(14, 15) + " "; 
-						}
-					
-						
-					}
-					else{
-						rowVal+=". ";
-					}
-				}
-				System.out.println(rowVal);
-			}
-		}
+//		public void outputGridValues(Boolean state){
+//			for (int i = 0; i < myGrid.length; i++){
+//				String rowVal = "";
+//				for (int j = 0; j < myGrid[i].length; j++){
+//					Species curr= myGrid[i][j];
+//					if (curr != null){
+//						if (state){//for GameOfLifeSim, FireSim
+//							rowVal+= curr.getCurrState() + " "; 
+//						}
+//						else{//for Predator-PreySim, SegregationSim
+//							rowVal+= curr.getClass().toString().substring(14, 15) + " "; 
+//						}
+//					
+//						
+//					}
+//					else{
+//						rowVal+=". ";
+//					}
+//				}
+//				System.out.println(rowVal);
+//			}
+//		}
 }
