@@ -10,10 +10,10 @@ import util.Grid;
  * @author Chalena
  */
 public class GameEngine {
-	
+
 	private Grid myGrid;
 	private Grid copyGrid;
-	
+
 	public GameEngine(Grid myGrid){
 		this.myGrid = myGrid;
 	}
@@ -39,6 +39,7 @@ public class GameEngine {
 			}
 		}
 		applyDecisions();
+
 	}
 
 	public void updateCell(Cell currCell, List<Species> alreadyVisited, List<Location> availableCells){
@@ -47,15 +48,16 @@ public class GameEngine {
 			if (!alreadyVisited.contains(currSpecies)){
 				alreadyVisited.add(currSpecies);
 				Location currLoc = currCell.getLocation();
-				currSpecies.performTask(availableCells, copyGrid.createNeighborhood(currLoc));
+				currSpecies.updateNextLocation(availableCells, copyGrid.createNeighborhood(currLoc));
 			}
 		}
 	}
-		
-	
-	
+
+
+
 	//do we really need this function since we are now making a deep copy of grid?
 	public void applyDecisions(){
+
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
@@ -69,7 +71,7 @@ public class GameEngine {
 						if (moveTo == null){
 							currCell.removeOccupant(currSpecies);
 						}
-						
+
 						else if(!moveTo.equals(currLoc)){
 							myGrid.getCell(moveTo).applyEffect(currSpecies);
 							if (!myGrid.getCell(moveTo).hasFreeSpace()){
@@ -78,12 +80,12 @@ public class GameEngine {
 							else{
 								myGrid.moveSpecies(currLoc, moveTo, currSpecies);
 							}
-							
+
 							if (currCell.hasFreeSpace() && currSpecies.toBreed()){
 								myGrid.addToGrid(currCell.getLocation(), currSpecies.clone(currLoc));
 							}
 						}
-						
+
 						currSpecies.setCurrState(currSpecies.getNextState());
 						currSpecies.setCurrLocation(currSpecies.getNextLocation());
 					}
@@ -91,6 +93,6 @@ public class GameEngine {
 			}
 		}
 	}
-	
-	
+
+
 }

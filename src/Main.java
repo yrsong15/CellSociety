@@ -1,12 +1,7 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import simulation_config.GameofLifeSim;
-import simulation_config.PredatorPreySim;
-import simulation_config.SegregationSim;
-import simulation_config.SimulationConfig;
 import user_interface.Controller;
-import util.GameEngine;
-import util.Grid;
+
 
 
 

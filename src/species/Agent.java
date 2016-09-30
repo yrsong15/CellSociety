@@ -1,6 +1,7 @@
 package species;
 
 import java.util.Collections;
+
 import java.util.List;
 
 import neighborhood.Neighborhood;
@@ -20,7 +21,7 @@ public class Agent extends Species {
 	}
 
 	@Override
-	public void performTask(List<Location> emptyCells, Neighborhood neighbors) {
+	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors) {
 		List<Location> sameAgents = neighbors.findNeighborsOfState(this.getCurrState());
 		int numberofneighbors = neighbors.getTotalNeighbors();
 		int numberofsameagent = sameAgents.size();

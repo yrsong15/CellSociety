@@ -6,6 +6,11 @@ import species.Species;
 import util.Cell;
 import util.Grid;
 import util.Location;
+import util.Orientation;
+
+/***
+ * @author Owen
+ */
 
 public abstract class Neighborhood {
 	private List<Cell> myNeighbors;
@@ -23,9 +28,12 @@ public abstract class Neighborhood {
 				if (currSpecies.getCurrState() == state){
 					matches.add(currSpecies.getCurrLocation());
 				}
+
 			}
+		
 		}
 		return matches;
+
 	}
 	
 	public int getTotalNeighbors(){

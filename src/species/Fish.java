@@ -8,6 +8,7 @@ import util.Location;
 /**
  * @author Owen, Chalena
  */
+
 public class Fish extends WatorSpecies {
 	private int standardBreedTime = 3;
 	
@@ -37,7 +38,7 @@ public class Fish extends WatorSpecies {
 	}
 	
 	@Override
-	public void performTask(List<Location> emptyCells, Neighborhood myneighbors){
+	public void updateNextLocation(List<Location> emptyCells, Neighborhood myneighbors){
 		List<Location> spaces = this.getCurrLocation().getAdjacentCells(emptyCells);
 		
 		if (!spaces.isEmpty()){

@@ -1,5 +1,6 @@
 package species;
 
+
 import java.util.Collections;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import util.Location;
 /**
  * @author Owen, Chalena
  */
+
 public class Shark extends WatorSpecies{
 	private int standardBreedTime = 10;
 	private int standardStarveTime = 3;
@@ -38,10 +40,11 @@ public class Shark extends WatorSpecies{
 	
 
 	@Override
-	public void performTask(List<Location> emptyCells, Neighborhood neighbors) {
+	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors) {
 		if (reachedStarvation()){
 			setNextLocation(null);
 			return;
+
 		}
 		List<Location> possibleMoves = neighbors.findNeighborsOfState(0);
 		

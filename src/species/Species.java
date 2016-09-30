@@ -4,7 +4,12 @@ import java.util.List;
 import neighborhood.Neighborhood;
 import util.Location;
 
+/***
+ * @author Owen
+ */
+
 public abstract class Species {
+
 	private int currState; // 0 is initial state
 	private int nextState;
 
@@ -26,7 +31,7 @@ public abstract class Species {
 	
 	public abstract boolean isPredator();
 	
-	public abstract void performTask(List<Location> emptyCells, Neighborhood neighbors);
+	public abstract void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors);
 	
 	public Location getCurrLocation() {
 		return currLocation;

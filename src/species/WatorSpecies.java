@@ -5,11 +5,16 @@ import java.util.List;
 import neighborhood.Neighborhood;
 import util.Location;
 
+/***
+ * @author Owen
+ */
+
 public abstract class WatorSpecies extends Species{
 	
 	private int timeUntilBreed;
 	private boolean roomToBreed;
 	
+
 	public abstract boolean toBreed();
 	
 	
