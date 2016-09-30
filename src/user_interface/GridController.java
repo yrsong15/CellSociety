@@ -13,6 +13,9 @@ import util.GameEngine;
 import util.Grid;
 import util.Location;
 
+/*** @author Ray Song(ys101)
+ * 
+*/
 public class GridController {
 
 	private SimulationConfig mySim;
@@ -24,9 +27,6 @@ public class GridController {
 	private double FRAMES_PER_SECOND = 1;
     private double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-	
-	public GridController(){
-	}
 	
 	public Grid startGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid){
 		if(path.equals(rb.getString("GameOfLifeXMLPath"))){
@@ -46,7 +46,6 @@ public class GridController {
 		myEngine = new GameEngine(grid);
 		return grid;
 	}
-
 	
 	public void displayGrid(Group g, Grid grid, int margin){
 		int cellSize = GRID_SIZE / grid.getWidth();

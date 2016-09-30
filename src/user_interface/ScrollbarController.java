@@ -8,6 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/*** @author Ray Song(ys101)
+ * 	
+*/
 public class ScrollbarController {
 	
 	
