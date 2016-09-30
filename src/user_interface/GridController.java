@@ -21,14 +21,33 @@ public class GridController {
 	private SimulationConfig mySim;
 	private GameEngine myEngine;
 
-	
 	private final int GRID_SIZE = 420;
+	private final Color COLORONE = Color.RED;
+	private final Color COLORTWO = Color.YELLOW;
 	
 	private double FRAMES_PER_SECOND = 1;
     private double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    
 	
 	public Grid startGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid){
+		setSimConfig(rb, path);
+		mySim.getXMLDoc(path);
+		grid = mySim.populateGrid();
+		myEngine = new GameEngine(grid);
+		return grid;
+	}
+	
+	public Grid resetGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid, int input){
+		setSimConfig(rb, path);
+		updateCellSize(input);
+		mySim.getXMLDoc(path);
+		grid = mySim.repopulateGrid();
+		myEngine = new GameEngine(grid);
+		return grid;
+	}
+	
+	public void setSimConfig(ResourceBundle rb, String path){
 		if(path.equals(rb.getString("GameOfLifeXMLPath"))){
 			mySim = new GameofLifeSim();
 		}
@@ -41,10 +60,6 @@ public class GridController {
 		else if(path.equals(rb.getString("SegregationXMLPath"))){
 			mySim = new SegregationSim();
 		}
-		mySim.getXMLDoc(path);
-		grid = mySim.populateGrid();
-		myEngine = new GameEngine(grid);
-		return grid;
 	}
 	
 	public void displayGrid(Group g, Grid grid, int margin){
@@ -56,10 +71,10 @@ public class GridController {
 				Location curr = new Location(i,j);
 				if(grid.getCell(curr) != null){
 					if(grid.getCell(curr).getCurrState() == 1){
-						r.setFill(Color.RED);
+						r.setFill(COLORONE);
 					}
 					else{
-						r.setFill(Color.YELLOW);
+						r.setFill(COLORTWO);
 					}
 				}
 				g.getChildren().add(r);
@@ -70,6 +85,10 @@ public class GridController {
 	
 	public GameEngine getGameEngine(){
 		return myEngine;
+	}
+	
+	public void updateCellSize(int input){
+		mySim.setCellSize(input);
 	}
 	
 	public void updateDelay(double fps){
