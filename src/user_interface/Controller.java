@@ -39,7 +39,7 @@ public class Controller{
     	myGC = new GridController();
     	mySC = new SceneController(myStage, myGC);
     	mySBC = new ScrollbarController();
-    	myGrid = new Grid(myGC.getGridSize(), myGC.getGridSize());
+    	myGrid = new Grid(myGC.getGridSize(), myGC.getGridSize(), "WholeNeighborhood", "Cell");
     	myTFC = new TextFieldController();
     	
     	setNewInitScene(myStage, mySC.startScene());

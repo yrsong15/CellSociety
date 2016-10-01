@@ -11,12 +11,20 @@ public class GameOfLifeSimulation extends SimulationParser{
 	
 	
 	public GameOfLifeSimulation(){
-		setNeighborhoodType("AllNeighbors");
+		setNeighborhoodType("WholeNeighborhood");
+		setCellType("Cell");
 	}
 
 
 	@Override
-	public void setParameters(Element speciesInfo, Species mySpecies) {
+	public void setSpeciesParameters(Element speciesInfo, Species mySpecies) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected void setGeneralParameters() {
 		// TODO Auto-generated method stub
 		
 	}

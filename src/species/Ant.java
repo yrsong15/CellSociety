@@ -18,8 +18,8 @@ public class Ant extends Species {
 	private int currHomePheromones;
 	private int currFoodPheromones;
 	private int desiredPheromones;
-	private int maxDesiredPheromones = 100;
-	private int standardLifeTime = 100;
+	private int maxPheromones;
+	private int standardLifeTime;
 	private int turnsSinceBorn;
 	
 
@@ -44,7 +44,7 @@ public class Ant extends Species {
 			return;
 		}
 		if (atNest || atFoodSource){
-			setDesiredPheromones(maxDesiredPheromones);
+			setDesiredPheromones(maxPheromones);
 		}
 	
 		turnsSinceBorn++;
@@ -185,7 +185,7 @@ public class Ant extends Species {
 	}
 	
 	public void setMaxPheromones(int maxPheromones) {
-		this.maxDesiredPheromones = maxPheromones;
+		this.maxPheromones = maxPheromones;
 	}
 	
 	@Override

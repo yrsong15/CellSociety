@@ -13,20 +13,28 @@ import species.Species;
 public class PredatorPreySimulation extends SimulationParser{
 
 	public PredatorPreySimulation() {
-		setNeighborhoodType("PlusNeighbors");
+		setNeighborhoodType("PlusNeighborhood");
+		setCellType("Cell");
 	}
 	
 
 	@Override
-	public void setParameters(Element speciesInfo, Species mySpecies) {
-		int breedTurns = Integer.parseInt(super.getElement(speciesInfo, "breedTurns"));
+	public void setSpeciesParameters(Element speciesInfo, Species mySpecies) {
+		int breedTurns = Integer.parseInt(getElement(speciesInfo, "breedTurns"));
     	if (speciesInfo.getAttribute("type").equals("Shark")){
-    		int starveTurns = Integer.parseInt(super.getElement(speciesInfo, "starveTurns"));
+    		int starveTurns = Integer.parseInt(getElement(speciesInfo, "starveTurns"));
     		((Shark) mySpecies).setStandardStarveTime(starveTurns);
     		((Shark) mySpecies).setStandardBreedTime(breedTurns);
     	}
     	else{
     		((Fish) mySpecies).setStandardBreedTime(breedTurns);
     	}
+	}
+
+
+	@Override
+	protected void setGeneralParameters() {
+		// TODO Auto-generated method stub
+		
 	}
 }

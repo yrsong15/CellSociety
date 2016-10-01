@@ -11,37 +11,18 @@
 			<percent state="1">20</percent>
 			
 			<initialization state = "1">		
+				<row>2 5 0</row>
 				<row>0 0 0</row>
-				<row>1 0 0</row>
-				<row>1 0 1</row>
+				<row>0 0 0</row>
 			</initialization>
-			
-			<foodLocation></foodLocation>
-			<nestLocation></nestLocation>
-			<lifeTime></lifeTime>
-			<orientation></orientation>
-			<numberInitAnts></numberInitAnts>
-			<antsBornePerTimeStep></antsBornePerTimeStep>
-			<minPheromone></minPheromone>
-			<maxPheromone></maxPheromone>
-			<evapRatio></evapRatio>
-			<diffuseRatio></diffuseRatio>
-			<k></k>
-			<n></n>
-			<maxAntsInSimulation>1000</maxAntsInSimulation>
-			<maxAntsInLocation>10</maxAntsInLocation>
 		</species>
 		
-		<species type ="Ant">
-			<percent state="0">40</percent>
-			<percent state="1">20</percent>
-			
-			<initialization state = "0">		
-				<row>1 1 1</row>
-				<row>0 1 1</row>
-				<row>0 1 0</row>
-			</initialization>
-		</species>
+		<general>
+			<foodLocation>0 0</foodLocation>
+			<nestLocation>2 2</nestLocation>
+			<lifeSpan>500</lifeSpan>
+			<maxPheromones>1000</maxPheromones>
+		</general>
 	</configuration>
 	
 	
