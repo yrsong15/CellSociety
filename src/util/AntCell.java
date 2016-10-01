@@ -1,5 +1,6 @@
 package util;
 
+import species.Ant;
 import species.Species;
 
 public class AntCell extends Cell{
@@ -45,9 +46,11 @@ public class AntCell extends Cell{
 
 	@Override
 	public void applyEffect(Species incoming) {
-		if (hasFreeSpace()){
-			//apply effect
-		}
+		Ant incomingAnt = (Ant)incoming;
+		incomingAnt.setAtNest(isNest);
+		incomingAnt.setAtFoodSource(isFoodSource);
+		incomingAnt.setCurrHomePheromones(getHomePheromones());
+		incomingAnt.setCurrFoodPheromones(getFoodPheromones());
 	}
 
 }

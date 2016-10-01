@@ -105,20 +105,19 @@ public abstract class SimulationConfig {
 	 */
 	public Grid populateGrid(){		
 		Grid firstGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
-	    NodeList speciesList = myXML.getElementsByTagName("species");
     	initNumCells();
-    	firstGrid = thePopulationLoop(speciesList, firstGrid);
+    	firstGrid = thePopulationLoop(firstGrid);
 	    return firstGrid;
 	}
 	
 	public Grid repopulateGrid(){
 		Grid newGrid = new Grid(numRows, numCols, neighborhoodType);
-		NodeList speciesList = myXML.getElementsByTagName("species");
-		newGrid = thePopulationLoop(speciesList, newGrid);
+		newGrid = thePopulationLoop(newGrid);
 		return newGrid;
 	}
 	
-	public Grid thePopulationLoop(NodeList speciesList, Grid grid){
+	public Grid thePopulationLoop(Grid grid){
+		NodeList speciesList = myXML.getElementsByTagName("species");
 	    for (int curr = 0; curr < speciesList.getLength(); curr++) {//for each species
             Element currSpecies= (Element) speciesList.item(curr);
             String speciesType = currSpecies.getAttribute("type");	            
@@ -198,7 +197,7 @@ public abstract class SimulationConfig {
 	 * @return height of the grid, or how many rows it contains
 	 */
 	public int getGridHeight(){
-//		return numRows;
+		if(numRows != 0) return numRows;
 		return Integer.parseInt(getElement("height"));
 	}
 	
@@ -206,7 +205,7 @@ public abstract class SimulationConfig {
 	 * @return width of the grid, or how many columns it contains
 	 */
 	public int getGridWidth(){
-//		return numCols;
+		if(numCols != 0) return numCols;
 		return Integer.parseInt(getElement("width"));
 	}
 	

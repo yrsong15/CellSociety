@@ -10,6 +10,9 @@ public class ForagingAnts extends SimulationConfig{
 
 	@Override
 	public void setParameters(Element speciesInfo, Species mySpecies) {
+		
+		
+		
 	}
 
 	
