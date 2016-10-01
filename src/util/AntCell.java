@@ -45,8 +45,9 @@ public class AntCell extends Cell{
 
 	@Override
 	public void applyEffect(Species incoming) {
-		// TODO Auto-generated method stub
-		
+		if (hasFreeSpace()){
+			//apply effect
+		}
 	}
 
 }

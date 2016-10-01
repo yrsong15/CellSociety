@@ -60,7 +60,7 @@ public class Orientation {
 		}
 	}
 	
-	public List<Location> getForwardLocationsDiff(Location in){
+	public List<Location> getForwardLocations(Location in){
 		return forwardLocations;
 	}
 	
