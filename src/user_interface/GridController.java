@@ -32,7 +32,7 @@ public class GridController {
 	
 	public Grid startGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid){
 		setSimConfig(rb, path);
-		mySim.getXMLDoc(path);
+		mySim.prepareXMLDoc(path);
 		grid = mySim.populateGrid();
 		myEngine = new GameEngine(grid);
 		return grid;
@@ -41,7 +41,7 @@ public class GridController {
 	public Grid resetGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid, int input){
 		setSimConfig(rb, path);
 		updateCellSize(input);
-		mySim.getXMLDoc(path);
+		mySim.prepareXMLDoc(path);
 		grid = mySim.repopulateGrid();
 		myEngine = new GameEngine(grid);
 		return grid;
