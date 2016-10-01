@@ -10,7 +10,6 @@ public class AntCell extends Cell{
 	private int foodPheromones;
 	private int homePheromones;
 	private float evaporationRatio = (float) 0.001;
-	private float diffusionRatio = (float) 0.001;
 
 	
 	public AntCell(Location where) {
@@ -55,6 +54,7 @@ public class AntCell extends Cell{
 		incomingAnt.setCurrHomePheromones(getHomePheromones());
 		incomingAnt.setCurrFoodPheromones(getFoodPheromones());
 	}
+	
 	@Override
 	public void step(){
 		if(isNest){

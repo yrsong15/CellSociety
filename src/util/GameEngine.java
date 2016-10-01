@@ -55,8 +55,6 @@ public class GameEngine {
 	}
 
 
-
-	//do we really need this function since we are now making a deep copy of grid?
 	public void applyDecisions(){
 
 		for (int i = 0; i < myGrid.getWidth(); i++){
@@ -67,32 +65,37 @@ public class GameEngine {
 				if (currCell.hasOccupants()){
 					List<Species> occupants = currCell.getOccupants();
 					List<Species> copyOccupants = new ArrayList<Species>(occupants);
-					for (int k = 0; k < copyOccupants.size(); k++){
-						Species currSpecies = copyOccupants.get(k);
-						Location moveTo = currSpecies.getNextLocation();
-						if (moveTo == null){
-							currCell.removeOccupant(currSpecies);
-						}
-
-						else if(!moveTo.equals(currLoc)){
-							myGrid.getCell(moveTo).applyEffect(currSpecies);
-							if (!myGrid.getCell(moveTo).hasFreeSpace()){
-								currSpecies.setCurrLocation(currSpecies.getNextLocation());
-							}
-							else{
-								myGrid.moveSpecies(currLoc, moveTo, currSpecies);
-							}
-
-							if (currCell.hasFreeSpace() && currSpecies.toBreed()){
-								myGrid.addToGrid(currCell.getLocation(), currSpecies.clone(currLoc));
-							}
-						}
-
-						currSpecies.setCurrState(currSpecies.getNextState());
-						currSpecies.setCurrLocation(currSpecies.getNextLocation());
-					}
+					updateSpecies(currLoc, currCell, copyOccupants);
 				}
 			}
+		}
+	}
+
+
+	private void updateSpecies(Location currLoc, Cell currCell, List<Species> copyOccupants) {
+		for (int k = 0; k < copyOccupants.size(); k++){
+			Species currSpecies = copyOccupants.get(k);
+			Location moveTo = currSpecies.getNextLocation();
+			if (moveTo == null){
+				currCell.removeOccupant(currSpecies);
+			}
+
+			else if(!moveTo.equals(currLoc)){
+				myGrid.getCell(moveTo).applyEffect(currSpecies);
+				if (!myGrid.getCell(moveTo).hasFreeSpace()){
+					currSpecies.setCurrLocation(currSpecies.getNextLocation());
+				}
+				else{
+					myGrid.moveSpecies(currLoc, moveTo, currSpecies);
+				}
+
+				if (currCell.hasFreeSpace() && currSpecies.toBreed()){
+					myGrid.addToGrid(currCell.getLocation(), currSpecies.clone(currLoc));
+				}
+			}
+
+			currSpecies.setCurrState(currSpecies.getNextState());
+			currSpecies.setCurrLocation(currSpecies.getNextLocation());
 		}
 	}
 
