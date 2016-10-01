@@ -23,7 +23,7 @@ import org.w3c.dom.Element;
 
 /** @author Chalena Scholl, Ray Song(ys101)
 */
-public abstract class SimulationConfiguration {
+public abstract class SimulationParser {
 	private Document myXML;
 	private String neighborhoodType;
 	protected int speciesAdded;

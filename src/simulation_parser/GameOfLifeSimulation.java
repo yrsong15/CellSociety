@@ -7,7 +7,7 @@ import species.Species;
 /**
  * @author Chalena Scholl
  */
-public class GameOfLifeSimulation extends SimulationConfiguration{
+public class GameOfLifeSimulation extends SimulationParser{
 	
 	
 	public GameOfLifeSimulation(){

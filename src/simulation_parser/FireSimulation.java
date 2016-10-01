@@ -9,7 +9,7 @@ import species.Tree;
 /**
  * @author Chalena Scholl
  */
-public class FireSimulation extends SimulationConfiguration{
+public class FireSimulation extends SimulationParser{
 	
 
 	public FireSimulation() {

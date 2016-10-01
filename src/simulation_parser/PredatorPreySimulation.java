@@ -10,7 +10,7 @@ import species.Species;
 /**
  * @author Chalena Scholl
  */
-public class PredatorPreySimulation extends SimulationConfiguration{
+public class PredatorPreySimulation extends SimulationParser{
 
 	public PredatorPreySimulation() {
 		setNeighborhoodType("PlusNeighbors");

@@ -2,7 +2,7 @@ package simulation_parser;
 import org.w3c.dom.Element;
 import species.Species;
 
-public class ForagingAntsSimulation extends SimulationConfiguration{
+public class ForagingAntsSimulation extends SimulationParser{
 	
 	public ForagingAntsSimulation() {
 		setNeighborhoodType("WholeNeighbors");

@@ -9,7 +9,7 @@ import species.Species;
 /**
  * @author Chalena Scholl
  */
-public class SegregationSimulation extends SimulationConfiguration {
+public class SegregationSimulation extends SimulationParser {
 	
 	public SegregationSimulation(){
 		setNeighborhoodType("AllNeighbors");
