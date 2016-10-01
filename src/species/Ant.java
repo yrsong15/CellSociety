@@ -79,7 +79,7 @@ public class Ant extends Species {
 		Cell maxNeighbor = null;
 		for (Cell currNeighbor: neighborCells){
 			AntCell temp = (AntCell)currNeighbor;
-			if (pheromone.equals("food")){
+			if (pheromone.equals(pheromone)){
 				if (temp.getFoodPheromones() > max){
 					maxNeighbor = currNeighbor;
 					max = temp.getFoodPheromones();
@@ -135,6 +135,15 @@ public class Ant extends Species {
 	public void setAtNest(boolean atNest) {
 		this.atNest = atNest;
 	}
+	
+	public void setCurrHomePheromones(int currHomePheromones) {
+		this.currHomePheromones = currHomePheromones;
+	}
+
+	public void setCurrFoodPheromones(int currFoodPheromones) {
+		this.currFoodPheromones = currFoodPheromones;
+	}
+	
 	@Override
 	public boolean toBreed() {
 		return false;
