@@ -9,6 +9,13 @@
 		<species type ="Ant">
 			<percent state="0">40</percent>
 			<percent state="1">20</percent>
+			
+			<initialization state = "1">		
+				<row>0 0 0</row>
+				<row>1 0 0</row>
+				<row>1 0 1</row>
+			</initialization>
+			
 			<foodLocation></foodLocation>
 			<nestLocation></nestLocation>
 			<lifeTime></lifeTime>
@@ -24,12 +31,23 @@
 			<maxAntsInSimulation>1000</maxAntsInSimulation>
 			<maxAntsInLocation>10</maxAntsInLocation>
 		</species>
+		
+		<species type ="Ant">
+			<percent state="0">40</percent>
+			<percent state="1">20</percent>
+			
+			<initialization state = "0">		
+				<row>1 1 1</row>
+				<row>0 1 1</row>
+				<row>0 1 0</row>
+			</initialization>
+		</species>
 	</configuration>
 	
 	
 	<grid>
-		<width>8</width>
-		<height>8</height>
-		<numCells>64</numCells>
+		<width>3</width>
+		<height>3</height>
+		<numCells>9</numCells>
 	</grid>
 </simulation>

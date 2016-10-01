@@ -1,12 +1,13 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import simulation_config.GameofLifeSim;
-import simulation_config.PredatorPreySim;
-import simulation_config.SegregationSim;
-import simulation_config.SimulationConfig;
+
+import simulation_parser.ForagingAntsSimulation;
+import simulation_parser.GameOfLifeSimulation;
+import simulation_parser.PredatorPreySimulation;
+import simulation_parser.SegregationSimulation;
+import simulation_parser.SimulationParser;
 import user_interface.Controller;
-import util.GameEngine;
-import util.Grid;
+
 
 
 
@@ -20,6 +21,16 @@ public class Main extends Application{
 		Controller ctrl = new Controller();
 		ctrl.startController(s);
 		
+//		
+//		SimulationConfiguration mySim = new ForagingAntsSimulation();
+//		mySim.getXMLDoc("data/ForagingAnts.xml");
+//		Grid myGrid = mySim.populateGrid();
+//		GameEngine myEngine = new GameEngine(myGrid);
+//		myGrid.outputGridValues();
+//	//	myEngine.updateWorld();
+//		//myGrid.outputGridValues();
+//		
+//		System.out.println("-----");
 		
 	}
 	

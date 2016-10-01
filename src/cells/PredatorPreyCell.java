@@ -1,9 +1,10 @@
-package util;
+package cells;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import species.Species;
+import util.Location;
 
 public class PredatorPreyCell extends Cell{
 

@@ -4,11 +4,11 @@ import java.util.ResourceBundle;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import simulation_config.FireSim;
-import simulation_config.GameofLifeSim;
-import simulation_config.PredatorPreySim;
-import simulation_config.SegregationSim;
-import simulation_config.SimulationConfig;
+import simulation_parser.FireSimulation;
+import simulation_parser.GameOfLifeSimulation;
+import simulation_parser.PredatorPreySimulation;
+import simulation_parser.SegregationSimulation;
+import simulation_parser.SimulationParser;
 import util.GameEngine;
 import util.Grid;
 import util.Location;
@@ -18,7 +18,7 @@ import util.Location;
 */
 public class GridController {
 
-	private SimulationConfig mySim;
+	private SimulationParser mySim;
 	private GameEngine myEngine;
 
 	private final int GRID_SIZE = 420;
@@ -32,7 +32,7 @@ public class GridController {
 	
 	public Grid startGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid){
 		setSimConfig(rb, path);
-		mySim.getXMLDoc(path);
+		mySim.prepareXMLDoc(path);
 		grid = mySim.populateGrid();
 		myEngine = new GameEngine(grid);
 		return grid;
@@ -41,7 +41,7 @@ public class GridController {
 	public Grid resetGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid, int input){
 		setSimConfig(rb, path);
 		updateCellSize(input);
-		mySim.getXMLDoc(path);
+		mySim.prepareXMLDoc(path);
 		grid = mySim.repopulateGrid();
 		myEngine = new GameEngine(grid);
 		return grid;
@@ -49,16 +49,16 @@ public class GridController {
 	
 	public void setSimConfig(ResourceBundle rb, String path){
 		if(path.equals(rb.getString("GameOfLifeXMLPath"))){
-			mySim = new GameofLifeSim();
+			mySim = new GameOfLifeSimulation();
 		}
 		else if(path.equals(rb.getString("SpreadingFireXMLPath"))){
-			mySim = new FireSim();
+			mySim = new FireSimulation();
 		}
 		else if(path.equals(rb.getString("FishSharkXMLPath"))){
-			mySim = new PredatorPreySim();
+			mySim = new PredatorPreySimulation();
 		}
 		else if(path.equals(rb.getString("SegregationXMLPath"))){
-			mySim = new SegregationSim();
+			mySim = new SegregationSimulation();
 		}
 	}
 	

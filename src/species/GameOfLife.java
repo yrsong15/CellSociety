@@ -8,15 +8,15 @@ import util.Location;
 /**
  * @author Owen Chung, Chalena Scholl
  */ 
-public class CellofLife extends Species{
-	public CellofLife(){
+public class GameOfLife extends Species{
+	public GameOfLife(){
 		super();
 	}
 	@Override
 	/**
 	 * 0 state = live cells, 1 state = dead cells
 	 */
-	public void performTask(List<Location> emptyCells, Neighborhood neighbors){
+	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors){
 		List<Location> liveNeighbors = neighbors.findNeighborsOfState(0);
 		int numLiveNeighbors = liveNeighbors.size();
 		

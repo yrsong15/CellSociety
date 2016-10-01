@@ -7,7 +7,9 @@ import util.Location;
 /***
  * @author Chalena Scholl, Owen Chung
  */
+
 public abstract class Species {
+
 	private int currState; // 0 is initial state
 	private int nextState;
 
@@ -20,6 +22,10 @@ public abstract class Species {
 		currLocation = null;
 		
 	}
+	public Species(Location currLoc){
+		currState = 0;
+		currLocation = currLoc;
+	}
 	
 	public abstract boolean toBreed();
 	
@@ -29,7 +35,7 @@ public abstract class Species {
 	
 	public abstract boolean isPredator();
 	
-	public abstract void performTask(List<Location> emptyCells, Neighborhood neighbors);
+	public abstract void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors);
 	
 	public Location getCurrLocation() {
 		return currLocation;

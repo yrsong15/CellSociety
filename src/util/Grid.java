@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cells.Cell;
 import neighborhood.WholeNeighborhood;
 import neighborhood.HexagonNeighborhood;
 import neighborhood.Neighborhood;
@@ -16,19 +17,32 @@ import species.*;
  */
 public class Grid {
 		Cell[][] myGrid;
+
 		private int numRows;
 		private int numCols;
 		private String neighbType;
 		
 		public Grid(int width, int height){
 			myGrid = new Cell[width][height];
+
 			this.numRows = width;
 			this.numCols = height;
 			initializeGrid();
 		}
+		private List<Species>[][] initGrid(int width, int height){
+			List<Species>[][] Grid = null;
+			for (int i = 0; i < width ; i++){
+				for (int j = 0; j < height; j++){
+					List<Species> temp = new ArrayList<>();
+					Grid[i][j] = temp;
+				}
+			}
+			return Grid;
+		}
 		
 		public Grid(int width, int height, String neighbType){
 			myGrid = new Cell[width][height];
+
 			this.numRows = width;
 			this.numCols = height;
 			this.neighbType = neighbType;
@@ -46,6 +60,7 @@ public class Grid {
 		
 		public Grid(Cell[][] myGrid2, int width, int height, String neighbType) {
 			this.myGrid = new Cell[width][height];
+
 			numRows = width;
 			numCols = height;
 			this.neighbType = neighbType;
@@ -53,6 +68,7 @@ public class Grid {
 		}
 		
 		public void copyFill(Cell[][] myOrig){
+
 			for (int i = 0; i < numRows; i++){
 				for (int j = 0; j <numCols; j++){
 					Cell oldCell = myOrig[i][j];
@@ -61,7 +77,7 @@ public class Grid {
 			}
 		}
 		
-		public String getNeighbType(){
+		protected String getNeighbType(){
 			return neighbType;
 		}
 
@@ -102,6 +118,7 @@ public class Grid {
 			}
 			myGrid[row][col].addOccupant(currSpecies);
 			currSpecies.setCurrLocation(new Location(row, col));
+
 		}
 		
 		
@@ -111,6 +128,7 @@ public class Grid {
 				for (int j = 0; j < myGrid[i].length; j++){
 					Cell curr= myGrid[i][j];
 					if (curr.hasFreeSpace()){
+
 						emptyCells.add(new Location(i, j));
 					}
 				}
@@ -157,6 +175,7 @@ public class Grid {
 		
 		/**
 		 * Outputs the current grid; print output based on state parameter
+		 * ONLY WORK FOR SIMULATION THAT ALLOWS ONLY ONE SPECIES PER CELL
 		 * @param state if true, outputs state of each species. Else, outputs first letter of each species type
 		 */
 		public void outputGridValues(){
@@ -173,5 +192,12 @@ public class Grid {
 				}
 				System.out.println(rowVal);
 			}
+		}
+		public Cell[][] getMyGrid() {
+			return myGrid;
+		}
+
+		public void setMyGrid(Cell[][] myGrid) {
+			this.myGrid = myGrid;
 		}
 }

@@ -2,7 +2,8 @@ package neighborhood;
 
 import java.util.ArrayList;
 import java.util.List;
-import util.Cell;
+
+import cells.Cell;
 import util.Grid;
 import util.Location;
 
@@ -17,7 +18,7 @@ public class PlusNeighborhood extends Neighborhood {
 		// TODO Auto-generated constructor stub
 	}
 
-	
+
 	@Override
 	public List<Cell> findMyNeighbors(Grid mainGrid, Location currLoc) {
 		List<Cell> ret = new ArrayList<Cell>();
@@ -38,6 +39,7 @@ public class PlusNeighborhood extends Neighborhood {
 		for (int i = 0; i < ret.size(); i++){
 			if (!ret.get(i).hasOccupants()){
 				ret.remove(i);
+
 			}
 		}
 		return ret;

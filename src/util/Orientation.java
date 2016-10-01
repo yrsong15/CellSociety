@@ -1,5 +1,6 @@
 package util;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class Orientation {
 	public void setOrientation(String orientation) {
 		Orientation = orientation;
 	}
+
 	
 	
 	public void updateOrientation(Location in, Location facing){
@@ -71,3 +73,4 @@ public class Orientation {
 		forwardLocations.add(right);
 	}
 }
+
