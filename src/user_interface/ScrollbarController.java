@@ -13,7 +13,6 @@ import javafx.scene.text.Text;
 */
 public class ScrollbarController {
 	
-	
 	private final double MIN_VALUE = 0.1;
 	private final double MAX_VALUE = 10;
 	private final double START_VALUE = 1;

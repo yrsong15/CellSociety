@@ -27,6 +27,7 @@ public class Controller{
 	private ButtonController myBC;
 	private GridController myGC;
 	private ScrollbarController mySBC;
+	private TextFieldController myTFC;
 	private Timeline myAnimation;
 	private Grid myGrid;
   
@@ -39,6 +40,7 @@ public class Controller{
     	mySC = new SceneController(myStage, myGC);
     	mySBC = new ScrollbarController();
     	myGrid = new Grid(myGC.getGridSize(), myGC.getGridSize());
+    	myTFC = new TextFieldController();
     	
     	setNewInitScene(myStage, mySC.startScene());
 		
@@ -78,6 +80,48 @@ public class Controller{
 			myGC.updateDelay(mySBC.getDelayValue());
 		}
 		
+		if(myTFC.cellSizeTFExists()){
+			myGC.updateCellSize(myTFC.getTFInput());
+		}
+		
+        KeyFrame frame = new KeyFrame(Duration.millis(myGC.getMilliSecondDelay()),
+                e -> step(g, myGrid, mySC.getMargin(), myResources, myGC.getSecondDelay()));
+        
+        myAnimation = new Timeline();
+        myAnimation.setCycleCount(Timeline.INDEFINITE);
+        myAnimation.getKeyFrames().add(frame);
+	}
+	
+    public void resetSimScene(Stage stage, Scene scene){
+    	Group root = (Group)scene.getRoot();
+    	simButtons(root);
+    	if(mySC.getState().equals(myResources.getString("GameOfLifeLabel"))){
+    		resetGrid(root, myResources.getString("GameOfLifeXMLPath"));
+    	}
+    	else if(mySC.getState().equals(myResources.getString("SpreadingFireLabel"))){
+    		resetGrid(root, myResources.getString("SpreadingFireXMLPath"));
+    	}
+    	else if (mySC.getState().equals(myResources.getString("FishSharkLabel"))){
+    		resetGrid(root, myResources.getString("FishSharkXMLPath"));
+    	}
+    	else if (mySC.getState().equals(myResources.getString("SegregationLabel"))){
+    		resetGrid(root, myResources.getString("SegregationXMLPath"));
+    	}
+		
+		stage.setScene(scene);
+    }
+	
+	public void resetGrid(Group g, String path){
+		if(mySBC.delayBarExists()){
+			myGC.updateDelay(mySBC.getDelayValue());
+		}
+		
+		int newNumCells = 0;
+		if(myTFC.cellSizeTFExists()){
+			newNumCells = myTFC.getTFInput();
+		}
+		myGrid = myGC.resetGridReader(g, myResources, mySC.getMargin(), path, myGrid, newNumCells);
+		
         KeyFrame frame = new KeyFrame(Duration.millis(myGC.getMilliSecondDelay()),
                 e -> step(g, myGrid, mySC.getMargin(), myResources, myGC.getSecondDelay()));
         
@@ -90,64 +134,62 @@ public class Controller{
 		g.getChildren().clear();
 		simButtons(g);
 		myGC.getGameEngine().updateWorld();
-    	myGC.displayGrid(g, myGrid, margin);
+    	myGC.displayGrid(g, grid, margin);
 	}
     
 	public void initButtons(Group g){
-		Button btnOne = myBC.addStartButton(g, myResources.getString("SegregationLabel"), mySC.getUIWidth()/2 + mySC.getMargin(), mySC.getMargin());
-		btnOne.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	mySC.setState(myResources.getString("SegregationLabel"));
-		    	setNewSimScene(myStage, mySC.segregationScene());
-		    }
-		});
-		Button btnTwo = myBC.addStartButton(g, myResources.getString("FishSharkLabel"), 
+		setStartButton(g, myStage, mySC.segregationScene(), myResources.getString("SegregationLabel"),
+				mySC.getUIWidth()/2 + mySC.getMargin(),mySC.getMargin());
+		setStartButton(g, myStage, mySC.fishSharkScene(), myResources.getString("FishSharkLabel"),
 				mySC.getUIWidth()/2 + mySC.getMargin() + myBC.getButtonSize(), mySC.getMargin());
-		btnTwo.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	mySC.setState(myResources.getString("FishSharkLabel"));
-		    	setNewSimScene(myStage, mySC.fishSharkScene());
-		    }
-		});
-		Button btnThree = myBC.addStartButton(g, myResources.getString("SpreadingFireLabel"), mySC.getUIWidth()/2 + mySC.getMargin(),
-				mySC.getMargin() + myBC.getButtonSize());
-		btnThree.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	mySC.setState(myResources.getString("SpreadingFireLabel"));
-		    	setNewSimScene(myStage, mySC.fireScene());
-		    }
-		});
-		Button btnFour = myBC.addStartButton(g, myResources.getString("GameOfLifeLabel"), 
+		setStartButton(g, myStage, mySC.fireScene(), myResources.getString("SpreadingFireLabel"),
+				mySC.getUIWidth()/2 + mySC.getMargin(), mySC.getMargin() + myBC.getButtonSize());
+		setStartButton(g, myStage, mySC.gameOfLifeScene(), myResources.getString("GameOfLifeLabel"),
 				mySC.getUIWidth()/2 + mySC.getMargin() + myBC.getButtonSize(), mySC.getMargin() + myBC.getButtonSize());
-		btnFour.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	mySC.setState(myResources.getString("GameOfLifeLabel"));
-		    	setNewSimScene(myStage, mySC.gameOfLifeScene());
-		    }
-		});
 	}
     
 	public void simButtons(Group g){
+		setResetButton(g);
+		setPlayButton(g);
+		setStopButton(g);
+		setStepButton(g);
+		setDelayButton(g);
+		setBackButton(g);
+		setCellSizeButton(g);
+	}
+	
+	public void setStartButton(Group g, Stage stage, Scene scene, String btnLabel, int xPos, int yPos){
+		Button btn = myBC.addStartButton(g, btnLabel, xPos, yPos);
+		btn.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	mySC.setState(btnLabel);
+		    	setNewSimScene(stage, scene);
+		    }
+		});
+	}
+	
+	public void setResetButton(Group g){
 		Button reset = myBC.addSimButton(g, myResources.getString("ResetLabel"), mySC.getUIWidth()/2 + mySC.getMargin(), mySC.getMargin());
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	myAnimation.stop();
 		    	if(mySC.getState().equals(myResources.getString("GameOfLifeLabel"))){
-		    		setNewSimScene(myStage, mySC.gameOfLifeScene());
+		    		resetSimScene(myStage, mySC.gameOfLifeScene());
 		    	}
 		    	else if(mySC.getState().equals(myResources.getString("SpreadingFireLabel"))){
-		    		setNewSimScene(myStage, mySC.fireScene());
+		    		resetSimScene(myStage, mySC.fireScene());
 		    	}
 		    	else if (mySC.getState().equals(myResources.getString("FishSharkLabel"))){
-		    		setNewSimScene(myStage, mySC.fishSharkScene());
+		    		resetSimScene(myStage, mySC.fishSharkScene());
 		    	}
 		    	else if (mySC.getState().equals(myResources.getString("SegregationLabel"))){
-		    		setNewSimScene(myStage, mySC.segregationScene());
+		    		resetSimScene(myStage, mySC.segregationScene());
 		    	}
 		    }
 		});
-		
-		
+	}
+	
+	public void setPlayButton(Group g){
 		Button play = myBC.addSimButton(g, myResources.getString("StartLabel"), mySC.getUIWidth()/2 + mySC.getMargin(), 
 				mySC.getMargin() + myBC.getSmallButtonLength());
 		play.setOnAction(new EventHandler<ActionEvent>() {
@@ -155,8 +197,9 @@ public class Controller{
 		    	myAnimation.play();
 		    }
 		});
-		
-		
+	}
+	
+	public void setStopButton(Group g){
 		Button stop = myBC.addSimButton(g, myResources.getString("StopLabel"), mySC.getUIWidth()/2 + mySC.getMargin(), 
 				mySC.getMargin() + 2 * myBC.getSmallButtonLength());
 		stop.setOnAction(new EventHandler<ActionEvent>() {
@@ -164,15 +207,20 @@ public class Controller{
 		    	myAnimation.stop();
 		    }
 		});
-		
+	}
+	
+	public void setStepButton(Group g){
 		Button step = myBC.addSimButton(g, myResources.getString("StepLabel"), mySC.getUIWidth()/2 + mySC.getMargin(),
 				mySC.getMargin() + 3 * myBC.getSmallButtonLength());
 		step.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	myAnimation.stop();
 		    	step(g, myGrid, mySC.getMargin(), myResources, myGC.getSecondDelay());
 		    }
 		});
-		
+	}
+	
+	public void setDelayButton(Group g){
 		Button delay = myBC.addSimButton(g, myResources.getString("DelayLabel"), mySC.getUIWidth()/2 + mySC.getMargin(), 
 				mySC.getMargin() + 4 * myBC.getSmallButtonLength());
 		delay.setOnAction(new EventHandler<ActionEvent>() {
@@ -181,7 +229,20 @@ public class Controller{
 		    	mySBC.simScrollBar(g, myResources, mySC.getUIWidth(), mySC.getMargin());
 		    }
 		});
-		
+	}
+	
+	public void setCellSizeButton(Group g){
+		Button cellSize = myBC.addSimButton(g, myResources.getString("CellSizeLabel"), mySC.getUIWidth()/2 + mySC.getMargin(), 
+				mySC.getMargin() + 5 * myBC.getSmallButtonLength());
+		cellSize.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	myAnimation.stop();
+		    	myTFC.cellSizeTextField(g, myResources.getString("NumberOfCells"), mySC.getUIWidth(), mySC.getMargin());
+		    }
+		});
+	}
+	
+	public void setBackButton(Group g){
 		Button anotherSim = myBC.addBackButton(g, myResources.getString("AnotherSimLabel"), 
 				mySC.getUIWidth()-myBC.getResetButtonWidth() , mySC.getUIHeight()-myBC.getSmallButtonLength());
 		

@@ -5,7 +5,7 @@ import user_interface.Controller;
 
 
 
-/*** @author Chalena, Ray
+/*** @author Chalena Scholl, Ray Song
  *
  */
 public class Main extends Application{

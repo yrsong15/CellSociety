@@ -6,7 +6,9 @@ import species.Species;
 import species.Tree;
 
 
-
+/**
+ * @author Chalena Scholl
+ */
 public class FireSim extends SimulationConfig{
 	
 

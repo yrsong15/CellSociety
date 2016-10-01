@@ -18,8 +18,8 @@
 	</configuration>
 	
 	<grid>
-		<width>10</width>
-		<height>10</height>
-		<numCells>100</numCells>
+		<width>20</width>
+		<height>20</height>
+		<numCells>400</numCells>
 	</grid>
 </simulation>

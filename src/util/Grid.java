@@ -11,6 +11,9 @@ import neighborhood.PlusNeighborhood;
 import species.*;
 
 
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public class Grid {
 		Cell[][] myGrid;
 

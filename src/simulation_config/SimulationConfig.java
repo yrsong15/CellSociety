@@ -20,11 +20,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 
+/** @author Chalena Scholl, Ray Song(ys101)
+*/
 public abstract class SimulationConfig {
 	private Document myXML;
 	private String neighborhoodType;
 	protected int speciesAdded;
 	
+	private final int DEFAULT_CELL_NUMBER = 100;
+	private int numRows;
+	private int numCols;
+	private int numCells;
+
 	
 	/**
 	 * prepares given xml document for parsing
@@ -97,9 +104,21 @@ public abstract class SimulationConfig {
 	 * @return populated grid based on values and configuration settings in given XML file
 	 */
 	public Grid populateGrid(){		
-		Grid myGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
+		Grid firstGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
 	    NodeList speciesList = myXML.getElementsByTagName("species");
-	    int numCells = Integer.parseInt(getElement("numCells"));
+    	initNumCells();
+    	firstGrid = thePopulationLoop(speciesList, firstGrid);
+	    return firstGrid;
+	}
+	
+	public Grid repopulateGrid(){
+		Grid newGrid = new Grid(numRows, numCols, neighborhoodType);
+		NodeList speciesList = myXML.getElementsByTagName("species");
+		newGrid = thePopulationLoop(speciesList, newGrid);
+		return newGrid;
+	}
+	
+	public Grid thePopulationLoop(NodeList speciesList, Grid grid){
 	    for (int curr = 0; curr < speciesList.getLength(); curr++) {//for each species
             Element currSpecies= (Element) speciesList.item(curr);
             String speciesType = currSpecies.getAttribute("type");	            
@@ -113,13 +132,13 @@ public abstract class SimulationConfig {
 		            	mySpecies.setCurrState(Integer.parseInt(((Element) percentList.item(i)).getAttribute("state")));
 		            	mySpecies.setNextState(Integer.parseInt(((Element) percentList.item(i)).getAttribute("state")));
 		            	this.setParameters(currSpecies, mySpecies);
-	            		myGrid.addRandomly((Species) mySpecies);
+	            		grid.addRandomly((Species) mySpecies);
 	            		speciesAdded++;
 	            	}	            	
 	            }
     	    }
 	    }
-	    return myGrid;
+	    return grid;
 	}
 	
 	/**
@@ -179,14 +198,30 @@ public abstract class SimulationConfig {
 	 * @return height of the grid, or how many rows it contains
 	 */
 	public int getGridHeight(){
+//		return numRows;
 		return Integer.parseInt(getElement("height"));
 	}
-	
 	
 	/**
 	 * @return width of the grid, or how many columns it contains
 	 */
 	public int getGridWidth(){
+//		return numCols;
 		return Integer.parseInt(getElement("width"));
+	}
+	
+	public void initNumCells(){
+		numRows = Integer.parseInt(getElement("height"));
+		numCols = Integer.parseInt(getElement("width"));
+		numCells = Integer.parseInt(getElement("numCells"));
+	}
+	
+	public void setCellSize(int input){
+		if(input == 0){
+			input = DEFAULT_CELL_NUMBER;
+		}
+		numCells = input;
+		numRows = (int)Math.sqrt(input);
+		numCols = (int)Math.sqrt(input);
 	}
 }

@@ -12,6 +12,9 @@ import util.Orientation;
  * @author Owen
  */
 
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public abstract class Neighborhood {
 	private List<Cell> myNeighbors;
 

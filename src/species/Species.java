@@ -5,7 +5,7 @@ import neighborhood.Neighborhood;
 import util.Location;
 
 /***
- * @author Owen
+ * @author Chalena Scholl, Owen Chung
  */
 
 public abstract class Species {

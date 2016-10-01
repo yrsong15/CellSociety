@@ -2,6 +2,10 @@ package shapes;
 
 import javafx.scene.shape.Polygon;
 
+
+/***
+ * @author Chalena Scholl
+ */
 public class Hexagon extends ShapeCreator {
 	
 	private Polygon myPolygon;
