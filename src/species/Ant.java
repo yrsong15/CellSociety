@@ -1,9 +1,10 @@
 package species;
 import java.util.ArrayList;
 import java.util.List;
+
+import cells.AntCell;
+import cells.Cell;
 import neighborhood.Neighborhood;
-import util.AntCell;
-import util.Cell;
 import util.Location;
 import util.Orientation;
 

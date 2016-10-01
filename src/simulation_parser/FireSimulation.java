@@ -1,4 +1,4 @@
-package simulation_config;
+package simulation_parser;
 
 
 import org.w3c.dom.Element;
@@ -9,10 +9,10 @@ import species.Tree;
 /**
  * @author Chalena Scholl
  */
-public class FireSim extends SimulationConfig{
+public class FireSimulation extends SimulationConfiguration{
 	
 
-	public FireSim() {
+	public FireSimulation() {
 		setNeighborhoodType("PlusNeighbors");
 	}
 

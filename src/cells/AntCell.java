@@ -1,7 +1,8 @@
-package util;
+package cells;
 
 import species.Ant;
 import species.Species;
+import util.Location;
 
 public class AntCell extends Cell{
 	private boolean isFoodSource;

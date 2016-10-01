@@ -8,8 +8,8 @@ import util.Location;
 /**
  * @author Owen Chung, Chalena Scholl
  */ 
-public class CellofLife extends Species{
-	public CellofLife(){
+public class GameOfLife extends Species{
+	public GameOfLife(){
 		super();
 	}
 	@Override

@@ -3,6 +3,7 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 
+import cells.Cell;
 import species.Species;
 import util.Grid;
 

@@ -3,7 +3,7 @@ package species;
 /***
  * @author Chalena Scholl, Owen Chung
  */
-public abstract class WatorSpecies extends Species{
+public abstract class PredatorPreySpecies extends Species{
 	
 	private int timeUntilBreed;
 	private boolean roomToBreed;

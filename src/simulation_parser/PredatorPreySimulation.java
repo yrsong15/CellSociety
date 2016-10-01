@@ -1,4 +1,4 @@
-package simulation_config;
+package simulation_parser;
 
 
 import org.w3c.dom.Element;
@@ -10,9 +10,9 @@ import species.Species;
 /**
  * @author Chalena Scholl
  */
-public class PredatorPreySim extends SimulationConfig{
+public class PredatorPreySimulation extends SimulationConfiguration{
 
-	public PredatorPreySim() {
+	public PredatorPreySimulation() {
 		setNeighborhoodType("PlusNeighbors");
 	}
 	

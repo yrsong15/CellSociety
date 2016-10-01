@@ -9,7 +9,7 @@ import util.Location;
 /**
  * @author Owen Chung, Chalena Scholl
  */
-public class Shark extends WatorSpecies{
+public class Shark extends PredatorPreySpecies{
 	private int standardBreedTime = 10;
 	private int standardStarveTime = 3;
 	private int  turnsSinceLastAte;

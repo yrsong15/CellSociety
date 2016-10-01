@@ -10,19 +10,20 @@
 			<percent state="0">60</percent>
 			<percent state="1">40</percent>
 			<threshold>30</threshold>
+			<initialization state = "0">
+				<row>0 0 0</row>
+				<row>1 0 0</row>
+				<row>1 0 1</row>
+			</initialization>
 		</species>
 	</configuration>
 	
 	<speciesType>CellofLife</speciesType>
 	
 	<grid>
-		<width>10</width>
-		<height>10</height>
-		<numCells>100</numCells>
-		
-		<row>0 0 0</row>
-		<row>1 0 0</row>
-		<row>1 0 1</row>
+		<width>3</width>
+		<height>3</height>
+		<numCells>9</numCells>
 		
 	</grid>
 </simulation>
