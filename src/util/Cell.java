@@ -64,14 +64,6 @@ public class Cell {
 	}
 	
 	public void applyEffect(Species incoming){
-		if (incoming.isPredator()){
-			List<Species>copyOccupants = new ArrayList<Species>(myOccupants);
-			for (Species inCell : copyOccupants){
-				if (inCell.isPrey()){
-					myOccupants.remove(inCell);
-				}
-			}
-		}
-			
+		
 	}
 }
