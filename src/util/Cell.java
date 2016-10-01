@@ -66,4 +66,7 @@ public class Cell {
 	public void applyEffect(Species incoming){
 		
 	}
+	public void step(){
+		
+	}
 }

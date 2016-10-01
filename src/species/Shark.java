@@ -67,10 +67,8 @@ public class Shark extends WatorSpecies{
 
 	}
 	public boolean reachedStarvation(){
-		if ((standardStarveTime - turnsSinceLastAte) <= 0){
-			return true;
-		}
-		return false;
+		return ((standardStarveTime - turnsSinceLastAte) <= 0);
+		
 	}
 	
 	public void setStandardBreedTime(int breedTime){

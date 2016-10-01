@@ -22,6 +22,10 @@ public abstract class Species {
 		currLocation = null;
 		
 	}
+	public Species(Location currLoc){
+		currState = 0;
+		currLocation = currLoc;
+	}
 	
 	public abstract boolean toBreed();
 	
