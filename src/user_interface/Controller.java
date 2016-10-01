@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -28,6 +29,8 @@ public class Controller{
 	private GridController myGC;
 	private ScrollbarController mySBC;
 	private TextFieldController myTFC;
+	private LineGraphController myLGC;
+	private LineChart<Number, Number> myChart;
 	private Timeline myAnimation;
 	private Grid myGrid;
   
@@ -41,6 +44,7 @@ public class Controller{
     	mySBC = new ScrollbarController();
     	myGrid = new Grid(myGC.getGridSize(), myGC.getGridSize());
     	myTFC = new TextFieldController();
+    	myLGC = new LineGraphController();
     	
     	setNewInitScene(myStage, mySC.startScene());
 		
@@ -79,17 +83,7 @@ public class Controller{
 		if(mySBC.delayBarExists()){
 			myGC.updateDelay(mySBC.getDelayValue());
 		}
-		
-		if(myTFC.cellSizeTFExists()){
-			myGC.updateCellSize(myTFC.getTFInput());
-		}
-		
-        KeyFrame frame = new KeyFrame(Duration.millis(myGC.getMilliSecondDelay()),
-                e -> step(g, myGrid, mySC.getMargin(), myResources, myGC.getSecondDelay()));
-        
-        myAnimation = new Timeline();
-        myAnimation.setCycleCount(Timeline.INDEFINITE);
-        myAnimation.getKeyFrames().add(frame);
+		createAnimation(g);
 	}
 	
     public void resetSimScene(Stage stage, Scene scene){
@@ -121,10 +115,12 @@ public class Controller{
 			newNumCells = myTFC.getTFInput();
 		}
 		myGrid = myGC.resetGridReader(g, myResources, mySC.getMargin(), path, myGrid, newNumCells);
-		
+		createAnimation(g);
+	}
+	
+	public void createAnimation(Group g){
         KeyFrame frame = new KeyFrame(Duration.millis(myGC.getMilliSecondDelay()),
                 e -> step(g, myGrid, mySC.getMargin(), myResources, myGC.getSecondDelay()));
-        
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
@@ -135,6 +131,7 @@ public class Controller{
 		simButtons(g);
 		myGC.getGameEngine().updateWorld();
     	myGC.displayGrid(g, grid, margin);
+    	myLGC.addDataToSeries();
 	}
     
 	public void initButtons(Group g){
@@ -156,6 +153,7 @@ public class Controller{
 		setDelayButton(g);
 		setBackButton(g);
 		setCellSizeButton(g);
+		setGraphButton(g);
 	}
 	
 	public void setStartButton(Group g, Stage stage, Scene scene, String btnLabel, int xPos, int yPos){
@@ -238,6 +236,17 @@ public class Controller{
 		    @Override public void handle(ActionEvent e) {
 		    	myAnimation.stop();
 		    	myTFC.cellSizeTextField(g, myResources.getString("NumberOfCells"), mySC.getUIWidth(), mySC.getMargin());
+		    }
+		});
+	}
+	
+	public void setGraphButton(Group g){
+		Button graph = myBC.addSimButton(g, "Test Graph", mySC.getUIWidth()/2 + mySC.getMargin(), 
+				mySC.getMargin() + 6 * myBC.getSmallButtonLength());
+		graph.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	myAnimation.stop();
+		    	myLGC.initGraphSettings(g, myResources, mySC.getUIWidth() * 1/2, mySC.getUIHeight() * 0.6);
 		    }
 		});
 	}
