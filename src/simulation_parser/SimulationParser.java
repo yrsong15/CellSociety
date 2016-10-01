@@ -26,12 +26,15 @@ import org.w3c.dom.Element;
 public abstract class SimulationParser {
 	private Document myXML;
 	private String neighborhoodType;
-	protected int speciesAdded;
+	private String cellType;
+	private int speciesAdded;
 	
 	private final int DEFAULT_CELL_NUMBER = 100;
 	private int numRows;
 	private int numCols;
 	private int numCells;
+	
+	private Grid mainGrid;
 
 	
 	/**
@@ -39,7 +42,6 @@ public abstract class SimulationParser {
 	 * @param filename xml file to be parsed
 	 */
 	public void prepareXMLDoc(String filename){
-		
 		try{
 		    File inputFile = new File(filename);
 		    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -57,23 +59,25 @@ public abstract class SimulationParser {
 	/**
 	 * @return populated grid based on values and configuration settings in given XML file
 	 */
-	public Grid populateGrid(){		
-		Grid firstGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
+	public Grid populateGrid(){	
+		mainGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType, cellType);
     	initNumCells();
-    	firstGrid = thePopulationLoop(firstGrid);
-	    return firstGrid;
+    	mainGrid = thePopulationLoop(mainGrid);
+    	setGeneralParameters();
+	    return mainGrid;
 	}
 	
 	/**
 	 * @return populated grid based on default values
 	 */
 	public Grid repopulateGrid(){
-		Grid newGrid = new Grid(numRows, numCols, neighborhoodType);
-		newGrid = thePopulationLoop(newGrid);
-		return newGrid;
+		mainGrid = new Grid(numRows, numCols, neighborhoodType, cellType);
+		mainGrid = thePopulationLoop(mainGrid);
+		setGeneralParameters();
+		return mainGrid;
 	}
 	
-	public Grid thePopulationLoop(Grid grid){
+	private Grid thePopulationLoop(Grid grid){
 		NodeList speciesList = myXML.getElementsByTagName("species");
 	    for (int curr = 0; curr < speciesList.getLength(); curr++) {//for each species, create as given
             Element currSpecies = (Element) speciesList.item(curr);     
@@ -87,11 +91,13 @@ public abstract class SimulationParser {
 	    return grid;
 	}
 	
-	public boolean initialConfigurationGiven(Element currSpecies){
+	
+	private boolean initialConfigurationGiven(Element currSpecies){
 		return (currSpecies.getElementsByTagName("initialization")).getLength() > 0;
 	}
 	
-	public void specificConfiguration(Grid grid, Element currSpecies){ 
+	
+	private void specificConfiguration(Grid grid, Element currSpecies){ 
 		NodeList allRows = currSpecies.getElementsByTagName("row");
 		for (int row = 0; row < allRows.getLength(); row++) {
 			Node rowNode = allRows.item(row);
@@ -100,48 +106,62 @@ public abstract class SimulationParser {
 		}
 	}
 			
-	public void initializeRow(int row, String[] rowVals, Grid mainGrid, Element currSpecies){
-		String speciesType = currSpecies.getAttribute("type");	
-		int state = Integer.parseInt(((Element)currSpecies.getElementsByTagName("initialization").item(0)).getAttribute("state"));
-		for (int cell = 0; cell<rowVals.length; cell++){
-			int numInCell = Integer.parseInt(rowVals[cell]);
-			for (int j = 0; j<numInCell; j++){
-            	Species toAdd = createSpecies(speciesType);
-            	toAdd.setCurrState(state);
-            	toAdd.setNextState(state);
-            	this.setParameters(currSpecies, toAdd);
-            	mainGrid.addToGrid(new Location(row, cell), toAdd);
-			}
-		}
-		
-	}
-	
-	public void randomConfiguration(Grid grid, Element currSpecies){
+
+	private void randomConfiguration(Grid grid, Element currSpecies){
         NodeList percentList = currSpecies.getElementsByTagName("percent");
-        String speciesType = currSpecies.getAttribute("type");	 
 	    for (int i = 0; i < percentList.getLength(); i++) {//for each percent of state in species
             int percent = Integer.parseInt(percentList.item(i).getTextContent());
             int createNum = (int) Math.ceil((numCells*(percent/100.0)));//number need to create of species w/ this state
+            int state = (Integer.parseInt(((Element) percentList.item(i)).getAttribute("state")));
             for (int created = 0; created < createNum; created++){
             	if (speciesAdded < numCells){
-	            	Species mySpecies = createSpecies(speciesType);
-	            	mySpecies.setCurrState(Integer.parseInt(((Element) percentList.item(i)).getAttribute("state")));
-	            	mySpecies.setNextState(Integer.parseInt(((Element) percentList.item(i)).getAttribute("state")));
-	            	this.setParameters(currSpecies, mySpecies);
-            		grid.addRandomly(mySpecies);
+            		Species toAdd = createSpecies(currSpecies, state);
+            		grid.addRandomly(toAdd);
             		speciesAdded++;
             	}	            	
             }
 	    }
 	}
 	
+	/**
+	 * 
+	 * @param row number of row currently initializing
+	 * @param rowVals a string array containing the value of each thing in the row
+	 * @param mainGrid a reference to the grid we are parsing into
+	 * @param currSpecies XML element that contains info to create species
+	 */
+	private void initializeRow(int row, String[] rowVals, Grid mainGrid, Element currSpecies){
+		int state = Integer.parseInt(((Element)currSpecies.getElementsByTagName("initialization").item(0)).getAttribute("state"));
+		for (int cell = 0; cell<rowVals.length; cell++){
+			int numInCell = Integer.parseInt(rowVals[cell]);
+			for (int j = 0; j<numInCell; j++){
+            	Species toAdd = createSpecies(currSpecies, state);
+            	mainGrid.addToGrid(new Location(row, cell), toAdd);
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param currSpecies XML Element that currently getting info to create species from
+	 * @param state
+	 * @return
+	 */
+	private Species createSpecies(Element currSpecies, int state) {
+		String speciesType = currSpecies.getAttribute("type");	
+		Species toAdd = getSpeciesInstance(speciesType);
+		toAdd.setCurrState(state);
+		toAdd.setNextState(state);
+		this.setSpeciesParameters(currSpecies, toAdd);
+		return toAdd;
+	}
 	
 	/**  
 	 * @param speciesType String representing object that needs to be initialized; needs to exactly
 	 * match spelling and be a subclass of Species in the species package
 	 * @return instance of species given as String
 	 */
-	public Species createSpecies(String speciesType) {
+	private Species getSpeciesInstance(String speciesType) {
 		Species mySpecies = null;
 		if (speciesType.equals("Agent")){
 			mySpecies = new Agent();
@@ -162,8 +182,6 @@ public abstract class SimulationParser {
 			mySpecies = new Ant();
 			
 		}
-			
-			
 		return mySpecies;
 	}
 
@@ -236,11 +254,20 @@ public abstract class SimulationParser {
 		neighborhoodType = type;
 	}
 	
+	protected void setCellType(String type){
+		cellType = type;
+	}
+	
+	
 	
 	/**
 	 * Sets any additional parameters needed for each specific simulation
 	 */
-	public abstract void setParameters(Element speciesInfo, Species mySpecies);
+	protected abstract void setSpeciesParameters(Element speciesInfo, Species mySpecies);
 	
+	protected abstract void setGeneralParameters();
 	
+	protected Grid getGrid(){
+		return mainGrid;
+	}
 }

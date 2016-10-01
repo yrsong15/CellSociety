@@ -27,7 +27,7 @@ public class GameEngine {
 	 * actions to do this.
 	 */
 	public void updateWorld(){
-		copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
+		copyGrid = new Grid(myGrid.getMyGrid(), myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType(), myGrid.getCellType());
 		List<Location> availableCells = copyGrid.getAvailableCells();
 		List<Species> alreadyVisited = new ArrayList<Species>();
 		for (int i = 0; i < myGrid.getWidth(); i++){

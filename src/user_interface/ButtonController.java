@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 */
 public class ButtonController{
 	
-	private final int BUTTON_SIZE = 150;
+	private final int BUTTON_SIZE = 130;
 	private final int SMALL_BUTTON_WIDTH = 100;
 	private final int SMALL_BUTTON_LENGTH = 30;
 	private final int RESET_BUTTON_WIDTH = 200;
