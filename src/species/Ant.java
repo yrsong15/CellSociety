@@ -11,7 +11,7 @@ import util.Orientation;
 
 public class Ant extends Species {
 
-	private Orientation myOrientation = null;
+	private Orientation myOrientation = new Orientation("N");
 	private boolean hasFoodItem;
 	private boolean atFoodSource;
 	private boolean atNest;

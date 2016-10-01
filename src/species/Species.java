@@ -1,6 +1,7 @@
 package species;
 import java.util.List;
 
+import cells.Cell;
 import neighborhood.Neighborhood;
 import util.Location;
 
@@ -36,7 +37,7 @@ public abstract class Species {
 	
 	public abstract boolean isPredator();
 	
-	public abstract void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors);
+	public abstract void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors, Cell currCell);
 	
 	public Location getCurrLocation() {
 		return currLocation;
