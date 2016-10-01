@@ -19,7 +19,6 @@ public class SceneController {
 	
 	private GridController scGC;
 	private String state;
-	private boolean segPressed, fishPressed, firePressed, gamePressed;
 	
 	public SceneController(Stage s, GridController gc){
 		scGC = gc;
@@ -32,33 +31,6 @@ public class SceneController {
 		return scene;
 	}
 	
-	public Scene segregationScene(){
-		Group temp = new Group();
-		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		showTheMan(temp);
-		return scene;
-	}
-	
-	public Scene fishSharkScene() {
-		Group temp = new Group();
-		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		showTheMan(temp);
-		return scene;
-	}
-	
-	public Scene fireScene(){
-		Group temp = new Group();
-		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		showTheMan(temp);
-		return scene;
-	}
-	
-	public Scene gameOfLifeScene(){
-		Group temp = new Group();
-		Scene scene = new Scene(temp, UI_WIDTH, UI_HEIGHT, BG_COLOR);
-		showTheMan(temp);
-		return scene;
-	}
 	
 	public void showTheMan(Group g){
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/duvall.jpg"));
@@ -94,37 +66,5 @@ public class SceneController {
 	
 	public int getMargin(){
 		return MARGIN;
-	}
-	
-	public void pressSeg(){
-		segPressed = true;
-	}
-	
-	public void pressFish(){
-		fishPressed = true;
-	}
-	
-	public void pressFire(){
-		firePressed = true;
-	}
-	
-	public void pressGame(){
-		gamePressed = true;
-	}
-	
-	public boolean segPressed(){
-		return segPressed;
-	}
-	
-	public boolean fishPressed(){
-		return fishPressed;
-	}
-	
-	public boolean firePressed(){
-		return firePressed;
-	}
-	
-	public boolean gamePressed(){
-		return gamePressed;
 	}
 }

@@ -73,6 +73,9 @@ public class Controller{
     	else if (mySC.getState().equals(myResources.getString("SegregationLabel"))){
     		startGrid(root, myResources.getString("SegregationXMLPath"));
     	}
+    	else if (mySC.getState().equals(myResources.getString("ForagingAntsLabel"))){
+    		startGrid(root, myResources.getString("ForagingAntsXMLPath"));
+    	}
 		
 		stage.setScene(scene);
     }
@@ -100,6 +103,9 @@ public class Controller{
     	}
     	else if (mySC.getState().equals(myResources.getString("SegregationLabel"))){
     		resetGrid(root, myResources.getString("SegregationXMLPath"));
+    	}
+    	else if (mySC.getState().equals(myResources.getString("ForagingAntsLabel"))){
+    		resetGrid(root, myResources.getString("ForagingAntsXMLPath"));
     	}
 		
 		stage.setScene(scene);
@@ -131,18 +137,20 @@ public class Controller{
 		simButtons(g);
 		myGC.getGameEngine().updateWorld();
     	myGC.displayGrid(g, grid, margin);
-    	myLGC.addDataToSeries();
+//    	myLGC.addDataToSeries();
 	}
     
 	public void initButtons(Group g){
-		setStartButton(g, myStage, mySC.segregationScene(), myResources.getString("SegregationLabel"),
+		setStartButton(g, myStage, mySC.startScene(), myResources.getString("SegregationLabel"),
 				mySC.getUIWidth()/2 + mySC.getMargin(),mySC.getMargin());
-		setStartButton(g, myStage, mySC.fishSharkScene(), myResources.getString("FishSharkLabel"),
+		setStartButton(g, myStage, mySC.startScene(), myResources.getString("FishSharkLabel"),
 				mySC.getUIWidth()/2 + mySC.getMargin() + myBC.getButtonSize(), mySC.getMargin());
-		setStartButton(g, myStage, mySC.fireScene(), myResources.getString("SpreadingFireLabel"),
+		setStartButton(g, myStage, mySC.startScene(), myResources.getString("SpreadingFireLabel"),
 				mySC.getUIWidth()/2 + mySC.getMargin(), mySC.getMargin() + myBC.getButtonSize());
-		setStartButton(g, myStage, mySC.gameOfLifeScene(), myResources.getString("GameOfLifeLabel"),
+		setStartButton(g, myStage, mySC.startScene(), myResources.getString("GameOfLifeLabel"),
 				mySC.getUIWidth()/2 + mySC.getMargin() + myBC.getButtonSize(), mySC.getMargin() + myBC.getButtonSize());
+		setStartButton(g, myStage, mySC.startScene(), myResources.getString("ForagingAntsLabel"),
+				mySC.getUIWidth()/2 + mySC.getMargin(), mySC.getMargin() + 2* myBC.getButtonSize());
 	}
     
 	public void simButtons(Group g){
@@ -171,18 +179,7 @@ public class Controller{
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	myAnimation.stop();
-		    	if(mySC.getState().equals(myResources.getString("GameOfLifeLabel"))){
-		    		resetSimScene(myStage, mySC.gameOfLifeScene());
-		    	}
-		    	else if(mySC.getState().equals(myResources.getString("SpreadingFireLabel"))){
-		    		resetSimScene(myStage, mySC.fireScene());
-		    	}
-		    	else if (mySC.getState().equals(myResources.getString("FishSharkLabel"))){
-		    		resetSimScene(myStage, mySC.fishSharkScene());
-		    	}
-		    	else if (mySC.getState().equals(myResources.getString("SegregationLabel"))){
-		    		resetSimScene(myStage, mySC.segregationScene());
-		    	}
+		    	resetSimScene(myStage, mySC.startScene());
 		    }
 		});
 	}
