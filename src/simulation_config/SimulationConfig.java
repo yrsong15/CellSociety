@@ -20,8 +20,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 
-/*** @author Chalena Maess-Scholl, Ray Song(ys101)
- * 
+/** @author Chalena Scholl, Ray Song(ys101)
 */
 public abstract class SimulationConfig {
 	private Document myXML;
@@ -132,7 +131,7 @@ public abstract class SimulationConfig {
 		            	mySpecies.setCurrState(Integer.parseInt(((Element) percentList.item(i)).getAttribute("state")));
 		            	mySpecies.setNextState(Integer.parseInt(((Element) percentList.item(i)).getAttribute("state")));
 		            	this.setParameters(currSpecies, mySpecies);
-	            		grid.addCell((Species) mySpecies);
+	            		grid.addRandomly((Species) mySpecies);
 	            		speciesAdded++;
 	            	}	            	
 	            }
@@ -146,7 +145,7 @@ public abstract class SimulationConfig {
 	 * (have to specify location and state of each species in simulation)
 	 * testing currently only works for GameofLifeSim
 	 * @return
-	 */
+	 *//***
 	public Grid populateGridTest(){
 		String speciesType = getElement("speciesType");
 		Grid myGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
@@ -160,12 +159,12 @@ public abstract class SimulationConfig {
 				mySpecies.setCurrState(Integer.parseInt(rowVals[i]));
 				mySpecies.setNextState(Integer.parseInt(rowVals[i]));
 				mySpecies.setMyLocation(pos);
-				myGrid.setCell(pos, mySpecies);
+				myGrid.moveSpecies(pos, mySpecies);
 			}
 		}
 		return myGrid;
 	}
-	
+	***/
 	
 	/**  
 	 * @param speciesType String representing object that needs to be initialized; needs to exactly

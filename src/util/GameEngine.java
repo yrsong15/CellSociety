@@ -7,11 +7,12 @@ import species.Species;
 import util.Grid;
 
 /***
- * @author Chalena
+ * @author Chalena Scholl, Owen Chung
  */
 public class GameEngine {
 	
 	private Grid myGrid;
+	private Grid copyGrid;
 	
 	public GameEngine(Grid myGrid){
 		this.myGrid = myGrid;
@@ -25,70 +26,71 @@ public class GameEngine {
 	 * actions to do this.
 	 */
 	public void updateWorld(){
-		Grid copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
-		List<Location> toDelete = new ArrayList<Location>();
-		List<Location> emptyCells = copyGrid.getEmptyCells();
+		copyGrid = new Grid(myGrid.myGrid, myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType());
+		List<Location> availableCells = copyGrid.getAvailableCells();
 		List<Species> alreadyVisited = new ArrayList<Species>();
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
-				Species currSpecies= myGrid.getCell(currLoc);
-				if (currSpecies != null && !alreadyVisited.contains(currSpecies)){
-					alreadyVisited.add(currSpecies);
-					Location moveTo = currSpecies.performTask(emptyCells, copyGrid.getNeighborhood(currLoc));
-					if (moveTo == null){
-						toDelete.add(currLoc);
-					}
-					else if(!moveTo.equals(currLoc)){
-						emptyCells.remove(moveTo);
-						move(currLoc, moveTo, currSpecies);
-						if (currSpecies.toBreed()){
-							myGrid.setCell(currLoc, currSpecies.clone(currLoc));
-						}
-					}
+				Cell currCell = myGrid.getCell(currLoc);
+				if (currCell.hasOccupants()){
+					updateCell(currCell, alreadyVisited, availableCells);
 				}
 			}
 		}
-		clearFallenSpecies(toDelete);
-		updateStates();
+		applyDecisions();
 	}
-	
-	
-	/**
-	 * @param from Location species object is moving from
-	 * @param to Location species object is moving to
-	 * @param moving species object that would like to move
-	 */
-	private void move(Location from, Location to, Species moving){
-		moving.setMyLocation(to);
-		myGrid.setCell(to, moving);
-		myGrid.setCell(from, null);
-		
-	}
-	
-	
-	/**
-	 * Removes species that have died from the grid
-	 * @param toDelete a list of locations that species need to be removed from (or set to null)
-	 */
-	private void clearFallenSpecies(List<Location> toDelete){
-		for (int i = 0; i < toDelete.size(); i++){
-			myGrid.setCell(toDelete.get(i), null);
+
+	public void updateCell(Cell currCell, List<Species> alreadyVisited, List<Location> availableCells){
+		List<Species> occupants = currCell.getOccupants();
+		for (Species currSpecies : occupants){
+			if (!alreadyVisited.contains(currSpecies)){
+				alreadyVisited.add(currSpecies);
+				Location currLoc = currCell.getLocation();
+				currSpecies.performTask(availableCells, copyGrid.createNeighborhood(currLoc));
+			}
 		}
 	}
+		
 	
-	/**
-	 * Updates the current states of all species to their next states.
-	 */
-	public void updateStates(){
+	
+	//do we really need this function since we are now making a deep copy of grid?
+	public void applyDecisions(){
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
-				Species currSpecies= myGrid.getCell(currLoc);
-				if (currSpecies != null){
-					currSpecies.updateToLatestState();
+				Cell currCell = myGrid.getCell(currLoc);
+				if (currCell.hasOccupants()){
+					List<Species> occupants = currCell.getOccupants();
+					List<Species> copyOccupants = new ArrayList<Species>(occupants);
+					for (int k = 0; k < copyOccupants.size(); k++){
+						Species currSpecies = copyOccupants.get(k);
+						Location moveTo = currSpecies.getNextLocation();
+						if (moveTo == null){
+							currCell.removeOccupant(currSpecies);
+						}
+						
+						else if(!moveTo.equals(currLoc)){
+							myGrid.getCell(moveTo).applyEffect(currSpecies);
+							if (!myGrid.getCell(moveTo).hasFreeSpace()){
+								currSpecies.setCurrLocation(currSpecies.getNextLocation());
+							}
+							else{
+								myGrid.moveSpecies(currLoc, moveTo, currSpecies);
+							}
+							
+							if (currCell.hasFreeSpace() && currSpecies.toBreed()){
+								myGrid.addToGrid(currCell.getLocation(), currSpecies.clone(currLoc));
+							}
+						}
+						
+						currSpecies.setCurrState(currSpecies.getNextState());
+						currSpecies.setCurrLocation(currSpecies.getNextLocation());
+					}
 				}
 			}
 		}
 	}
+	
+	
 }

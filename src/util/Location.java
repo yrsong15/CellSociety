@@ -3,6 +3,9 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public class Location {
 	private int x, y;
 	public Location(int x, int y){

@@ -6,6 +6,10 @@ import java.util.List;
 import neighborhood.Neighborhood;
 import util.Location;
 
+/**
+ * @author Owen Chung, Chalena Scholl
+ */
+
 public class Agent extends Species {
 	//agent X is satisfied if at least thresholdPercentage of its neighbors are also X
 	//different state means different agents
@@ -16,28 +20,21 @@ public class Agent extends Species {
 	}
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood neighbors) {
-		int numberofneighbors = 0;
-		int numberofsameagent = 0;
+	public void performTask(List<Location> emptyCells, Neighborhood neighbors) {
+		List<Location> sameAgents = neighbors.findNeighborsOfState(this.getCurrState());
+		int numberofneighbors = neighbors.getTotalNeighbors();
+		int numberofsameagent = sameAgents.size();
 		float satisfaction = 0;
-		List<Location> spaces = emptyCells;
-		this.setNeighborhood(neighbors);
-		for (Species s : this.getNeighborhood().getMyNeighbors()){
-			if (!s.equals(null)){
-				numberofneighbors++;
-				if (s.getCurrState() == this.getCurrState()){
-					numberofsameagent++;
-				}
-			}
-		}
+
 		if (numberofneighbors != 0){
 			satisfaction = numberofsameagent / (float) numberofneighbors;
 		}
-		if(satisfaction < thresholdPercentage && !spaces.isEmpty()){
-			Collections.shuffle(spaces);
-			return spaces.get(0);
+		if(satisfaction < thresholdPercentage && !emptyCells.isEmpty()){
+			Collections.shuffle(emptyCells);
+			setNextLocation(emptyCells.get(0));
+			return;
 		}
-		return this.getMyLocation();
+		setNextLocation(getCurrLocation());
 	}
 	
 	public double getThresholdPercentage() {
@@ -58,6 +55,16 @@ public class Agent extends Species {
 	public Species clone(Location pos) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean isPrey() {
+		return false;
+	}
+
+	@Override
+	public boolean isPredator() {
+		return false;
 	}
 
 }

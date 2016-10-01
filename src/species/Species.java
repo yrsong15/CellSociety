@@ -4,18 +4,20 @@ import java.util.List;
 import neighborhood.Neighborhood;
 import util.Location;
 
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public abstract class Species {
-	private Neighborhood myNeighbors;
-
 	private int currState; // 0 is initial state
 	private int nextState;
 
-	private Location myLocation;
-	
+	private Location currLocation;
+	private Location nextLocation;
+
+
 	public Species(){
-		myNeighbors = null;
 		currState = 0;
-		myLocation = null;
+		currLocation = null;
 		
 	}
 	
@@ -23,21 +25,26 @@ public abstract class Species {
 	
 	public abstract Species clone(Location pos);
 	
-	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
+	public abstract boolean isPrey();
 	
-	public Location getMyLocation() {
-		return myLocation;
+	public abstract boolean isPredator();
+	
+	public abstract void performTask(List<Location> emptyCells, Neighborhood neighbors);
+	
+	public Location getCurrLocation() {
+		return currLocation;
 	}
 
-	public void setMyLocation(Location myLocation) {
-		this.myLocation = myLocation;
+	public void setCurrLocation(Location myLocation) {
+		this.currLocation = myLocation;
 	}
 	
-	public void setNeighborhood(Neighborhood myneighborhood){
-		this.myNeighbors = myneighborhood;
+	public Location getNextLocation() {
+		return nextLocation;
 	}
-	public Neighborhood getNeighborhood(){
-		return this.myNeighbors;
+
+	public void setNextLocation(Location nextLocation) {
+		this.nextLocation = nextLocation;
 	}
 	
 	public void setCurrState(int mystate){
@@ -55,11 +62,4 @@ public abstract class Species {
 	public int getNextState(){
 		return this.nextState;
 	}
-	
-	public void updateToLatestState(){
-		setCurrState(getNextState());
-
-	}
-
-
 }

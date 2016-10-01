@@ -1,19 +1,12 @@
 package species;
 
-import java.util.List;
-
-import neighborhood.Neighborhood;
-import util.Location;
-
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public abstract class WatorSpecies extends Species{
 	
 	private int timeUntilBreed;
 	private boolean roomToBreed;
-	
-
-	@Override
-	public abstract Location performTask(List<Location> emptyCells, Neighborhood neighbors);
-	public abstract boolean isEdible();
 	
 	public abstract boolean toBreed();
 	

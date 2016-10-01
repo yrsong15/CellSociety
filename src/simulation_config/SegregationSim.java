@@ -5,6 +5,10 @@ import org.w3c.dom.Element;
 import species.Agent;
 import species.Species;
 
+
+/**
+ * @author Chalena Scholl
+ */
 public class SegregationSim extends SimulationConfig {
 	
 	public SegregationSim(){

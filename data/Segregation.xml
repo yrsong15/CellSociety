@@ -15,8 +15,8 @@
 	
 	
 	<grid>
-		<width>10</width>
-		<height>10</height>
-		<numCells>100</numCells>
+		<width>3</width>
+		<height>3</height>
+		<numCells>9</numCells>
 	</grid>
 </simulation>

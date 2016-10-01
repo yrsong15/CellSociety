@@ -1,20 +1,20 @@
 package species;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import neighborhood.Neighborhood;
 import util.Location;
 
+/**
+ * @author Owen Chung, Chalena Scholl
+ */
 public class Shark extends WatorSpecies{
 	private int standardBreedTime = 10;
 	private int standardStarveTime = 3;
-	
 	private int  turnsSinceLastAte;
 	
-
-
+	
 	public Shark(){
 		super();
 		this.setTimeUntilBreed(standardBreedTime + (int) (Math.random() * 10));
@@ -35,45 +35,35 @@ public class Shark extends WatorSpecies{
 		}
 		return breed;
 	}
-	@Override
-	public boolean isEdible(){
-		return false;
-	}
+	
 
 	@Override
-	public Location performTask(List<Location> emptyCells, Neighborhood myneighbors) {
-		
-		if (toDie()){
-			return null;
+	public void performTask(List<Location> emptyCells, Neighborhood neighbors) {
+		if (reachedStarvation()){
+			setNextLocation(null);
+			return;
 		}
-		 
-		this.setNeighborhood(myneighbors);
-		List<Location> possiblemoves = new ArrayList<Location>();
-		for (Species s : this.getNeighborhood().getMyNeighbors()){
-			if (s instanceof Fish){
-				possiblemoves.add(s.getMyLocation());
-			}
-		}
+		List<Location> possibleMoves = neighbors.findNeighborsOfState(0);
 		
-		if(possiblemoves.isEmpty()){
-			List<Location> spaces = this.getMyLocation().getAdjacentCells(emptyCells);
-			possiblemoves.addAll(spaces);
+		if(possibleMoves.isEmpty()){
+			possibleMoves.addAll(this.getCurrLocation().getAdjacentCells(emptyCells));
 			turnsSinceLastAte++;
 		}
 		else{//can eat a fish
 			turnsSinceLastAte = 0;
 		}
 		
-		if (!possiblemoves.isEmpty()){
-			Collections.shuffle(possiblemoves);
+		if (!possibleMoves.isEmpty()){
+			Collections.shuffle(possibleMoves);
 			setRoomToBreed(true);
-			return possiblemoves.get(0);
+			setNextLocation(possibleMoves.get(0));
+			return;
 		}
 		setRoomToBreed(false);
-		return this.getMyLocation();
+		setNextLocation(getCurrLocation());
 
 	}
-	public boolean toDie(){
+	public boolean reachedStarvation(){
 		if ((standardStarveTime - turnsSinceLastAte) <= 0){
 			return true;
 		}
@@ -93,10 +83,21 @@ public class Shark extends WatorSpecies{
 		Species baby = new Shark();
 		((Shark) baby).setStandardStarveTime(this.standardStarveTime);
 		((Shark) baby).setStandardBreedTime(this.standardBreedTime);
-		baby.setMyLocation(pos);
+		baby.setCurrLocation(pos);
 		baby.setCurrState(this.getCurrState());
 		baby.setNextState(this.getNextState());
 		return baby;
+	}
+	
+	@Override
+	public boolean isPrey() {
+		return false;
+	}
+
+	
+	@Override
+	public boolean isPredator() {
+		return true;
 	}
 	
 
