@@ -2,7 +2,8 @@ package neighborhood;
 
 import java.util.ArrayList;
 import java.util.List;
-import util.Cell;
+
+import cells.Cell;
 import util.Grid;
 import util.Location;
 

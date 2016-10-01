@@ -9,7 +9,7 @@ import util.Location;
  * @author Owen Chung, Chalena Scholl
  */
 
-public class Fish extends WatorSpecies {
+public class Fish extends PredatorPreySpecies {
 	private int standardBreedTime = 3;
 	
 	

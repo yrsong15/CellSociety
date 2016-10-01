@@ -1,4 +1,4 @@
-package simulation_config;
+package simulation_parser;
 
 import org.w3c.dom.Element;
 
@@ -9,9 +9,9 @@ import species.Species;
 /**
  * @author Chalena Scholl
  */
-public class SegregationSim extends SimulationConfig {
+public class SegregationSimulation extends SimulationParser {
 	
-	public SegregationSim(){
+	public SegregationSimulation(){
 		setNeighborhoodType("AllNeighbors");
 	}
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cells.Cell;
 import neighborhood.WholeNeighborhood;
 import neighborhood.HexagonNeighborhood;
 import neighborhood.Neighborhood;

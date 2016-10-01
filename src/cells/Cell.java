@@ -1,8 +1,9 @@
-package util;
+package cells;
 
 import java.util.ArrayList;
 import java.util.List;
 import species.Species;
+import util.Location;
 
 /***
  * @author Chalena Scholl, Owen Chung
