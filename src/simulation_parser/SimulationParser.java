@@ -38,7 +38,7 @@ public abstract class SimulationParser {
 	 * prepares given xml document for parsing
 	 * @param filename xml file to be parsed
 	 */
-	public void getXMLDoc(String filename){
+	public void prepareXMLDoc(String filename){
 		
 		try{
 		    File inputFile = new File(filename);
@@ -48,11 +48,8 @@ public abstract class SimulationParser {
 		    doc.getDocumentElement().normalize();
 		    myXML = doc;
 		 }			
-			
 		catch (Exception e) {
-			System.err.println("Invalid XML file");
-			e.printStackTrace();
-            throw new RuntimeErrorException(new Error());
+            throw new RuntimeErrorException(new Error("Could not find XML file to prepare for parsing."));
      }
 	}
 	
@@ -67,6 +64,9 @@ public abstract class SimulationParser {
 	    return firstGrid;
 	}
 	
+	/**
+	 * @return populated grid based on default values
+	 */
 	public Grid repopulateGrid(){
 		Grid newGrid = new Grid(numRows, numCols, neighborhoodType);
 		newGrid = thePopulationLoop(newGrid);
@@ -75,8 +75,8 @@ public abstract class SimulationParser {
 	
 	public Grid thePopulationLoop(Grid grid){
 		NodeList speciesList = myXML.getElementsByTagName("species");
-	    for (int curr = 0; curr < speciesList.getLength(); curr++) {//for each species
-            Element currSpecies= (Element) speciesList.item(curr);     
+	    for (int curr = 0; curr < speciesList.getLength(); curr++) {//for each species, create as given
+            Element currSpecies = (Element) speciesList.item(curr);     
         	if (initialConfigurationGiven(currSpecies)){
         		specificConfiguration(grid, currSpecies);
         	}

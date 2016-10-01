@@ -8,7 +8,7 @@ import simulation_parser.FireSimulation;
 import simulation_parser.GameOfLifeSimulation;
 import simulation_parser.PredatorPreySimulation;
 import simulation_parser.SegregationSimulation;
-import simulation_parser.SimulationConfiguration;
+import simulation_parser.SimulationParser;
 import util.GameEngine;
 import util.Grid;
 import util.Location;
@@ -18,7 +18,7 @@ import util.Location;
 */
 public class GridController {
 
-	private SimulationConfiguration mySim;
+	private SimulationParser mySim;
 	private GameEngine myEngine;
 
 	private final int GRID_SIZE = 420;
@@ -32,7 +32,7 @@ public class GridController {
 	
 	public Grid startGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid){
 		setSimConfig(rb, path);
-		mySim.getXMLDoc(path);
+		mySim.prepareXMLDoc(path);
 		grid = mySim.populateGrid();
 		myEngine = new GameEngine(grid);
 		return grid;
@@ -41,7 +41,7 @@ public class GridController {
 	public Grid resetGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid, int input){
 		setSimConfig(rb, path);
 		updateCellSize(input);
-		mySim.getXMLDoc(path);
+		mySim.prepareXMLDoc(path);
 		grid = mySim.repopulateGrid();
 		myEngine = new GameEngine(grid);
 		return grid;
