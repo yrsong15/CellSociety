@@ -13,15 +13,24 @@ public class FireSimulation extends SimulationParser{
 	
 
 	public FireSimulation() {
-		setNeighborhoodType("PlusNeighbors");
+		setNeighborhoodType("PlusNeighborhood");
+		setCellType("Cell");
 	}
 
 	
 
 	@Override
-	public void setParameters(Element speciesInfo, Species mySpecies) {
-		float probCatchFire = Float.parseFloat(super.getElement(speciesInfo, "probCatchFire"));
+	public void setSpeciesParameters(Element speciesInfo, Species mySpecies) {
+		float probCatchFire = Float.parseFloat(getElement(speciesInfo, "probCatchFire"));
 		((Tree) mySpecies).setProbabilityBurn(probCatchFire);
+	}
+
+
+
+	@Override
+	protected void setGeneralParameters() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
