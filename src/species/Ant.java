@@ -12,6 +12,8 @@ public class Ant extends Species {
 	private boolean hasFoodItem;
 	private boolean atFoodSource;
 	private boolean atNest;
+	private int currHomePheromones;
+	private int currFoodPheromones;
 
 	
 	public Ant(){
@@ -34,12 +36,13 @@ public class Ant extends Species {
 		if (atFoodSource){
 			Cell maxNeighbor = findMaxPheromones("home", neighborCells);
 			myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
+			neighborCells = neighbors.findNeighborsWithSpace();
 			maxNeighbor = findMaxPheromones("home", findForward(neighborCells));
 			if (maxNeighbor == null){
 				maxNeighbor = findMaxPheromones("home", neighborCells);
 			}
 			if (maxNeighbor != null){
-				dropFoodPheromones();
+				dropFoodPheromones(neighbors);
 				myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
 				setNextLocation(maxNeighbor.getLocation());
 				return;
@@ -56,18 +59,18 @@ public class Ant extends Species {
 		if (atNest){
 			Cell maxNeighbor = findMaxPheromones("food", neighborCells);
 			myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
+			neighborCells = neighbors.findNeighborsWithSpace();
 		}
 		
-		Cell maxNeighbor = selectLocation(findForward(neighborCells));
-		if (maxNeighbor==null){
-			maxNeighbor = selectLocation(findForward(neighborCells));
+		Cell maxNeighbor = findMaxPheromones("food", findForward(neighborCells));
+		if (maxNeighbor == null){
+			maxNeighbor = findMaxPheromones("food", findForward(neighborCells));
 		}
 		if(maxNeighbor!=null){
-			dropHomePheromones();
+			dropHomePheromones(neighbors);
 			myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
 			setNextLocation(maxNeighbor.getLocation());
 			return;
-			
 		}
 	}
 	
@@ -92,26 +95,24 @@ public class Ant extends Species {
 		return maxNeighbor;
 	}
 	
-	//To-Do: fix method if going to use it
-	private Cell selectLocation(List<Cell> choices){
-		List<Cell> viableChoices = new ArrayList<Cell>();
-		for (Cell choice : choices){
-			if (choice.hasFreeSpace())
-				viableChoices.add(choice);
+	private void dropHomePheromones(Neighborhood neighbors){
+		List<Cell> neighborCells = neighbors.getMyNeighbors();
+		Cell maxNeighbor = findMaxPheromones("home", findForward(neighborCells));
+		int neighborAmt = ((AntCell)maxNeighbor).getHomePheromones();
+		int pheromones = neighborAmt-2-currHomePheromones;
+		if (pheromones > 0){
+			((AntCell)maxNeighbor).setHomePheromones(neighborAmt + pheromones);
 		}
-		if (viableChoices == null){
-			//return null;
-		}
-		return null;
-		//return location from viableChoices, where each location is chosed with probability
-		//K + foodPhereomonesatLocation to the power of n
 	}
 	
-	private void dropHomePheromones(){
-		
-	}
-	
-	private void dropFoodPheromones(){
+	private void dropFoodPheromones(Neighborhood neighbors){
+		List<Cell> neighborCells = neighbors.getMyNeighbors();
+		Cell maxNeighbor = findMaxPheromones("food", findForward(neighborCells));
+		int neighborAmt = ((AntCell)maxNeighbor).getFoodPheromones();
+		int pheromones = neighborAmt-2-currFoodPheromones;
+		if (pheromones > 0){
+			((AntCell)maxNeighbor).setFoodPheromones(neighborAmt + pheromones);
+		}
 		
 	}
 	

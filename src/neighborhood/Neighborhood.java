@@ -31,6 +31,16 @@ public abstract class Neighborhood {
 		return matches;
 	}
 	
+	public List<Cell> findNeighborsWithSpace(){
+		List<Cell> haveSpace = new ArrayList<Cell>();
+		for (Cell currCell : myNeighbors){
+			if (currCell.hasFreeSpace()){
+				haveSpace.add(currCell);
+			}
+		}
+		return haveSpace;
+	}
+	
 	public int getTotalNeighbors(){
 		int total = 0;
 		for (Cell currCell : myNeighbors){
