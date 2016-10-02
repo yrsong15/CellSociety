@@ -30,7 +30,7 @@ public class Controller{
 	private ScrollbarController mySBC;
 	private TextFieldController myTFC;
 	private LineGraphController myLGC;
-	private LineChart<Number, Number> myChart;
+//	private LineChart<Number, Number> myChart;
 	private Timeline myAnimation;
 	private Grid myGrid;
   
@@ -138,7 +138,7 @@ public class Controller{
 		myGC.getGameEngine().updateWorld();
     	myGC.displayGrid(g, grid, margin);
     	myLGC.displayLineChart(g, myLGC.getChart(), mySC.getUIWidth() * 1/2, mySC.getUIHeight() * 0.6);
-    	myLGC.addDataToSeries();
+    	myLGC.addDataToSeries(myGC.getNumOfTypeOne(), myGC.getNumOfTypeTwo(), myGC.getNumOfTotalCells());
 	}
     
 	public void initButtons(Group g){

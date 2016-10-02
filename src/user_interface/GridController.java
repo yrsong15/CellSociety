@@ -29,6 +29,10 @@ public class GridController {
     private double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     
+    private int numOfTypeOne;
+    private int numOfTypeTwo;
+    private int numOfTotalCells;
+    
 	
 	public Grid startGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid){
 		setSimConfig(rb, path);
@@ -64,6 +68,9 @@ public class GridController {
 	
 	public void displayGrid(Group g, Grid grid, int margin){
 		int cellSize = GRID_SIZE / grid.getWidth();
+		numOfTypeOne = 0;
+		numOfTypeTwo = 0;
+		numOfTotalCells = grid.getHeight() * grid.getWidth();
 		
 		for(int i=0;i<grid.getWidth();i++){
 			for(int j=0;j<grid.getHeight();j++){
@@ -71,11 +78,12 @@ public class GridController {
 				Location curr = new Location(i,j);
 				if(grid.getCell(curr).hasOccupants()){
 					if(grid.getCell(curr).getState()==1){
-						r.setFill(Color.RED);
-
+						r.setFill(COLORONE);
+						numOfTypeOne++;
 					}
 					else{
 						r.setFill(COLORTWO);
+						numOfTypeTwo++;
 					}
 				}
 				g.getChildren().add(r);
@@ -107,5 +115,17 @@ public class GridController {
 	
 	public double getSecondDelay(){
 		return SECOND_DELAY;
+	}
+	
+	public int getNumOfTypeOne(){
+		return numOfTypeOne;
+	}
+	
+	public int getNumOfTypeTwo(){
+		return numOfTypeTwo;
+	}
+	
+	public int getNumOfTotalCells(){
+		return numOfTotalCells;
 	}
 }
