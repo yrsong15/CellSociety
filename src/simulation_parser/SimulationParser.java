@@ -33,10 +33,10 @@ public abstract class SimulationParser {
 	private int numRows;
 	private int numCols;
 	private int numCells;
-	
 	private Grid mainGrid;
+	private String cellShape;
 
-	
+
 	/**
 	 * prepares given xml document for parsing
 	 * @param filename xml file to be parsed
@@ -64,6 +64,7 @@ public abstract class SimulationParser {
     	initNumCells();
     	mainGrid = thePopulationLoop(mainGrid);
     	setGeneralParameters();
+    	setCellShape(getElement("cellShape"));
 	    return mainGrid;
 	}
 	
@@ -74,6 +75,7 @@ public abstract class SimulationParser {
 		mainGrid = new Grid(numRows, numCols, neighborhoodType, cellType);
 		mainGrid = thePopulationLoop(mainGrid);
 		setGeneralParameters();
+		setCellShape(getElement("cellShape"));
 		return mainGrid;
 	}
 	
@@ -269,5 +271,14 @@ public abstract class SimulationParser {
 	
 	protected Grid getGrid(){
 		return mainGrid;
+	}
+	
+	public String getCellShape() {
+		return cellShape;
+	}
+
+
+	public void setCellShape(String cellShape) {
+		this.cellShape = cellShape;
 	}
 }

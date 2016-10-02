@@ -1,11 +1,13 @@
 package shapes;
 
+import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
 /***
  * @author Chalena Scholl
  */
-public abstract class ShapeCreator {
+public abstract class CustomShape {
 	private Shape myShape;
 	
 	private int myRow;
@@ -13,7 +15,7 @@ public abstract class ShapeCreator {
 	private int mySideLength;
 	private int gridMargin;
 	
-	public ShapeCreator(int row, int col, int length, int margin){
+	public CustomShape(int row, int col, int length, int margin){
 		myRow = row;
 		myCol = col;
 		mySideLength = length;
@@ -56,6 +58,10 @@ public abstract class ShapeCreator {
 	
 	public void setShape(Shape obj){
 		this.myShape = obj;
-		
 	}
+
+	public Node getShape(){
+		return myShape;
+	}
+	public abstract void setFill(Color red);
 }

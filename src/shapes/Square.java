@@ -1,26 +1,32 @@
 package shapes;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /***
  * @author Chalena Scholl
  */
-public class Square extends ShapeCreator{
-	Rectangle myRectangle;
+public class Square extends CustomShape{
+	Rectangle mySquare;
 
 	public Square(int row, int col, int length, int margin) {
 		super(row, col, length, margin);
-		myRectangle = new Rectangle();
-		super.setShape(myRectangle);
+		mySquare = new Rectangle();
+		super.setShape(mySquare);
 	}
 
 	@Override
 	public void setPosition() {
 		int mySideLength = getMySideLength();
-		myRectangle.setX(mySideLength*getMyRow() + getGridMargin());
-		myRectangle.setY(mySideLength*getMyCol() + getGridMargin());
-		myRectangle.setWidth(mySideLength);
-		myRectangle.setHeight(mySideLength);
+		mySquare.setX(mySideLength*getMyRow() + getGridMargin());
+		mySquare.setY(mySideLength*getMyCol() + getGridMargin());
+		mySquare.setWidth(mySideLength);
+		mySquare.setHeight(mySideLength);
+	}
+
+	@Override
+	public void setFill(Color choice) {
+		mySquare.setFill(choice);
 	}
 
 }

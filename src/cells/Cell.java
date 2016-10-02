@@ -57,7 +57,12 @@ public class Cell {
 	}
 	
 	public int getState(){
-		return myOccupants.get(0).getCurrState();
+		if (hasOccupants()){
+			return myOccupants.get(0).getCurrState();
+		}
+		else{
+			return 2;
+		}
 	}
 
 	public int getMaxOccupants() {
@@ -69,7 +74,14 @@ public class Cell {
 	}
 	
 	public void applyEffect(Species incoming){
-		
+		if (incoming.isPredator()){
+			List<Species>copyOccupants = new ArrayList<Species>(getOccupants());
+			for (Species inCell : copyOccupants){
+				if (inCell.isPrey()){
+					getOccupants().remove(inCell);
+				}
+			}
+		}
 	}
 	public void step(){
 		

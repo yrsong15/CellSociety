@@ -1,12 +1,13 @@
 package shapes;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 
 /***
  * @author Chalena Scholl
  */
-public class Hexagon extends ShapeCreator {
+public class Hexagon extends CustomShape {
 	
 	private Polygon myPolygon;
 
@@ -49,5 +50,10 @@ public class Hexagon extends ShapeCreator {
 		return;
 		
 		
+	}
+
+	@Override
+	public void setFill(Color choice) {
+		myPolygon.setFill(choice);
 	}
 }
