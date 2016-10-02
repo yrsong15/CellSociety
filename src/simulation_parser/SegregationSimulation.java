@@ -12,15 +12,23 @@ import species.Species;
 public class SegregationSimulation extends SimulationParser {
 	
 	public SegregationSimulation(){
-		setNeighborhoodType("AllNeighbors");
+		setNeighborhoodType("WholeNeighborhood");
+		setCellType("Cell");
 	}
 	
 
 	@Override
-	public void setParameters(Element speciesInfo, Species mySpecies) {
-		int threshold = Integer.parseInt(super.getElement(speciesInfo, "threshold"));
+	public void setSpeciesParameters(Element speciesInfo, Species mySpecies) {
+		int threshold = Integer.parseInt(getElement(speciesInfo, "threshold"));
 		((Agent) mySpecies).setThresholdPercentage(threshold);
 		
+		
+	}
+
+
+	@Override
+	protected void setGeneralParameters() {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -10,11 +10,6 @@
 			<percent state="0">60</percent>
 			<percent state="1">40</percent>
 			<threshold>30</threshold>
-			<initialization state = "0">
-				<row>0 0 0</row>
-				<row>1 0 0</row>
-				<row>1 0 1</row>
-			</initialization>
 		</species>
 	</configuration>
 	

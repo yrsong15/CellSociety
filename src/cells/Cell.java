@@ -64,6 +64,10 @@ public class Cell {
 		return maxOccupants;
 	}
 	
+	public void setMaxOccupants(int max){
+		maxOccupants = max;
+	}
+	
 	public void applyEffect(Species incoming){
 		
 	}

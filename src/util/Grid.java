@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cells.AntCell;
 import cells.Cell;
 import neighborhood.WholeNeighborhood;
 import neighborhood.HexagonNeighborhood;
@@ -16,69 +17,55 @@ import species.*;
  * @author Chalena Scholl, Owen Chung
  */
 public class Grid {
-		Cell[][] myGrid;
-
+		private Cell[][] myGrid;
 		private int numRows;
 		private int numCols;
 		private String neighbType;
+		private String cellType;
 		
-		public Grid(int width, int height){
-			myGrid = new Cell[width][height];
-
-			this.numRows = width;
-			this.numCols = height;
-			initializeGrid();
-		}
-		private List<Species>[][] initGrid(int width, int height){
-			List<Species>[][] Grid = null;
-			for (int i = 0; i < width ; i++){
-				for (int j = 0; j < height; j++){
-					List<Species> temp = new ArrayList<>();
-					Grid[i][j] = temp;
-				}
-			}
-			return Grid;
-		}
-		
-		public Grid(int width, int height, String neighbType){
-			myGrid = new Cell[width][height];
-
-			this.numRows = width;
-			this.numCols = height;
+		public Grid(int width, int height, String neighbType, String cellType){
+			this.cellType = cellType;
 			this.neighbType = neighbType;
+			myGrid = create2DArray(width, height);
+			this.numRows = width;
+			this.numCols = height;
 			initializeGrid();
+		}
+		
+		
+		public Grid(Cell[][] mainGrid, int width, int height, String neighbType, String cellType) {
+			this.cellType = cellType;
+			this.neighbType = neighbType;
+			this.myGrid = create2DArray(width, height);
+			numRows = width;
+			numCols = height;
+			makeCopy(mainGrid);
 		}
 		
 		public void initializeGrid(){
 			for (int i = 0; i < numRows; i++){
 				for (int j = 0; j <numCols; j++){
-					Cell init = new Cell(new Location(i,j));
+					Cell init = createCell(new Location(i,j));
 					this.myGrid[i][j] = init;
 				}
 			}
 		}
 		
-		public Grid(Cell[][] myGrid2, int width, int height, String neighbType) {
-			this.myGrid = new Cell[width][height];
-
-			numRows = width;
-			numCols = height;
-			this.neighbType = neighbType;
-			copyFill(myGrid2);
-		}
-		
-		public void copyFill(Cell[][] myOrig){
-
+		public void makeCopy(Cell[][] myOrig){
 			for (int i = 0; i < numRows; i++){
 				for (int j = 0; j <numCols; j++){
 					Cell oldCell = myOrig[i][j];
-					this.myGrid[i][j] = new Cell(oldCell.getOccupants(), oldCell.getMaxOccupants(), oldCell.getLocation());
+					this.myGrid[i][j] = createCell(oldCell.getOccupants(), oldCell.getMaxOccupants(), oldCell.getLocation());
 				}
 			}
 		}
 		
 		protected String getNeighbType(){
 			return neighbType;
+		}
+		
+		protected String getCellType(){
+			return cellType;
 		}
 
 		public int getWidth(){
@@ -149,15 +136,15 @@ public class Grid {
 		 */
 		public Neighborhood createNeighborhood(Location myPos) {
 			Neighborhood myNeighb = null;
-			if (neighbType.equals("AllNeighbors")){
+			if (neighbType.equals("WholeNeighborhood")){
 				myNeighb = new WholeNeighborhood(this, myPos);
 			}
 			
-			else if(neighbType.equals("HexagonNeighbors")){
+			else if(neighbType.equals("HexagonNeighborhood")){
 				myNeighb = new HexagonNeighborhood(this, myPos);
 			}
 			
-			else if(neighbType.equals("PlusNeighbors")){
+			else if(neighbType.equals("PlusNeighborhood")){
 				myNeighb = new PlusNeighborhood(this, myPos);
 			}
 			return myNeighb;
@@ -184,7 +171,7 @@ public class Grid {
 				for (int j = 0; j < myGrid[i].length; j++){
 					Cell curr= myGrid[i][j];
 					if (curr.hasOccupants()){
-						rowVal+= curr.getState() + " "; 
+						rowVal+= curr.getSize() + " "; 
 					}
 					else{
 						rowVal+=". ";
@@ -199,5 +186,35 @@ public class Grid {
 
 		public void setMyGrid(Cell[][] myGrid) {
 			this.myGrid = myGrid;
+		}
+		
+		public Cell[][] create2DArray(int width, int height){
+			if (cellType.equals("AntCell")){
+				return new AntCell[width][height];
+			}
+			else{
+				return new Cell[width][height];
+			}
+			
+		}
+		
+		public Cell createCell(Location toPut){
+			if (cellType.equals("AntCell")){
+				return new AntCell(toPut);
+			}
+			else{
+				return new Cell(toPut);
+			}
+			
+			
+		}
+		public Cell createCell(List<Species> occupants, int max, Location oldLocation){
+			if (cellType.equals("AntCell")){
+				return new AntCell(occupants, max, oldLocation);
+			}
+			else{
+				return new Cell(occupants, max, oldLocation);
+			}
+			
 		}
 }

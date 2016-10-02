@@ -26,12 +26,15 @@ import org.w3c.dom.Element;
 public abstract class SimulationParser {
 	private Document myXML;
 	private String neighborhoodType;
+	private String cellType;
 	private int speciesAdded;
 	
 	private final int DEFAULT_CELL_NUMBER = 100;
 	private int numRows;
 	private int numCols;
 	private int numCells;
+	
+	private Grid mainGrid;
 
 	
 	/**
@@ -56,20 +59,22 @@ public abstract class SimulationParser {
 	/**
 	 * @return populated grid based on values and configuration settings in given XML file
 	 */
-	public Grid populateGrid(){		
-		Grid firstGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType);
+	public Grid populateGrid(){	
+		mainGrid = new Grid(getGridHeight(), getGridWidth(), neighborhoodType, cellType);
     	initNumCells();
-    	firstGrid = thePopulationLoop(firstGrid);
-	    return firstGrid;
+    	mainGrid = thePopulationLoop(mainGrid);
+    	setGeneralParameters();
+	    return mainGrid;
 	}
 	
 	/**
 	 * @return populated grid based on default values
 	 */
 	public Grid repopulateGrid(){
-		Grid newGrid = new Grid(numRows, numCols, neighborhoodType);
-		newGrid = thePopulationLoop(newGrid);
-		return newGrid;
+		mainGrid = new Grid(numRows, numCols, neighborhoodType, cellType);
+		mainGrid = thePopulationLoop(mainGrid);
+		setGeneralParameters();
+		return mainGrid;
 	}
 	
 	private Grid thePopulationLoop(Grid grid){
@@ -147,7 +152,7 @@ public abstract class SimulationParser {
 		Species toAdd = getSpeciesInstance(speciesType);
 		toAdd.setCurrState(state);
 		toAdd.setNextState(state);
-		this.setParameters(currSpecies, toAdd);
+		this.setSpeciesParameters(currSpecies, toAdd);
 		return toAdd;
 	}
 	
@@ -249,9 +254,20 @@ public abstract class SimulationParser {
 		neighborhoodType = type;
 	}
 	
+	protected void setCellType(String type){
+		cellType = type;
+	}
+	
+	
 	
 	/**
 	 * Sets any additional parameters needed for each specific simulation
 	 */
-	protected abstract void setParameters(Element speciesInfo, Species mySpecies);
+	protected abstract void setSpeciesParameters(Element speciesInfo, Species mySpecies);
+	
+	protected abstract void setGeneralParameters();
+	
+	protected Grid getGrid(){
+		return mainGrid;
+	}
 }
