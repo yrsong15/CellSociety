@@ -33,7 +33,8 @@ public class WholeNeighborhood extends Neighborhood{
             	int newRow = changeRow + row;
 	            int newCol = changeCol + col;
 	            Location newLoc = new Location(newRow, newCol);
-	            if(mainGrid.isValidCell(newRow, newCol) && mainGrid.getCell(newLoc).hasOccupants()) {
+	            // does not have to have occupants
+	            if(mainGrid.isValidCell(newRow, newCol)) {
 	            	neighbors.add(mainGrid.getCell(newLoc));
 	            }
 	        }

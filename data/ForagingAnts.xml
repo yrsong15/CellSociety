@@ -12,9 +12,9 @@
 			<percent state="1">20</percent>
 			
 			<initialization state = "1">		
-				<row>2 5 0</row>
 				<row>0 0 0</row>
 				<row>0 0 0</row>
+				<row>0 0 2</row>
 			</initialization>
 		</species>
 		

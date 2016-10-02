@@ -2,6 +2,7 @@ package species;
 import java.util.Collections;
 import java.util.List;
 
+import cells.Cell;
 import neighborhood.Neighborhood;
 import util.Location;
 
@@ -38,7 +39,7 @@ public class Fish extends PredatorPreySpecies {
 	}
 	
 	@Override
-	public void updateNextLocation(List<Location> emptyCells, Neighborhood myneighbors){
+	public void updateNextLocation(List<Location> emptyCells, Neighborhood myneighbors, Cell currCell){
 		List<Location> spaces = this.getCurrLocation().getAdjacentCells(emptyCells);
 		
 		if (!spaces.isEmpty()){

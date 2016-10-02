@@ -27,8 +27,8 @@ public class GameEngine {
 	 * actions to do this.
 	 */
 	public void updateWorld(){
-		copyGrid = new Grid(myGrid.getMyGrid(), myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType(), myGrid.getCellType());
-		List<Location> availableCells = copyGrid.getAvailableCells();
+		//copyGrid = new Grid(myGrid.getMyGrid(), myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType(), myGrid.getCellType());
+		List<Location> availableCells = myGrid.getAvailableCells();
 		List<Species> alreadyVisited = new ArrayList<Species>();
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
@@ -49,14 +49,12 @@ public class GameEngine {
 			if (!alreadyVisited.contains(currSpecies)){
 				alreadyVisited.add(currSpecies);
 				Location currLoc = currCell.getLocation();
-				currSpecies.updateNextLocation(availableCells, copyGrid.createNeighborhood(currLoc));
+				currSpecies.updateNextLocation(availableCells, myGrid.createNeighborhood(currLoc), currCell);
 			}
 		}
 	}
 
 
-
-	//do we really need this function since we are now making a deep copy of grid?
 	public void applyDecisions(){
 
 		for (int i = 0; i < myGrid.getWidth(); i++){
@@ -67,32 +65,43 @@ public class GameEngine {
 				if (currCell.hasOccupants()){
 					List<Species> occupants = currCell.getOccupants();
 					List<Species> copyOccupants = new ArrayList<Species>(occupants);
-					for (int k = 0; k < copyOccupants.size(); k++){
-						Species currSpecies = copyOccupants.get(k);
-						Location moveTo = currSpecies.getNextLocation();
-						if (moveTo == null){
-							currCell.removeOccupant(currSpecies);
-						}
+					updateSpecies(currLoc, currCell, copyOccupants);
+				}
+				currCell.step();
+			}
+		}
+	}
 
-						else if(!moveTo.equals(currLoc)){
-							myGrid.getCell(moveTo).applyEffect(currSpecies);
-							if (!myGrid.getCell(moveTo).hasFreeSpace()){
-								currSpecies.setCurrLocation(currSpecies.getNextLocation());
-							}
-							else{
-								myGrid.moveSpecies(currLoc, moveTo, currSpecies);
-							}
 
-							if (currCell.hasFreeSpace() && currSpecies.toBreed()){
-								myGrid.addToGrid(currCell.getLocation(), currSpecies.clone(currLoc));
-							}
-						}
+	private void updateSpecies(Location currLoc, Cell currCell, List<Species> copyOccupants) {
+		//System.out.println(copyOccupants.size());
+		for (int k = 0; k < copyOccupants.size(); k++){
+			Species currSpecies = copyOccupants.get(k);
+//			System.out.println(currSpecies);
+//			System.out.println(currSpecies.getNextLocation());
+			Location moveTo = currSpecies.getNextLocation();
+			if (moveTo == null){
+				System.out.println("ant's dying");
+				currCell.removeOccupant(currSpecies);
+			}
 
-						currSpecies.setCurrState(currSpecies.getNextState());
-						currSpecies.setCurrLocation(currSpecies.getNextLocation());
-					}
+			else if(!moveTo.equals(currLoc)){
+				myGrid.getCell(moveTo).applyEffect(currSpecies);
+				//why are we setting it to next location if we can't move them 
+				if (!myGrid.getCell(moveTo).hasFreeSpace()){
+					//currSpecies.setCurrLocation(currSpecies.getNextLocation());
+				}
+				else{
+					myGrid.moveSpecies(currLoc, moveTo, currSpecies);
+				}
+
+				if (currCell.hasFreeSpace() && currSpecies.toBreed()){
+					myGrid.addToGrid(currCell.getLocation(), currSpecies.clone(currLoc));
 				}
 			}
+
+			currSpecies.setCurrState(currSpecies.getNextState());
+			currSpecies.setCurrLocation(currSpecies.getNextLocation());
 		}
 	}
 

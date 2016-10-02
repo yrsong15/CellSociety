@@ -22,17 +22,22 @@ public class Main extends Application{
 	public void start(Stage s) throws Exception {
 		Controller ctrl = new Controller();
 		ctrl.startController(s);
-		
-		
-//		SimulationParser mySim = new FireSimulation();
-//		mySim.prepareXMLDoc("data/Fire.xml");
+
+	
+//		SimulationParser mySim = new ForagingAntsSimulation();
+//		mySim.prepareXMLDoc("data/ForagingAnts.xml");
 //		Grid myGrid = mySim.populateGrid();
 //		GameEngine myEngine = new GameEngine(myGrid);
 //		myGrid.outputGridValues();
-//		myEngine.updateWorld();
 //		System.out.println("-----");
-//		myGrid.outputGridValues();
-		
+//		int i = 0;
+//		while(i < 100){
+//			myEngine.updateWorld();
+//			myGrid.outputGridValues();
+//			System.out.println("-----");
+//			i++;
+//		}
+
 		
 	}
 	

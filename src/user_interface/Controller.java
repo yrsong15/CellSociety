@@ -30,7 +30,7 @@ public class Controller{
 	private ScrollbarController mySBC;
 	private TextFieldController myTFC;
 	private LineGraphController myLGC;
-	private LineChart<Number, Number> myChart;
+//	private LineChart<Number, Number> myChart;
 	private Timeline myAnimation;
 	private Grid myGrid;
   
@@ -137,7 +137,8 @@ public class Controller{
 		simButtons(g);
 		myGC.getGameEngine().updateWorld();
     	myGC.displayGrid(g, grid, margin);
-//    	myLGC.addDataToSeries();
+    	myLGC.displayLineChart(g, myLGC.getChart(), mySC.getUIWidth() * 1/2, mySC.getUIHeight() * 0.6);
+    	myLGC.addDataToSeries(myGC.getNumOfTypeOne(), myGC.getNumOfTypeTwo(), myGC.getNumOfTotalCells());
 	}
     
 	public void initButtons(Group g){
@@ -161,7 +162,7 @@ public class Controller{
 		setDelayButton(g);
 		setBackButton(g);
 		setCellSizeButton(g);
-		setGraphButton(g);
+		myLGC.initGraphSettings(g, myResources, mySC.getUIWidth() * 1/2, mySC.getUIHeight() * 0.6);
 	}
 	
 	public void setStartButton(Group g, Stage stage, Scene scene, String btnLabel, int xPos, int yPos){
@@ -233,17 +234,6 @@ public class Controller{
 		    @Override public void handle(ActionEvent e) {
 		    	myAnimation.stop();
 		    	myTFC.cellSizeTextField(g, myResources.getString("NumberOfCells"), mySC.getUIWidth(), mySC.getMargin());
-		    }
-		});
-	}
-	
-	public void setGraphButton(Group g){
-		Button graph = myBC.addSimButton(g, "Test Graph", mySC.getUIWidth()/2 + mySC.getMargin(), 
-				mySC.getMargin() + 6 * myBC.getSmallButtonLength());
-		graph.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	myAnimation.stop();
-		    	myLGC.initGraphSettings(g, myResources, mySC.getUIWidth() * 1/2, mySC.getUIHeight() * 0.6);
 		    }
 		});
 	}
