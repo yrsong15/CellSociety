@@ -22,7 +22,6 @@ public class Main extends Application{
 	public void start(Stage s) throws Exception {
 		Controller ctrl = new Controller();
 		ctrl.startController(s);
-		
 	
 //		SimulationParser mySim = new ForagingAntsSimulation();
 //		mySim.prepareXMLDoc("data/ForagingAnts.xml");
@@ -31,14 +30,12 @@ public class Main extends Application{
 //		myGrid.outputGridValues();
 //		System.out.println("-----");
 //		int i = 0;
-//		while(i < 3){
+//		while(i < 100){
 //			myEngine.updateWorld();
 //			myGrid.outputGridValues();
 //			System.out.println("-----");
 //			i++;
 //		}
-		
-		
 
 		
 	}

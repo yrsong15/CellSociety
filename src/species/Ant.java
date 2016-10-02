@@ -20,7 +20,7 @@ public class Ant extends Species {
 	private int currFoodPheromones;
 	private int desiredPheromones;
 	private int maxPheromones;
-	private int standardLifeTime;
+	private int standardLifeTime = 100;
 	private int turnsSinceBorn;
 	
 
@@ -49,10 +49,12 @@ public class Ant extends Species {
 			if (atNest && hasFoodItem){
 				currCell.setFoodAmount(currCell.getFoodAmount() + 1);
 				hasFoodItem = false;
+				System.out.println("just dropped food");
 			}
 			if (atFoodSource){
 				
 				hasFoodItem = true;
+				System.out.println("just picked up food");
 			}
 		}
 	
@@ -76,25 +78,39 @@ public class Ant extends Species {
 		List<Cell> neighborCells = neighbors.getMyNeighbors();
 		if (atFoodSource){
 			Cell maxNeighbor = findMaxPheromones("home", neighborCells);
-			System.out.println(maxNeighbor);
-			myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
-			neighborCells = neighbors.findNeighborsWithSpace();
-			maxNeighbor = findMaxPheromones("home", findForward(neighborCells));
-			if (maxNeighbor == null){
-				maxNeighbor = findMaxPheromones("home", neighborCells);
-			}
 			if (maxNeighbor != null){
-				dropFoodPheromones(neighbors, currCell);
 				myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
-				setNextLocation(maxNeighbor.getLocation());
-				return;
 			}
 			else{
-				setNextLocation(getCurrLocation());
-				return;
+				myOrientation.updateOrientation(getCurrLocation(), neighborCells.get(0).getLocation());
+			}	
+		}
+			//neighborCells = neighbors.findNeighborsWithSpace();
+		Cell maxNeighbor = findMaxPheromones("home", findForward(neighborCells));
+		if (maxNeighbor == null){
+			maxNeighbor = findMaxPheromones("home", findOther(neighborCells));
+		}
+		if (maxNeighbor != null){
+			dropFoodPheromones(neighbors, currCell);
+			myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
+			setNextLocation(maxNeighbor.getLocation());
+			//System.out.println(maxNeighbor.getLocation().getX() + "" + maxNeighbor.getLocation().getY());
+		}
+		else{
+			Location next;
+			// could change to random selection later
+			if (findForward(neighborCells).isEmpty()){
+				next = findOther(neighborCells).get(0).getLocation();
 			}
+			else{
+				next = findForward(neighborCells).get(0).getLocation();
+			}
+			dropFoodPheromones(neighbors, currCell);
+			myOrientation.updateOrientation(getCurrLocation(), next);
+			setNextLocation(next);
 		}
 	}
+	
 	
 	private void findFoodSource(Neighborhood neighbors, Cell currCell){
 		List<Cell> neighborCells = neighbors.getMyNeighbors();
@@ -140,7 +156,9 @@ public class Ant extends Species {
 		for (Cell currNeighbor: neighborCells){
 			AntCell temp = (AntCell)currNeighbor;
 			if (pheromone.equals("food")){
-				System.out.println(temp.getHomePheromones());
+				//System.out.println(currNeighbor);
+				//System.out.println(temp.getLocation().getX() + "" + temp.getLocation().getY());
+				//System.out.println(temp.getHomePheromones());
 				//System.out.println(temp.getFoodPheromones());
 				if (temp.getFoodPheromones() > max){
 					maxNeighbor = currNeighbor;
@@ -156,6 +174,7 @@ public class Ant extends Species {
 				}
 			}
 		}
+		//System.out.println(maxNeighbor);
 		return maxNeighbor;
 	}
 	
@@ -163,22 +182,25 @@ public class Ant extends Species {
 	private void dropHomePheromones(Neighborhood neighbors, Cell currCell){
 		List<Cell> neighborCells = neighbors.getMyNeighbors();
 		Cell maxNeighbor = findMaxPheromones("home", neighborCells);
-		System.out.println(desiredPheromones);
+		//System.out.println("desired pheromones" + desiredPheromones);
 		if ((desiredPheromones-currHomePheromones) > 0){
 			((AntCell)currCell).setHomePheromones(desiredPheromones);
-			System.out.println(((AntCell)currCell).getHomePheromones());
 		}
 		if (maxNeighbor != null){
-			setDesiredPheromones(((AntCell)maxNeighbor).getHomePheromones() - 2);
+			setDesiredPheromones(((AntCell)maxNeighbor).getHomePheromones() - 5);
 		}
+		//System.out.println(currCell);
+		//System.out.println(((AntCell)currCell).getHomePheromones());
 	}
 	
 	private void dropFoodPheromones(Neighborhood neighbors, Cell currCell){
 		List<Cell> neighborCells = neighbors.getMyNeighbors();
 		Cell maxNeighbor = findMaxPheromones("food", findForward(neighborCells));
-		setDesiredPheromones(((AntCell)maxNeighbor).getFoodPheromones() - 2);
-		if ((desiredPheromones-currFoodPheromones) > 0){
+		if ((desiredPheromones-currHomePheromones) > 0){
 			((AntCell)currCell).setFoodPheromones(desiredPheromones);
+		}
+		if (maxNeighbor != null){
+			setDesiredPheromones(((AntCell)maxNeighbor).getFoodPheromones() - 5);
 		}
 	}
 	
