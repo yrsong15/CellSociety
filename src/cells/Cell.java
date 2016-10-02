@@ -28,6 +28,7 @@ public class Cell {
 	}
 	
 	
+	
 	public List<Species> getOccupants(){
 		return myOccupants;
 	}
@@ -58,7 +59,12 @@ public class Cell {
 	}
 	
 	public int getState(){
-		return myOccupants.get(0).getCurrState();
+		if (hasOccupants()){
+			return myOccupants.get(0).getCurrState();
+		}
+		else{
+			return 3;
+		}
 	}
 
 	public int getMaxOccupants() {
