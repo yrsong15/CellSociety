@@ -123,6 +123,7 @@ public class LineGraphController {
     }
     
     public void displayLineChart(Group g, LineChart<Number, Number> lc, double xPos, double yPos){
+    	g.getChildren().remove(lc);
     	lc.setPrefWidth(CHART_WIDTH);
     	lc.setPrefHeight(CHART_HEIGHT);
     	lc.setLayoutX(xPos);
