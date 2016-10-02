@@ -4,11 +4,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import simulation_parser.FireSimulation;
-import simulation_parser.GameOfLifeSimulation;
-import simulation_parser.PredatorPreySimulation;
-import simulation_parser.SegregationSimulation;
-import simulation_parser.SimulationParser;
+import simulation_parser.*;
 import util.GameEngine;
 import util.Grid;
 import util.Location;
@@ -63,6 +59,9 @@ public class GridController {
 		}
 		else if(path.equals(rb.getString("SegregationXMLPath"))){
 			mySim = new SegregationSimulation();
+		}
+		else if(path.equals(rb.getString("ForagingAntsXMLPath"))){
+			mySim = new ForagingAntsSimulation();
 		}
 	}
 	
