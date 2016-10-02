@@ -137,7 +137,8 @@ public class Controller{
 		simButtons(g);
 		myGC.getGameEngine().updateWorld();
     	myGC.displayGrid(g, grid, margin);
-//    	myLGC.addDataToSeries();
+    	myLGC.displayLineChart(g, myLGC.getChart(), mySC.getUIWidth() * 1/2, mySC.getUIHeight() * 0.6);
+    	myLGC.addDataToSeries();
 	}
     
 	public void initButtons(Group g){

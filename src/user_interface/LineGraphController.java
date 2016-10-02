@@ -17,6 +17,7 @@ public class LineGraphController {
     private final int CHART_WIDTH = 200;
     private final int CHART_HEIGHT = 100;
 
+    private LineChart<Number, Number> lcChart;
     private int xSeriesData = 0;
     private XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
     private XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
@@ -37,7 +38,9 @@ public class LineGraphController {
             protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
             }
         };
+        lcChart = chart;
 
+        chart.getData().addAll(series1, series2);
         chart = setLineChartSettings(chart, rb);
         displayLineChart(g, chart, xPos, yPos);
         runLineGraph();
@@ -55,7 +58,7 @@ public class LineGraphController {
 
         AddToQueue addToQueue = new AddToQueue();
         executor.execute(addToQueue);
-        prepareTimeline();
+//        prepareTimeline();
     }
     
     private void prepareTimeline() {
@@ -114,18 +117,21 @@ public class LineGraphController {
         lc.setAnimated(false);
         lc.setTitle(rb.getString("ChartTitle"));
         lc.setHorizontalGridLinesVisible(true);
-        series1.setName("Series 1");
-        series2.setName("Series 2");
+        series1.setName(rb.getString("TypeOneTitle"));
+        series2.setName(rb.getString("TypeTwoTitle"));
         return lc;
     }
     
     public void displayLineChart(Group g, LineChart<Number, Number> lc, double xPos, double yPos){
-    	lc.getData().addAll(series1, series2);
     	lc.setPrefWidth(CHART_WIDTH);
     	lc.setPrefHeight(CHART_HEIGHT);
     	lc.setLayoutX(xPos);
     	lc.setLayoutY(yPos);
         g.getChildren().add(lc);
+    }
+    
+    public LineChart<Number, Number> getChart(){
+    	return lcChart;
     }
 
 }
