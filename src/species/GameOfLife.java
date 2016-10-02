@@ -2,6 +2,7 @@ package species;
 
 import java.util.List;
 
+import cells.Cell;
 import neighborhood.Neighborhood;
 import util.Location;
 
@@ -16,7 +17,7 @@ public class GameOfLife extends Species{
 	/**
 	 * 0 state = live cells, 1 state = dead cells
 	 */
-	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors){
+	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors, Cell currCell){
 		List<Location> liveNeighbors = neighbors.findNeighborsOfState(0);
 		int numLiveNeighbors = liveNeighbors.size();
 		

@@ -10,7 +10,7 @@ import util.Location;
 /***
  * @author Chalena Scholl, Owen Chung
  */
-public class HexagonNeighborhood extends Neighborhood{
+public class HexagonNeighborhood extends PlusNeighborhood{
 
 	
 	public HexagonNeighborhood(Grid mainGrid, Location currLoc) {
@@ -21,21 +21,25 @@ public class HexagonNeighborhood extends Neighborhood{
 
 	@Override
 	public List<Cell> findMyNeighbors(Grid mainGrid, Location currLoc) {
-		List<Cell> ret = new ArrayList<Cell>();
-		ret.add(mainGrid.getCell(new Location(currLoc.getX()-1, currLoc.getY())));
-		ret.add(mainGrid.getCell(new Location(currLoc.getX()+1, currLoc.getY())));
-		ret.add(mainGrid.getCell(new Location(currLoc.getX(), currLoc.getY()-1)));
-		ret.add(mainGrid.getCell(new Location(currLoc.getX(), currLoc.getY()+1)));
-		ret.add(mainGrid.getCell(new Location(currLoc.getX()-1, currLoc.getY()-1)));
-		ret.add(mainGrid.getCell(new Location(currLoc.getX()+1, currLoc.getY()-1)));
-		
-		for (int i = 0; i < ret.size(); i++){
-			if (!ret.get(i).hasOccupants() || ret.get(i) == null){
-				ret.remove(i);
-			}
-		}
+		List<Cell> ret = getPlusNeighbors(mainGrid, currLoc);
+		getOtherNeighbors(ret, mainGrid, currLoc);
+		removeEmptyCells(ret);
 		return ret;
 	}
+	
+	private void getOtherNeighbors(List<Cell> toAdd, Grid mainGrid, Location currLoc) {
+		// TODO Auto-generated method stub
+		int currX = currLoc.getX();
+		int currY = currLoc.getY();
+		if (mainGrid.isValidCell(currX - 1, currY -1)){
+			toAdd.add(mainGrid.getCell(new Location(currX, currY - 1)));
+		}
+		if (mainGrid.isValidCell(currX + 1, currY -1)){
+			toAdd.add(mainGrid.getCell(new Location(currX, currY - 1)));
+		}
+	}
+
+
 
 
 }

@@ -13,6 +13,7 @@ public class Cell {
 	private List<Species> myOccupants;
 	private int maxOccupants;
 	private Location myLocation;
+	private int foodAmount = 0;
 	
 	public Cell(Location where){
 		myOccupants = new ArrayList<Species>();
@@ -69,9 +70,26 @@ public class Cell {
 	}
 	
 	public void applyEffect(Species incoming){
-		
+		if (incoming.isPredator()){
+			List<Species>copyOccupants = new ArrayList<Species>(getOccupants());
+			for (Species inCell : copyOccupants){
+				if (inCell.isPrey()){
+					getOccupants().remove(inCell);
+				}
+			}
+		}
 	}
 	public void step(){
 		
+	}
+
+	public int getFoodAmount() {
+		// TODO Auto-generated method stub
+		return foodAmount;
+	}
+
+	public void setFoodAmount(int foodamount) {
+		// TODO Auto-generated method stub
+		foodAmount = foodamount;
 	}
 }

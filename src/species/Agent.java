@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import java.util.List;
 
+import cells.Cell;
 import neighborhood.Neighborhood;
 import util.Location;
 
@@ -21,7 +22,7 @@ public class Agent extends Species {
 	}
 
 	@Override
-	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors) {
+	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors, Cell currCell) {
 		List<Location> sameAgents = neighbors.findNeighborsOfState(this.getCurrState());
 		int numberofneighbors = neighbors.getTotalNeighbors();
 		int numberofsameagent = sameAgents.size();
