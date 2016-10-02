@@ -4,6 +4,7 @@ package species;
 import java.util.Collections;
 import java.util.List;
 
+import cells.Cell;
 import neighborhood.Neighborhood;
 import util.Location;
 
@@ -40,7 +41,7 @@ public class Shark extends PredatorPreySpecies{
 	
 
 	@Override
-	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors) {
+	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors, Cell currCell) {
 		if (reachedStarvation()){
 			setNextLocation(null);
 			return;

@@ -23,9 +23,8 @@ public class ForagingAntsSimulation extends SimulationParser{
 		
 		int maxPheromones = Integer.parseInt(getElement("maxPheromones"));
 		((Ant) mySpecies).setMaxPheromones(maxPheromones);
+		((Ant) mySpecies).setAtNest(true);
 		
-		
-
 	}
 
 	@Override

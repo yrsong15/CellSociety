@@ -2,6 +2,7 @@ package species;
 
 import java.util.List;
 
+import cells.Cell;
 import neighborhood.Neighborhood;
 import util.Location;
 
@@ -21,7 +22,7 @@ public class Tree extends Species {
 
 	@Override
 
-	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors) {		
+	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors, Cell currCell) {		
 		if (isBurning()){
 
 			this.setNextState(0);

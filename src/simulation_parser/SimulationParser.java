@@ -136,7 +136,10 @@ public abstract class SimulationParser {
 			int numInCell = Integer.parseInt(rowVals[cell]);
 			for (int j = 0; j<numInCell; j++){
             	Species toAdd = createSpecies(currSpecies, state);
-            	mainGrid.addToGrid(new Location(row, cell), toAdd);
+            	Location currLoc = new Location (row, cell);
+            	toAdd.setCurrLocation(currLoc);
+            	toAdd.setNextLocation(currLoc);
+            	mainGrid.addToGrid(currLoc, toAdd);
 			}
 		}
 	}

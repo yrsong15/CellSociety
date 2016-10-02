@@ -49,7 +49,7 @@ public class GameEngine {
 			if (!alreadyVisited.contains(currSpecies)){
 				alreadyVisited.add(currSpecies);
 				Location currLoc = currCell.getLocation();
-				currSpecies.updateNextLocation(availableCells, copyGrid.createNeighborhood(currLoc));
+				currSpecies.updateNextLocation(availableCells, copyGrid.createNeighborhood(currLoc), currCell);
 			}
 		}
 	}
