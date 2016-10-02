@@ -27,8 +27,8 @@ public class GameEngine {
 	 * actions to do this.
 	 */
 	public void updateWorld(){
-		copyGrid = new Grid(myGrid.getMyGrid(), myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType(), myGrid.getCellType());
-		List<Location> availableCells = copyGrid.getAvailableCells();
+		//copyGrid = new Grid(myGrid.getMyGrid(), myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType(), myGrid.getCellType());
+		List<Location> availableCells = myGrid.getAvailableCells();
 		List<Species> alreadyVisited = new ArrayList<Species>();
 		for (int i = 0; i < myGrid.getWidth(); i++){
 			for (int j = 0; j < myGrid.getHeight(); j++){
@@ -49,7 +49,7 @@ public class GameEngine {
 			if (!alreadyVisited.contains(currSpecies)){
 				alreadyVisited.add(currSpecies);
 				Location currLoc = currCell.getLocation();
-				currSpecies.updateNextLocation(availableCells, copyGrid.createNeighborhood(currLoc), currCell);
+				currSpecies.updateNextLocation(availableCells, myGrid.createNeighborhood(currLoc), currCell);
 			}
 		}
 	}
@@ -61,29 +61,34 @@ public class GameEngine {
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
 				Cell currCell = myGrid.getCell(currLoc);
-				currCell.step();
 				if (currCell.hasOccupants()){
 					List<Species> occupants = currCell.getOccupants();
 					List<Species> copyOccupants = new ArrayList<Species>(occupants);
 					updateSpecies(currLoc, currCell, copyOccupants);
 				}
+				currCell.step();
 			}
 		}
 	}
 
 
 	private void updateSpecies(Location currLoc, Cell currCell, List<Species> copyOccupants) {
+		//System.out.println(copyOccupants.size());
 		for (int k = 0; k < copyOccupants.size(); k++){
 			Species currSpecies = copyOccupants.get(k);
+//			System.out.println(currSpecies);
+//			System.out.println(currSpecies.getNextLocation());
 			Location moveTo = currSpecies.getNextLocation();
 			if (moveTo == null){
+				System.out.println("ant's dying");
 				currCell.removeOccupant(currSpecies);
 			}
 
 			else if(!moveTo.equals(currLoc)){
 				myGrid.getCell(moveTo).applyEffect(currSpecies);
+				//why are we setting it to next location if we can't move them 
 				if (!myGrid.getCell(moveTo).hasFreeSpace()){
-					currSpecies.setCurrLocation(currSpecies.getNextLocation());
+					//currSpecies.setCurrLocation(currSpecies.getNextLocation());
 				}
 				else{
 					myGrid.moveSpecies(currLoc, moveTo, currSpecies);

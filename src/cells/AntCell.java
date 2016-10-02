@@ -77,9 +77,13 @@ public class AntCell extends Cell{
 	@Override
 	public void step(){
 		if(isNest){
-			for (int i = 0; i < 2; i++){
+			for (int i = 0; i < 1; i++){
 				if (hasFreeSpace()){
-					addOccupant(new Ant(getLocation()));
+					Ant toAdd = new Ant();
+					toAdd.setAtNest(true);
+					toAdd.setCurrLocation(getLocation());
+					toAdd.setNextLocation(getLocation());
+					addOccupant(toAdd);
 				}
 			}
 		}
