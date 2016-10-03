@@ -177,7 +177,7 @@ public class Grid {
 						rowVal+=". ";
 					}
 				}
-				System.out.println(rowVal);
+				//System.out.println(rowVal);
 			}
 		}
 		public Cell[][] getMyGrid() {
