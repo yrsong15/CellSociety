@@ -31,7 +31,7 @@ public class Main extends Application{
 		myGrid.outputGridValues();
 		System.out.println("-----");
 		int i = 0;
-		while(i < 100){
+		while(i < 30){
 			myEngine.updateWorld();
 			myGrid.outputGridValues();
 			System.out.println("-----");
