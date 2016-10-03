@@ -76,19 +76,17 @@ public class GridController {
 			for(int j=0;j<grid.getHeight();j++){
 				Rectangle r = new Rectangle(cellSize*i + margin, cellSize*j + margin, cellSize, cellSize);
 				Location curr = new Location(i,j);
-//				if(grid.getCell(curr).hasOccupants()){
-					if(grid.getCell(curr).getState()==1){
-						r.setFill(COLORONE);
-						numOfTypeOne++;
-					}
-					else if(grid.getCell(curr).getState()==0){
-						r.setFill(COLORZERO);
-						numOfTypeTwo++;
-					}
-					else if(grid.getCell(curr).getState()==2){
-						r.setFill(COLORTWO);
-					}
-//				}
+				if(grid.getCell(curr).getState()==1){
+					r.setFill(COLORONE);
+					numOfTypeOne++;
+				}
+				else if(grid.getCell(curr).getState()==0){
+					r.setFill(COLORZERO);
+					numOfTypeTwo++;
+				}
+				else if(grid.getCell(curr).getState()==2){
+					r.setFill(COLORTWO);
+				}
 				g.getChildren().add(r);
 			}
 		}
