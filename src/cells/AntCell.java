@@ -97,7 +97,7 @@ public class AntCell extends Cell{
 			return 2;
 		}
 		
-		if (isFoodSource){
+		else if (isFoodSource){
 			return 1;
 		}
 		if (hasOccupants()){
