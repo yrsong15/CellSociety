@@ -13,7 +13,7 @@ import util.Grid;
 
 
 
-/*** @author Chalena Scholl, Ray Song
+/*** @author Chalena Scholl, Ray Song, Owen Chung
  *
  */
 public class Main extends Application{
@@ -21,23 +21,7 @@ public class Main extends Application{
 	@Override
 	public void start(Stage s) throws Exception {
 		Controller ctrl = new Controller();
-		ctrl.startController(s);
-	
-//		SimulationParser mySim = new ForagingAntsSimulation();
-//		mySim.prepareXMLDoc("data/ForagingAnts.xml");
-//		Grid myGrid = mySim.populateGrid();
-//		GameEngine myEngine = new GameEngine(myGrid);
-//		myGrid.outputGridValues();
-//		System.out.println("-----");
-//		int i = 0;
-//		while(i < 100){
-//			myEngine.updateWorld();
-//			myGrid.outputGridValues();
-//			System.out.println("-----");
-//			i++;
-//		}
-
-		
+		ctrl.startController(s);	
 	}
 	
 	public static void main (String[] args) {

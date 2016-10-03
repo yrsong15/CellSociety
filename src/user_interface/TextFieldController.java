@@ -43,6 +43,5 @@ public class TextFieldController {
 	public boolean cellSizeTFExists(){
 		return cellSizeTF != null;
 	}
-	
 
 }

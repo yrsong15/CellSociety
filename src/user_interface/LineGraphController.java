@@ -49,7 +49,6 @@ public class LineGraphController {
             series1.getData().add(new XYChart.Data<>(xSeriesData++, dataQ1.remove()));
             series2.getData().add(new XYChart.Data<>(xSeriesData++, dataQ2.remove()));
         }
-        // remove points to keep us at no more than MAX_DATA_POINTS
         if (series1.getData().size() > MAX_DATA_POINTS) {
             series1.getData().remove(0, series1.getData().size() - MAX_DATA_POINTS);
         }

@@ -31,7 +31,6 @@ public class SceneController {
 		return scene;
 	}
 	
-	
 	public void showTheMan(Group g){
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/duvall.jpg"));
 		ImageView theMan = new ImageView(image);
