@@ -101,7 +101,7 @@ public class AntCell extends Cell{
 			return 1;
 		}
 		if (hasOccupants()){
-			return super.getState();
+			return 0;
 		}
 		else{
 			return 3;
