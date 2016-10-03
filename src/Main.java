@@ -20,25 +20,28 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage s) throws Exception {
-//		Controller ctrl = new Controller();
-//		ctrl.startController(s);
-		
+		Controller ctrl = new Controller();
+		ctrl.startController(s);
 	
-		SimulationParser mySim = new ForagingAntsSimulation();
-		mySim.prepareXMLDoc("data/ForagingAnts.xml");
-		Grid myGrid = mySim.populateGrid();
-		GameEngine myEngine = new GameEngine(myGrid);
-		myGrid.outputGridValues();
-		System.out.println("-----");
-		int i = 0;
-		while(i < 30){
-			myEngine.updateWorld();
-			myGrid.outputGridValues();
-			System.out.println("-----");
-			i++;
-		}
+
+//		SimulationParser mySim = new ForagingAntsSimulation();
+//		mySim.prepareXMLDoc("data/ForagingAnts.xml");
+//		Grid myGrid = mySim.populateGrid();
+//		GameEngine myEngine = new GameEngine(myGrid);
+//		myGrid.outputGridValues();
+//		System.out.println("-----");
+//		int i = 0;
+//		while(i < 30){
+//			myEngine.updateWorld();
+//			myGrid.outputGridValues();
+//			System.out.println("-----");
+//			i++;
+//		}
+//		
 		
-		
+
+
+
 
 		
 	}

@@ -4,11 +4,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import simulation_parser.FireSimulation;
-import simulation_parser.GameOfLifeSimulation;
-import simulation_parser.PredatorPreySimulation;
-import simulation_parser.SegregationSimulation;
-import simulation_parser.SimulationParser;
+import simulation_parser.*;
 import util.GameEngine;
 import util.Grid;
 import util.Location;
@@ -23,7 +19,8 @@ public class GridController {
 
 	private final int GRID_SIZE = 420;
 	private final Color COLORONE = Color.RED;
-	private final Color COLORTWO = Color.YELLOW;
+	private final Color COLORZERO = Color.YELLOW;
+	private final Color COLORTWO = Color.GREEN;
 	
 	private double FRAMES_PER_SECOND = 1;
     private double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -64,6 +61,9 @@ public class GridController {
 		else if(path.equals(rb.getString("SegregationXMLPath"))){
 			mySim = new SegregationSimulation();
 		}
+		else if(path.equals(rb.getString("ForagingAntsXMLPath"))){
+			mySim = new ForagingAntsSimulation();
+		}
 	}
 	
 	public void displayGrid(Group g, Grid grid, int margin){
@@ -76,16 +76,19 @@ public class GridController {
 			for(int j=0;j<grid.getHeight();j++){
 				Rectangle r = new Rectangle(cellSize*i + margin, cellSize*j + margin, cellSize, cellSize);
 				Location curr = new Location(i,j);
-				if(grid.getCell(curr).hasOccupants()){
+//				if(grid.getCell(curr).hasOccupants()){
 					if(grid.getCell(curr).getState()==1){
 						r.setFill(COLORONE);
 						numOfTypeOne++;
 					}
-					else{
-						r.setFill(COLORTWO);
+					else if(grid.getCell(curr).getState()==0){
+						r.setFill(COLORZERO);
 						numOfTypeTwo++;
 					}
-				}
+					else if(grid.getCell(curr).getState()==2){
+						r.setFill(COLORTWO);
+					}
+//				}
 				g.getChildren().add(r);
 			}
 		}
