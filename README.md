@@ -37,7 +37,7 @@ Duke CompSci 308 Cell Society Project
 	+ Shape of displayed cell can be configured by toggling the 'cellShape' setting in the XML file, which is under the details tag.
 	+ The initial percentage of each species for each simulation can be configured by toggling the configuration -> species -> percent settings in each XML file.
 	+ Each simulation can also be set to a specific initial configuration by adding an 'initialization' tag under the corresponding species that you wish to set. For example:
-		<<species type ="Ant">>
+		\<species type ="Ant">
     		<<initialization state = "0">>		
     			<<row>0 0 0</row>>
     			<<row>0 0 0</row>>
