@@ -3,6 +3,7 @@
 		<name> Segregation </name>
 		<title>Segregation Team 17</title>
 		<author>         </author>
+		<cellShape>Hexagon</cellShape>
 	</details>
 	
 	<configuration>

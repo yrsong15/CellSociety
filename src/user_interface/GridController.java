@@ -3,7 +3,14 @@ package user_interface;
 import java.util.ResourceBundle;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import shapes.Hexagon;
+import shapes.CustomShape;
+import shapes.Square;
+import simulation_parser.FireSimulation;
+import simulation_parser.GameOfLifeSimulation;
+import simulation_parser.PredatorPreySimulation;
+import simulation_parser.SegregationSimulation;
+import simulation_parser.SimulationParser;
 import simulation_parser.*;
 import util.GameEngine;
 import util.Grid;
@@ -67,30 +74,39 @@ public class GridController {
 	}
 	
 	public void displayGrid(Group g, Grid grid, int margin){
-		int cellSize = GRID_SIZE / grid.getWidth();
 		numOfTypeOne = 0;
 		numOfTypeTwo = 0;
 		numOfTotalCells = grid.getHeight() * grid.getWidth();
 		
 		for(int i=0;i<grid.getWidth();i++){
 			for(int j=0;j<grid.getHeight();j++){
-				Rectangle r = new Rectangle(cellSize*i + margin, cellSize*j + margin, cellSize, cellSize);
+				CustomShape shape = createShape(i, j, grid.getWidth(), margin);
+				shape.setPosition();
 				Location curr = new Location(i,j);
 				if(grid.getCell(curr).getState()==1){
-					r.setFill(COLORONE);
+					shape.setFill(COLORONE);
 					numOfTypeOne++;
 				}
 				else if(grid.getCell(curr).getState()==0){
-					r.setFill(COLORZERO);
+					shape.setFill(COLORZERO);
 					numOfTypeTwo++;
 				}
 				else if(grid.getCell(curr).getState()==2){
-					r.setFill(COLORTWO);
+					shape.setFill(COLORTWO);
 				}
-				g.getChildren().add(r);
+				g.getChildren().add(shape.getShape());
 			}
 		}
 		return;
+	}
+	
+	public CustomShape createShape(int row, int col, int gridWidth, int margin){
+		if(mySim.getCellShape().equals("Hexagon")){
+			return new Hexagon(row, col, (int)(GRID_SIZE / (gridWidth*1.8)), margin);
+		}
+		else{
+			return new Square(row, col, GRID_SIZE / gridWidth, margin);
+		}
 	}
 	
 	public GameEngine getGameEngine(){

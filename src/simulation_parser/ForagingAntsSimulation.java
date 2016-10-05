@@ -20,7 +20,7 @@ public class ForagingAntsSimulation extends SimulationParser{
 	public void setSpeciesParameters(Element speciesInfo, Species mySpecies) {
 		int lifeSpan = Integer.parseInt(getElement("lifeSpan"));
 		((Ant) mySpecies).setStandardLifeTime(lifeSpan);
-		
+		((Ant) mySpecies).setAtNest(true);
 		int maxPheromones = Integer.parseInt(getElement("maxPheromones"));
 		((Ant) mySpecies).setMaxPheromones(maxPheromones);
 		((Ant) mySpecies).setAtNest(true);

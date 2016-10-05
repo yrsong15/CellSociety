@@ -171,7 +171,7 @@ public class Grid {
 				for (int j = 0; j < myGrid[i].length; j++){
 					Cell curr= myGrid[i][j];
 					if (curr.hasOccupants()){
-						rowVal+= curr.getSize() + " "; 
+						rowVal+= curr.getState() + " "; 
 					}
 					else{
 						rowVal+=". ";

@@ -3,13 +3,14 @@
 		<name>Segregation</name>
 		<title>Segregation Team 17</title>
 		<author>         </author>
+		<cellShape>Hexagon</cellShape>
 	</details>
 	
 	<configuration>
 		<species type ="Shark">
 			<percent state ="1">20</percent>
 			<breedTurns>10</breedTurns>
-			<starveTurns>3</starveTurns>
+			<starveTurns>5</starveTurns>
 		</species>
 		<species type = "Fish">     
 			<percent state="0">70</percent>
@@ -18,8 +19,8 @@
 	</configuration>
 	
 	<grid>
-		<width>20</width>
-		<height>20</height>
-		<numCells>400</numCells>
+		<width>3</width>
+		<height>3</height>
+		<numCells>9</numCells>
 	</grid>
 </simulation>

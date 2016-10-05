@@ -59,6 +59,7 @@ public class GameEngine {
 			for (int j = 0; j < myGrid.getHeight(); j++){
 				Location currLoc = new Location(i, j);
 				Cell currCell = myGrid.getCell(currLoc);
+				//currCell.step();
 				if (currCell.hasOccupants()){
 					List<Species> occupants = currCell.getOccupants();
 					List<Species> copyOccupants = new ArrayList<Species>(occupants);

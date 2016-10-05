@@ -3,14 +3,14 @@
 		<name>Segregation</name>
 		<title>Segregation Team 17</title>
 		<author>         </author>
+		<cellShape>Hexagon</cellShape>
 	</details>
 	
 	<configuration>
 		<species type ="Ant">
 			<percent state="0">40</percent>
-			<percent state="0">20</percent>
 			
-			<initialization state = "1">		
+			<initialization state = "0">		
 				<row>0 0 0</row>
 				<row>0 0 0</row>
 				<row>0 0 2</row>
