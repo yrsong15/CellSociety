@@ -14,13 +14,12 @@
 ### Overview
 
 + **Main** 
-	* Initializes grid and UI
-	* Creates and saves Simulation details
-	* Runs the *Game Loop* including the start/stop command for each step of the process
-	
-+ **UI** 
+	* Initializes **Controller.java**, which oversees all action and calls other classes as necessary.
+
++ **User Interface** 
 	* See **User Interface** below
-	* Includes buttons that start different Simulations
+	* Refers to helper Controller classes (ex: **ButtonController.java**, **SceneController.java**) to call various functions of the program and visualize the simulation
+	* Includes buttons that change the scene and start different Simulations
 
 + **Simulation**
 	* Contains data from XML files that are required to instantiate and run each simulation
@@ -50,7 +49,7 @@
 
 ### User Interface
 
-+ When Main.java is executed, a short splash message displaying our team name and individual members' names will be shown. After the message disappears, the Main Page will feature an empty grid on the left-hand side, as well as four buttons on the right-hand side that each lead to different simulations: **Segregation, Fish-Shark, Spreading Fire, and Other**.
++ When Main.java is executed, the Main Page will feature an empty grid (represented by non other than Professor Duvall's image) on the left-hand side, as well as five buttons on the right-hand side that each lead to different simulations: **Segregation, Fish-Shark, Spreading Fire, Game of Life, and Foraging Ants**.
 	* The grid will always be in the same location, regardless of what page the user is on.
 	* **Please refer to the picture at the end of this section for visual reference.**
 
@@ -60,29 +59,10 @@
 	* **Start** (button): The game engine will run the game loop indefinitely, until the end conditions are reached or until the stop button is clicked.
 	* **Stop** (button): The game engine will halt the game loop.
 	* **Play** (button): The game engine will run a single iteration of the game loop.
-	
-	* **Size of Cell** (text box): The user will input an integer that determines the size of each cell on the grid.
-	* **Delay** (text box): The user will input an integer that determines the delay between each iteration of the game loop.
-	
+	* **Size of Cell** (button): The button will trigger a **Text Field**, on which the user will input an integer that determines the size of each cell on the grid.
+	* **Delay** (button): The button will trigger a **Scroll Bar**, which the user will use to select the delay between each iteration of the game loop.
 	* **Run Another Simulation** (button): The user will be moved back to the **Main Page**, the initial page that contains the empty grid and the four buttons that each lead to different simulations.
-
-+ **Segregation** model will also contain the following:
-	* **Similar** (text box): User will input an integer between 0-100 to denote the percentage of similar neighbors that are required for happiness.
-	*  **Ratio** (text box): User will input an integer between 0-100 to denote the initial ratio between the two ethnicities represented.
-	* **Empty** (text box): User will input an integer between 0-100 to denote the percentage of empty cells.
-	
-+ **Fish-Shark** model will also contain the following:
-	* **Fish %** (text box): User will input an integer between 0-100 to denote the initial percentage of fish.
-	* **Shark %** (text box): User will input an integer between 0-100 to denote the initial percentage of shark.
-	* **Fish Breed %** (text box): User will input an integer to denote the number of turns it takes for a single fish to breed.
-	* **Shark Breed %** (text box): User will input an integer to denote the number of turns it takes for a single shark to breed.
-	* **Shark Starve %** (text box): User will input an integer to denote the number of turns it takes for a single shark to starve, i.e. the number of consecutive turns it takes for the shark to die without consuming any fish.
-
-+ **Spreading Fire** model will also contain the following:
-	* **Fish %** (text box): User will input an integer between 0-100 to denote the percentage of a tree catching fire.
-	
-+ **Other** model will also contain the following:
-	* Specific details required for simulation( ex: Game of Life model)
+	* **Species Distribution** (Line Chart): This is a dynamic line chart that represents the percentage of each species in the Grid that is shown to its left.
 	
 #### User Interface Diagram
 
