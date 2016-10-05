@@ -112,13 +112,23 @@
 	+ Each subclass will also have its own algorithm of movement or reaction to a certain state, so each subclass also needs to implement a updateNextLocation function that decides where to move on the grid. The move function will be passed available cells and neighborhood so that each species can make its decision about where to move based on its own specific algorithm but still without gaining access to the entire grid itself.
 	+ Each subclass should also keep track of whether or not it needs to reproduce, as this is something that each species might want to do.
 	+ Each species should also know its current location on the grid and also the cell it lives in.
-+ **Cell**
+
++ **Cells**
 	+  Cell is an abstraction that essentially provides a place for species to operate on. It could also carry out actions each time step if need be. For example,  Foraging ants requires the nest to breed ants each time step. AntCell, which is a subclass of Cell, implements this simulation specific actions with the *step* function.
 	+ Cell also limits number of occupants it could store based on different simulation. 
 	+ *applyEffect* function in cell takes in an argument that is the new species coming into the cell and updates the states of the species and also carries out required actions.
+
 + **Neighborhood**
 	+  Neighborhood is an abstraction that stores the neighbors of a cell given its location. 
 	+ One could utilize it to find the neighbors of a cell based on different definition on a subclasses of neighborhood.
+
++ **Shapes**
+
++ **Location**
+	+  Location is an abstraction that represents the location on the grid. 
+	+ One could utilize it to check whether two objects are at the same locaiton or get the adjacent cells of a specific location.
+
+
 + **Use Cases**
 	1. Game engine class would call *updateNextLocation(...)* on the species subclass, which would update the next location of the species. If the next location is set to null, the species is removed because it indicates the species is dying.  On the other hand, if it's set to a different location than the current location,  applyEffect is called so that the cell could prepare for the incoming species and update the states for the incoming species.  Then, species is moved to the next location and breed if certain condition is met. 	
 	2. Same as above.
