@@ -37,13 +37,13 @@ Duke CompSci 308 Cell Society Project
 	+ Shape of displayed cell can be configured by toggling the 'cellShape' setting in the XML file, which is under the details tag.
 	+ The initial percentage of each species for each simulation can be configured by toggling the configuration -> species -> percent settings in each XML file.
 	+ Each simulation can also be set to a specific initial configuration by adding an 'initialization' tag under the corresponding species that you wish to set. For example:
-		+<species type ="Ant">
-    		<initialization state = "0">		
-    			<row>0 0 0</row>
-    			<row>0 0 0</row>
-    			<row>0 0 2</row>
-    		</initialization>
-    	 </species>
+		+<<species type ="Ant">>
+    		<<initialization state = "0">>		
+    			<<row>0 0 0</row>>
+    			<<row>0 0 0</row>>
+    			<<row>0 0 2</row>>
+    		<</initialization>>
+    	 <</species>>
         + The above puts 2 ants with state 0 in the bottom right position.
 	+ Extra settings for each simulation (ex) probCatch for Spreading Fire model, # of turns to breed/die for Fish-Shark model) can be configured in the XML file under the general tag.
 	+ The initial width and height of the grid can also be set but needs to correspond to the number given in 'numCells' i.e. if width is 3 and height is 3 numCells needs to be 9.
