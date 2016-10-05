@@ -8,14 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.Grid;
 
 /*** @author Ray Song(ys101)
- * 
+ * 	 This is the platform that controls the front-end side of our application.
+ * 	 All other classes within this package are called from this class.
 */
 public class Controller{
 	
@@ -30,7 +30,6 @@ public class Controller{
 	private ScrollbarController mySBC;
 	private TextFieldController myTFC;
 	private LineGraphController myLGC;
-//	private LineChart<Number, Number> myChart;
 	private Timeline myAnimation;
 	private Grid myGrid;
   
@@ -42,7 +41,8 @@ public class Controller{
     	myGC = new GridController();
     	mySC = new SceneController(myStage, myGC);
     	mySBC = new ScrollbarController();
-    	myGrid = new Grid(myGC.getGridSize(), myGC.getGridSize(), "WholeNeighborhood", "Cell");
+    	myGrid = new Grid(myGC.getGridSize(), myGC.getGridSize(), myResources.getString("NeighborhoodLabel"), 
+    			myResources.getString("CellLabel"));
     	myTFC = new TextFieldController();
     	myLGC = new LineGraphController();
     	
@@ -76,7 +76,6 @@ public class Controller{
     	else if (mySC.getState().equals(myResources.getString("ForagingAntsLabel"))){
     		startGrid(root, myResources.getString("ForagingAntsXMLPath"));
     	}
-		
 		stage.setScene(scene);
     }
     

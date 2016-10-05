@@ -28,6 +28,7 @@ public class Cell {
 	}
 	
 	
+	
 	public List<Species> getOccupants(){
 		return myOccupants;
 	}
@@ -62,7 +63,7 @@ public class Cell {
 			return myOccupants.get(0).getCurrState();
 		}
 		else{
-			return 2;
+			return 3;
 		}
 	}
 

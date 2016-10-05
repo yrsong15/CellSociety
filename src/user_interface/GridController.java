@@ -26,7 +26,8 @@ public class GridController {
 
 	private final int GRID_SIZE = 420;
 	private final Color COLORONE = Color.RED;
-	private final Color COLORTWO = Color.YELLOW;
+	private final Color COLORZERO = Color.YELLOW;
+	private final Color COLORTWO = Color.GREEN;
 	
 	private double FRAMES_PER_SECOND = 1;
     private double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -82,15 +83,16 @@ public class GridController {
 				CustomShape shape = createShape(i, j, grid.getWidth(), margin);
 				shape.setPosition();
 				Location curr = new Location(i,j);
-				if(grid.getCell(curr).hasOccupants()){
-					if(grid.getCell(curr).getState()==1){
-						shape.setFill(COLORONE);
-
-					}
-					else{
-						shape.setFill(COLORTWO);
-						numOfTypeOne++;
-					}
+				if(grid.getCell(curr).getState()==1){
+					shape.setFill(COLORONE);
+					numOfTypeOne++;
+				}
+				else if(grid.getCell(curr).getState()==0){
+					shape.setFill(COLORZERO);
+					numOfTypeTwo++;
+				}
+				else if(grid.getCell(curr).getState()==2){
+					shape.setFill(COLORTWO);
 				}
 				g.getChildren().add(shape.getShape());
 			}

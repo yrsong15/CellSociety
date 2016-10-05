@@ -16,6 +16,9 @@ public class ScrollbarController {
 	private final double MIN_VALUE = 0.1;
 	private final double MAX_VALUE = 10;
 	private final double START_VALUE = 1;
+	private final String DEFAULT_FONT = "Verdana";
+	private final int DEFAULT_FONT_SIZE = 15;
+	private final Color DEFAULT_TEXT_COLOR = Color.NAVY;
 	private ScrollBar delayBar;
 	
 	public ScrollBar addScrollBar(Group g, double min, double max, double base, double xPos, double yPos){
@@ -31,8 +34,8 @@ public class ScrollbarController {
 	
 	public void addText(Group g, String msg, double xPos, double yPos){
 		Text t = new Text(xPos, yPos, msg);
-		t.setFont(Font.font ("Verdana", 15));
-		t.setFill(Color.ROYALBLUE);
+		t.setFont(Font.font (DEFAULT_FONT, DEFAULT_FONT_SIZE));
+		t.setFill(DEFAULT_TEXT_COLOR);
 		g.getChildren().add(t);
 	}
 	

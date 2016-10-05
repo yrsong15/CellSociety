@@ -91,4 +91,20 @@ public class AntCell extends Cell{
 		setFoodPheromones((int)(getFoodPheromones() * (1 - evaporationRatio)));
 	}
 
+	@Override
+	public int getState(){
+		if (isNest){
+			return 2;
+		}
+		
+		else if (isFoodSource){
+			return 1;
+		}
+		if (hasOccupants()){
+			return 0;
+		}
+		else{
+			return 3;
+		}
+	}
 }

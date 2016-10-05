@@ -74,14 +74,10 @@ public class GameEngine {
 
 
 	private void updateSpecies(Location currLoc, Cell currCell, List<Species> copyOccupants) {
-		//System.out.println(copyOccupants.size());
 		for (int k = 0; k < copyOccupants.size(); k++){
 			Species currSpecies = copyOccupants.get(k);
-//			System.out.println(currSpecies);
-//			System.out.println(currSpecies.getNextLocation());
 			Location moveTo = currSpecies.getNextLocation();
 			if (moveTo == null){
-				System.out.println("ant's dying");
 				currCell.removeOccupant(currSpecies);
 			}
 
