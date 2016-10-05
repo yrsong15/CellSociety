@@ -10,16 +10,26 @@ import util.Location;
  */
 
 public class Cell {
+	protected static int EMPTY_STATE = 3;
 	private List<Species> myOccupants;
 	private int maxOccupants;
 	private Location myLocation;
-	private int foodAmount = 0;
 	
-	public Cell(Location where){
+	/**
+	 * constructor to create a cell
+	 * @param loc location of the cell
+	 */
+	public Cell(Location loc){
 		myOccupants = new ArrayList<Species>();
 		maxOccupants = 1;
-		myLocation = where;
+		myLocation = loc;
 	}
+	
+	/**
+	 * @param occupants lists of species objects occupying the cell
+	 * @param max maximum occupants allowed
+	 * @param loc location of the cell
+	 */
 	
 	public Cell(List<Species> occupants, int max, Location loc){
 		myOccupants = occupants;
@@ -57,13 +67,19 @@ public class Cell {
 	public Location getLocation(){
 		return myLocation;
 	}
+	/**
+	 * Returns state of cell that can then be printed 
+	 * on front end. If not empty return the state of 
+	 * the first occupants of the list.
+	 * @return state of the cell
+	 */
 	
 	public int getState(){
 		if (hasOccupants()){
 			return myOccupants.get(0).getCurrState();
 		}
 		else{
-			return 3;
+			return EMPTY_STATE;
 		}
 	}
 
@@ -74,7 +90,13 @@ public class Cell {
 	public void setMaxOccupants(int max){
 		maxOccupants = max;
 	}
-	
+	/**
+	 * applies effects from the incoming species 
+	 * or anything species should about cell.
+	 * e.g., if a shark is coming into the cell,
+	 * fish in the cell will die.
+	 * @param incoming species coming into the cell
+	 */
 	public void applyEffect(Species incoming){
 		if (incoming.isPredator()){
 			List<Species>copyOccupants = new ArrayList<Species>(getOccupants());
@@ -85,17 +107,12 @@ public class Cell {
 			}
 		}
 	}
+	/**
+	 * carries out changes of a cell per time step
+	 */
 	public void step(){
 		
 	}
 
-	public int getFoodAmount() {
-		// TODO Auto-generated method stub
-		return foodAmount;
-	}
 
-	public void setFoodAmount(int foodamount) {
-		// TODO Auto-generated method stub
-		foodAmount = foodamount;
-	}
 }

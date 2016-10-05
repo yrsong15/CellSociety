@@ -20,7 +20,7 @@ public class Ant extends Species {
 	private int currFoodPheromones;
 	private int desiredPheromones;
 	private int maxPheromones;
-	private int standardLifeTime = 100;
+	private int standardLifeTime = 500;
 	private int turnsSinceBorn;
 	
 
@@ -40,6 +40,7 @@ public class Ant extends Species {
 	
 	@Override
 	public void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors, Cell currCell) {
+		AntCell currAntCell = (AntCell) currCell;
 		if (reachedLifeTime()){
 			setNextLocation(null);
 			return;
@@ -47,7 +48,7 @@ public class Ant extends Species {
 		if (atNest || atFoodSource){
 			setDesiredPheromones(maxPheromones);
 			if (atNest && hasFoodItem){
-				currCell.setFoodAmount(currCell.getFoodAmount() + 1);
+				currAntCell.setFoodAmount(currAntCell.getFoodAmount() + 1);
 				hasFoodItem = false;
 				//System.out.println("just dropped food");
 			}
@@ -262,6 +263,7 @@ public class Ant extends Species {
 	public boolean isPredator() {
 		return false;
 	}
+	
 	
 
 	

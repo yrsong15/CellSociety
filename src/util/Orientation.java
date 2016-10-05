@@ -3,7 +3,9 @@ package util;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/***
+ * @author Chalena Scholl, Owen Chung
+ */
 public class Orientation {
 	//possible orientations are N, NE, E, SE, S, SW, W, NW
 	private String Orientation;

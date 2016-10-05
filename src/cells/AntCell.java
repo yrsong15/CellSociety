@@ -5,6 +5,9 @@ import java.util.List;
 import species.Ant;
 import species.Species;
 import util.Location;
+/*** @author Chalena Scholl, Owen Chung
+*
+*/
 
 public class AntCell extends Cell{
 	private boolean isFoodSource;
@@ -12,11 +15,15 @@ public class AntCell extends Cell{
 	private int foodPheromones;
 	private int homePheromones;
 	private float evaporationRatio = (float) 0.001;
+	private int foodAmount = 0;
 
 
-	
-	public AntCell(Location where) {
-		super(where);
+	/**
+	 * constructor of the Antcell
+	 * @param loc
+	 */
+	public AntCell(Location loc) {
+		super(loc);
 		setMaxOccupants(10);
 	}
 	
@@ -63,8 +70,18 @@ public class AntCell extends Cell{
 	public void setHomePheromones(int homePheromones) {
 		this.homePheromones = homePheromones;
 	}
+	
+	public int getFoodAmount() {
+		return foodAmount;
+	}
 
+	public void setFoodAmount(int foodamount) {
+		foodAmount = foodamount;
+	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void applyEffect(Species incoming) {
 		Ant incomingAnt = (Ant)incoming;
@@ -75,16 +92,17 @@ public class AntCell extends Cell{
 	}
 	
 	@Override
+	/**
+	 * if cell is nest, breed an ant
+	 */
 	public void step(){
 		if(isNest){
-			for (int i = 0; i < 1; i++){
-				if (hasFreeSpace()){
+			if (hasFreeSpace()){
 					Ant toAdd = new Ant();
 					toAdd.setAtNest(true);
 					toAdd.setCurrLocation(getLocation());
 					toAdd.setNextLocation(getLocation());
 					addOccupant(toAdd);
-				}
 			}
 		}
 		setHomePheromones((int)(getHomePheromones() * (1 - evaporationRatio)));
@@ -96,7 +114,6 @@ public class AntCell extends Cell{
 		if (isNest){
 			return 2;
 		}
-		
 		else if (isFoodSource){
 			return 1;
 		}
@@ -104,7 +121,8 @@ public class AntCell extends Cell{
 			return 0;
 		}
 		else{
-			return 3;
+			return EMPTY_STATE;
 		}
 	}
+	
 }

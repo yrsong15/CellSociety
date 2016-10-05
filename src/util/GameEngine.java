@@ -13,7 +13,6 @@ import util.Grid;
 public class GameEngine {
 
 	private Grid myGrid;
-	private Grid copyGrid;
 
 	public GameEngine(Grid myGrid){
 		this.myGrid = myGrid;
@@ -27,7 +26,6 @@ public class GameEngine {
 	 * actions to do this.
 	 */
 	public void updateWorld(){
-		//copyGrid = new Grid(myGrid.getMyGrid(), myGrid.getWidth(), myGrid.getHeight(), myGrid.getNeighbType(), myGrid.getCellType());
 		List<Location> availableCells = myGrid.getAvailableCells();
 		List<Species> alreadyVisited = new ArrayList<Species>();
 		for (int i = 0; i < myGrid.getWidth(); i++){
@@ -81,20 +79,13 @@ public class GameEngine {
 			}
 
 			else if(!moveTo.equals(currLoc)){
-				myGrid.getCell(moveTo).applyEffect(currSpecies);
-				//why are we setting it to next location if we can't move them 
-				if (!myGrid.getCell(moveTo).hasFreeSpace()){
-					//currSpecies.setCurrLocation(currSpecies.getNextLocation());
-				}
-				else{
-					myGrid.moveSpecies(currLoc, moveTo, currSpecies);
-				}
+				myGrid.getCell(moveTo).applyEffect(currSpecies);	
+				myGrid.moveSpecies(currLoc, moveTo, currSpecies);
 
 				if (currCell.hasFreeSpace() && currSpecies.toBreed()){
 					myGrid.addToGrid(currCell.getLocation(), currSpecies.clone(currLoc));
 				}
 			}
-
 			currSpecies.setCurrState(currSpecies.getNextState());
 			currSpecies.setCurrLocation(currSpecies.getNextLocation());
 		}
