@@ -22,10 +22,14 @@ public class PlusNeighborhood extends Neighborhood {
 	@Override
 	public List<Cell> findMyNeighbors(Grid mainGrid, Location currLoc) {
 		List<Cell> ret = getPlusNeighbors(mainGrid, currLoc);
-		removeEmptyCells(ret);
 		return ret;
 	}
-	
+	/**
+	 * returns plus neighbors
+	 * @param mainGrid
+	 * @param currLoc
+	 * @return
+	 */
 	protected List<Cell> getPlusNeighbors(Grid mainGrid, Location currLoc) {
 		List<Cell> possibleneighbors = new ArrayList<Cell>();
 		int currX = currLoc.getX();

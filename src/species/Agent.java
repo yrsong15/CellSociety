@@ -13,8 +13,11 @@ import util.Location;
  */
 
 public class Agent extends Species {
-	//agent X is satisfied if at least thresholdPercentage of its neighbors are also X
-	//different state means different agents
+	/**
+	 * agent X is satisfied if at least thresholdPercentage of its neighbors are also X
+	 * different state means different agents
+	 */
+	
 	private static double thresholdPercentage;
 
 	public Agent(){
@@ -49,13 +52,11 @@ public class Agent extends Species {
 
 	@Override
 	public boolean toBreed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Species clone(Location pos) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

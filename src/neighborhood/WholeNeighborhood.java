@@ -18,7 +18,6 @@ public class WholeNeighborhood extends Neighborhood{
 	}
 
 	
-	//To-Do: pass Grid class instead of the actual 2d array that grid is made of
 	@Override
 	public List<Cell> findMyNeighbors(Grid mainGrid, Location currLoc) {
 		int row = currLoc.getX();
@@ -26,14 +25,10 @@ public class WholeNeighborhood extends Neighborhood{
 	    List<Cell> neighbors = new ArrayList<>();
 	    for( int changeRow = -1; changeRow <= 1; ++changeRow) {
 	        for( int changeCol = -1; changeCol <= 1; ++changeCol) {
-	            if( changeRow == 0 && changeCol == 0 ) {
-	            	continue;
-	            }
-	            
+	            if( changeRow == 0 && changeCol == 0 ) {continue; }         
             	int newRow = changeRow + row;
 	            int newCol = changeCol + col;
 	            Location newLoc = new Location(newRow, newCol);
-	            // does not have to have occupants
 	            if(mainGrid.isValidCell(newRow, newCol)) {
 	            	neighbors.add(mainGrid.getCell(newLoc));
 	            }

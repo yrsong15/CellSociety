@@ -28,16 +28,29 @@ public abstract class Species {
 		currLocation = currLoc;
 		nextLocation = currLoc;
 	}
-	
+	/**
+	 * whether the species should breed
+	 * @return
+	 */
 	public abstract boolean toBreed();
-	
+	/**
+	 * clone the species at location pos
+	 * useful if want to breed
+	 * @param pos
+	 * @return
+	 */
 	public abstract Species clone(Location pos);
-	
+
 	public abstract boolean isPrey();
 	
 	public abstract boolean isPredator();
-	
-	public abstract void updateNextLocation(List<Location> emptyCells, Neighborhood neighbors, Cell currCell);
+	/**
+	 * update next location of the species
+	 * @param availableCells cells that the species could move to
+	 * @param neighbors neighborhood the species in 
+	 * @param currCell current cell species in
+	 */
+	public abstract void updateNextLocation(List<Location> availableCells, Neighborhood neighbors, Cell currCell);
 	
 	public Location getCurrLocation() {
 		return currLocation;

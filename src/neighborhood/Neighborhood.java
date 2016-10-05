@@ -8,9 +8,6 @@ import util.Grid;
 import util.Location;
 import util.Orientation;
 
-/***
- * @author Owen
- */
 
 /***
  * @author Chalena Scholl, Owen Chung
@@ -21,9 +18,20 @@ public abstract class Neighborhood {
 	public Neighborhood(Grid mainGrid, Location currLoc){
 		setMyNeighbors(findMyNeighbors(mainGrid, currLoc));
 	}
-	
+	/**
+	 * returns neighbors of currLoc
+	 * allows different definitions of neighbors
+	 * @param mainGrid
+	 * @param currLoc
+	 * @return
+	 */
 	public abstract List<Cell> findMyNeighbors(Grid mainGrid, Location currLoc);
-	
+	/**
+	 * find the neighbors of the same
+	 * useful for segregation for example
+	 * @param state :state of a species
+	 * @return list of locations
+	 */
 	public List<Location> findNeighborsOfState(int state){
 		List<Location> matches = new ArrayList<Location>();
 		for (Cell currCell: myNeighbors){
@@ -38,7 +46,10 @@ public abstract class Neighborhood {
 		return matches;
 
 	}
-	
+	/**
+	 * returns neighbor cells with space
+	 * @return
+	 */
 	public List<Cell> findNeighborsWithSpace(){
 		List<Cell> haveSpace = new ArrayList<Cell>();
 		for (Cell currCell : myNeighbors){
@@ -48,15 +59,11 @@ public abstract class Neighborhood {
 		}
 		return haveSpace;
 	}
-
-	protected void removeEmptyCells(List<Cell> cellstocheck) {
-		for (int i = 0; i < cellstocheck.size(); i++){
-			if (!cellstocheck.get(i).hasOccupants()){
-				cellstocheck.remove(i);
-
-			}
-		}
-	}
+	/**
+	 * returns number of neighbors within
+	 * the neighborhood
+	 * @return 
+	 */
 	public int getTotalNeighbors(){
 		int total = 0;
 		for (Cell currCell : myNeighbors){

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /***
-
  * @author Chalena Scholl, Owen Chung
  */
 public class Location {
