@@ -100,23 +100,37 @@
 
 
 + **Game Engine**
-	+ Responsible for checking whether each species is satisfied in its current position and saving the unsatisfied
-species. It then calls *species.move()* on each instance of a species that is unsatisfied, ultimately using the return value to update the grid in terms of the position of species.	
-	+ This class will also query each species to see if it needs to reproduce and complete the actions necessary for that.
+	+ Responsible for checking whether each species is moving to a new location. It then updates the game settings e.g, species location, cell's parameters based on each species' next location parameters by calling *getNextLocation*. In short, It takes care of carrying out each step of the simulation.
+	+ This class will also query each species to see if it needs to reproduce or if is dying and complete the actions necessary for those conditions.
 	+ The game engine will be used by the Main class, which will pass the grid to it.
-	+ The game engine will also interact with the grid and the species classes.
+	+ The game engine will also interact with the grid, cell, species classes.
 
 
 + **Species**
-	+ Species will be an abstract super class so that subclasses can be created that each know their own state and 
-	  the rules that dictate how it responds to its environment, which is dependent on what other species it is closely surrounded by. 
-	+ Each subclass will have a function *stateOfSatisfaction(...)* that, given its surrounding neighbors as parameters, will return a value specifying whether or not it is satisfied with its state. If the cell is an edge cell, the neighbor parameters that are over the edge boundary should simply be passed in as null. Before it returns whether or not it is satisfied, it will also update its own knowledge about whether or not it was satisfied with its last position, or the last information it was given about its neighbors. 
-	+ Each subclass	will also have its own algorithm of movement or reaction to a certain state, so each subclass also needs to implement a move function that decides where to move on the grid. The move function will be passed the result of the *getEmptySpaces()* function in the grid template so that each species can make its decision about where to move based on its own specific algorithm but still without gaining access to the entire grid itself.
+	+ Species will be an abstract super class so that subclasses can be created that each know their own state and the rules that dictate how it responds to its environment, which is dependent on what other species it is closely surrounded by. 
+	+ Each subclass will have a function *updateNextLocation(...)* that, given its surrounding neighbors as parameters, will update next location that it would like to move to. If the cell is an edge cell, the neighbor parameters that are over the edge boundary would not be passed in. 
+	+ Each subclass will also have its own algorithm of movement or reaction to a certain state, so each subclass also needs to implement a updateNextLocation function that decides where to move on the grid. The move function will be passed available cells and neighborhood so that each species can make its decision about where to move based on its own specific algorithm but still without gaining access to the entire grid itself.
 	+ Each subclass should also keep track of whether or not it needs to reproduce, as this is something that each species might want to do.
-	+ Each species should also know its current location on the grid.
-	
+	+ Each species should also know its current location on the grid and also the cell it lives in.
+
++ **Cells**
+	+  Cell is an abstraction that essentially provides a place for species to operate on. It could also carry out actions each time step if need be. For example,  Foraging ants requires the nest to breed ants each time step. AntCell, which is a subclass of Cell, implements this simulation specific actions with the *step* function.
+	+ Cell also limits number of occupants it could store based on different simulation. 
+	+ *applyEffect* function in cell takes in an argument that is the new species coming into the cell and updates the states of the species and also carries out required actions.
+
++ **Neighborhood**
+	+  Neighborhood is an abstraction that stores the neighbors of a cell given its location. 
+	+ One could utilize it to find the neighbors of a cell based on different definition on a subclasses of neighborhood.
+
++ **Shapes**
+
++ **Location**
+	+  Location is an abstraction that represents the location on the grid. 
+	+ One could utilize it to check whether two objects are at the same locaiton or get the adjacent cells of a specific location.
+
+
 + **Use Cases**
-	1. Game engine class would call *stateOfSatisfaction(...)* on the species subclass, which would update the state of the cell in addition to returning a value about whether it is satisfied. If the result is false, it would also call *.move()* on the species subclass while passing the open cells in the grid as a parameter. However, since the game of life simulation does not require movement to another cell but rather just the switching of a live/dead state, nothing would happen in this *.move()* function as implemented in the species subclass. 	
+	1. Game engine class would call *updateNextLocation(...)* on the species subclass, which would update the next location of the species. If the next location is set to null, the species is removed because it indicates the species is dying.  On the other hand, if it's set to a different location than the current location,  applyEffect is called so that the cell could prepare for the incoming species and update the states for the incoming species.  Then, species is moved to the next location and breed if certain condition is met. 	
 	2. Same as above.
 	3. Call the game engine, which will loop through the grid and update each cell. The grid will then correspondingly be updated visually.
 	4. Once the user decides to run the Fire simulation, Main will initialize the simulation class which will parse the Fire XML file and save those values in itself. 
