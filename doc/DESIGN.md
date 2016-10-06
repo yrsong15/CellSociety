@@ -104,7 +104,14 @@
 	+  By clicking the buttons on the UI (ex: Spreading Fire button, stop button, etc.), the user will be able to manipulate the simulation and/or the game loop.
 	+ See above for more details.
 
-+ **Grid Template**
++ **Simulation Parser** 
+    * Prepares the XML document for parsing and has a function called populateGrid, which initializes a new grid and populates it with species as configurated in the XML file
+    * Also has a repopulateGrid function which populates the grid based on default values, or the values taken in from the UI interaction.
+ 	* Has the functionality to populate the grid with either a specific configuration or a configuration decided randomly and by percentages.
+    * Since it populates the grid, it is also in charge of creating instances of species and setting any parameters needed for either the species or the simulation itself.
+	
+
++ **Grid**
 	+ The grid template keeps track of each species location on the grid and has functions such as *getEmptyCells()* that will return a list of cells that are empty and can be moved to. This will allow each species to implement its own algorithm of movement/reaction without having to gain access to the entire grid.
 	+ It is also responsible for initializing and positioning each species on the grid, so this class will interact with the species subclasses as well. This would be done by a function like *grid.populate(...)*, which would take in parameter values that specified which species to create and the amount needed, as well as a value like *probCatch* which could be needed by the species when it is running its algorithm/updating its state.
 	+ The grid should also be able to resize itself based on a value, since the initial grid created might be of a different size then the one needed for a certain simulation.
@@ -113,8 +120,8 @@
 + **Game Engine**
 	+ Responsible for checking whether each species is moving to a new location. It then updates the game settings e.g, species location, cell's parameters based on each species' next location parameters by calling *getNextLocation*. In short, It takes care of carrying out each step of the simulation.
 	+ This class will also query each species to see if it needs to reproduce or if is dying and complete the actions necessary for those conditions.
-	+ The game engine will be used by the Main class, which will pass the grid to it.
-	+ The game engine will also interact with the grid, cell, species classes.
+	+ The game engine will be used by the controller, which will pass the grid to it.
+	+ The game engine will also interact with the grid, cell, and species classes.
 
 
 + **Species**
@@ -125,7 +132,7 @@
 	+ Each species should also know its current location on the grid and also the cell it lives in.
 
 + **Cells**
-	+  Cell is an abstraction that essentially provides a place for species to operate on. It could also carry out actions each time step if need be. For example,  Foraging ants requires the nest to breed ants each time step. AntCell, which is a subclass of Cell, implements this simulation specific actions with the *step* function.
+	+ Cell is an abstraction that essentially provides a place for species to operate on. It could also carry out actions each time step if need be. For example, Foraging ants requires the nest to breed ants each time step. AntCell, which is a subclass of Cell, implements this simulation specific actions with the *step* function.
 	+ Cell also limits number of occupants it could store based on different simulation. 
 	+ *applyEffect* function in cell takes in an argument that is the new species coming into the cell and updates the states of the species and also carries out required actions.
 
@@ -134,6 +141,8 @@
 	+ One could utilize it to find the neighbors of a cell based on different definition on a subclasses of neighborhood.
 
 + **Shapes**
+    * Allows flexibility for different grid shapes by extending from the CustomShape class.
+    * Returns the specified shape (given in the XML file) that is positioned on the grid as it should be, according to the parameters its constructor was called with.
 
 + **Location**
 	+ Location is an abstraction that represents the location on the grid. 
@@ -162,27 +171,6 @@
 		+ Organization -> better to make it an extra class than add more code to Main that would parse/save those values.
 	+ Cons:
 		+ An extra class, another thing for Main to initialize and keep track of.
-		
-		
-		
-+ Letting Main have access to/interact with the majority of the classes to direct the flow of the simulation.
-	+ Pros:
-		+ Readability -> the main logic of the program is created and called from one place.
-		+ Central hub that oversees the entire program.
-	+ Cons:
-		+ Main has access to the majority of the classes.
-		+ Burdening Main with too many functionalities.
-		+ Code could get cluttered.
-
-
-
-+ Having a separate class for the UI
-	+ Pros:
-		+ Better manages complexity -> can easily make UI changes in one place.
-		+ Less cluttered Main class.
-	+ Cons:
-		+ Main has to continuously interact with the UI class to check whether certain buttons have been pressed.
-
 
 
 + Letting the subclasses of species implement their own move algorithm instead of having those functions in the grid template or game engine.
@@ -193,7 +181,18 @@
 		+ Species needs to receive the open cells in the grid as an input so that it can utilize its given algorithm to find the spot where it wants to go.
 		+ Each species won't necessarily require a *move()* function, some might simply change their states.
 
++ Creating a copy of Grid from which to draw and base species decisions off of
+    + Pros:
+        + Each species essentially makes its decision at the same time, rather than making them sequentially.
+    + Cons:
+        + More space overhead
 
++ Orientation and Location classes being hard-coded for a 2d array implementation
+    + Pros:
+        + Able to implement Foraging Ants since we have a class that keeps track of their orientation and 'forward neighbors'
+    + Cons:
+        + Would not be easy to change the implementation of the grid in terms of the 2d array
+        
 
 + Passing the species subclasses the cells that are empty instead of passing the entire grid to them.
 	+ Pros:
