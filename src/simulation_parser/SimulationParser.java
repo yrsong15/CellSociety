@@ -1,3 +1,14 @@
+// This entire file is part of my masterpiece.
+// Ray Song (ys101)
+// methods: repopulateGrid() (lines 80-100), setCellSize() (lines 222-230)
+
+/**
+ * Here is a link to the commit that I made to the SimulationParser.java class:
+ * https://git.cs.duke.edu/CompSci308_2016Fall/cellsociety_team17/commit/005f5d43e953a98b040ec090e80db7c1ffee8345
+ * 
+ * Explanations/comments for the Code Masterpiece are in Controller.java.
+ */
+
 package simulation_parser;
 import java.io.File;
 
@@ -71,6 +82,8 @@ public abstract class SimulationParser {
 	/**
 	 * @return populated grid based on default values
 	 */
+	// This method is part of my masterpiece.
+	// Ray Song (ys101)
 	public Grid repopulateGrid(){
 		mainGrid = new Grid(numRows, numCols, neighborhoodType, cellType);
 		mainGrid = thePopulationLoop(mainGrid);
@@ -213,6 +226,8 @@ public abstract class SimulationParser {
 		numCells = Integer.parseInt(getElement("numCells"));
 	}
 	
+	// This method is part of my masterpiece.
+	// Ray Song (ys101)
 	public void setCellSize(int input){
 		if(input == 0){
 			input = DEFAULT_CELL_NUMBER;

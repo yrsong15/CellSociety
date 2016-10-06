@@ -1,5 +1,6 @@
 package species;
 
+import util.Location;
 
 /***
  * @author Chalena Scholl, Owen Chung
@@ -9,7 +10,14 @@ public abstract class PredatorPreySpecies extends Species{
 	private int timeUntilBreed;
 	private boolean roomToBreed;
 	
-
+	
+	public abstract Species clone(Location pos);
+	
+	public abstract boolean isPrey();
+	
+	public abstract boolean isPredator();
+	
+	
 	public abstract boolean toBreed();
 	
 	

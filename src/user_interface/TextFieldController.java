@@ -1,3 +1,8 @@
+// This entire file is part of my masterpiece.
+// Ray Song (ys101)
+/**
+ * Explanations/comments for the Code Masterpiece are in Controller.java.
+ */
 package user_interface;
 
 import javafx.scene.Group;

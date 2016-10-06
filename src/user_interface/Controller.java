@@ -1,3 +1,37 @@
+// This entire file is part of my masterpiece.
+// Ray Song (ys101)
+// methods: resetGrid(), createAnimation(), step() : lines 147-181
+/**
+ * My Code Masterpiece is one of the additional features that I added during Sprint Two,
+ * which is to create a text field that accepts an integer input that represents the 
+ * number of cells for the new simulation. 
+ * 
+ * Before, the number of cells was a static input
+ * that was solely determined by the XML file, but this feature allows the user to dynamically
+ * change the number of cells even after the initial configuration. 
+ * 
+ * Due to the nature of our program,
+ * I had to make changes in not only the main controller, but also the GridController and SimulationParser 
+ * classes as well. In addition, I also created a TextFieldController class to account for the use
+ * of an entirely new JavaFX feature that had not been used before.
+ * 
+ * I am especially proud of my masterpiece in that during Sprint Two, I was able to divide my UI 
+ * into smaller classes based on functionalities, as well as display my understanding of the MVC model.
+ * This is why I was able to add a separate class (TextFieldController) that seamlessly integrates
+ * with the rest of the UI, as well as add such a large change just by tweak existing methods, 
+ * without having to overhaul the entire project.
+ * 
+ * I believe that my Code Masterpiece not only shows my fluent use of diverse methods and classes to keep code as 
+ * concise as possible, but also account for edge cases in order to proactively prevent bugs and errors.
+ * 
+ * Also, my Code Masterpiece displays my all-around understanding
+ * of not only the code I had written, but also those written by my teammates (SimulationParser was 
+ * originally written by Chalena, but I made significant changes to its layout to account for 
+ * dynamic changes in number of Cells. Here is the link to the changes that I made:
+ *  https://git.cs.duke.edu/CompSci308_2016Fall/cellsociety_team17/commit/005f5d43e953a98b040ec090e80db7c1ffee8345
+ *  ).
+ */
+
 package user_interface;
 
 import java.util.ResourceBundle;
@@ -110,6 +144,8 @@ public class Controller{
 		stage.setScene(scene);
     }
 	
+	// This method is part of my masterpiece.
+	// Ray Song (ys101)
 	public void resetGrid(Group g, String path){
 		if(mySBC.delayBarExists()){
 			myGC.updateDelay(mySBC.getDelayValue());
@@ -123,6 +159,8 @@ public class Controller{
 		createAnimation(g);
 	}
 	
+	// This method is part of my masterpiece.
+	// Ray Song (ys101)
 	public void createAnimation(Group g){
         KeyFrame frame = new KeyFrame(Duration.millis(myGC.getMilliSecondDelay()),
                 e -> step(g, myGrid, mySC.getMargin(), myResources, myGC.getSecondDelay()));
@@ -131,6 +169,8 @@ public class Controller{
         myAnimation.getKeyFrames().add(frame);
 	}
 	
+	// This method is part of my masterpiece.
+	// Ray Song (ys101)
 	public void step(Group g, Grid grid, int margin, ResourceBundle rb, double elapsedTime){
 		g.getChildren().clear();
 		simButtons(g);
