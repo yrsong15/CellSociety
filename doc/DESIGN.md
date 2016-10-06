@@ -4,10 +4,11 @@
 
 + The objective of this project is to come up with a fluid, flexible platform on which various Cellular Automata programs - including, but not limited to Model of Segregation, Predator-Prey Relationships, Spreading of Fire, and Game of Life - can be run on.
 
-+ Abstraction is the key to our project, in that the platform must be able to account for different types of CA models. Because of this we have come up with a solid base to our project and allowed the most flexibility to be in adding a simulation or changing the values/algorithms of a simulation. As such, we have come up with three key components to the project, which are as follows:
-	* **Grid Template**: This is the basic template on which the *Game Engine* and each *Species* will operate.
++ Abstraction is the key to our project, in that the platform must be able to account for different types of CA simulations/models. Because of this we have come up with a solid base to our project and allowed the most flexibility to be in adding a simulation or changing the values/algorithms of a simulation. As such, we have come up with four key components to the project, which are as follows:
+	* **Grid**: This is the basic template on which the *Game Engine* and each *Species* will operate.
 	* **Game Engine** : This is part of the *Game Loop* of our project that will not only give the start/stop signs for each step of the game, but also store the *status quo* of each state so that individual species know whether to change their state or not once the Game Loop begins.
 	* **Species** : This is the abstract model on which individual species will be based. Each individual species (ex: Sharks, Fire, different races) will work on the module provided by the Species superclass and manipulate the module so that specific details inherent to each model can be provided. The species class will be open to extension but closed to algorithms.
+	* **SimulationParser** : This is what will complete the parsing of the XML file needed to set up the chosen CA simulation. The values within these XML files can be changed as desired.
 
 	
 
@@ -21,26 +22,37 @@
 	* Refers to helper Controller classes (ex: **ButtonController.java**, **SceneController.java**) to call various functions of the program and visualize the simulation
 	* Includes buttons that change the scene and start different Simulations
 
-+ **Simulation**
-	* Contains data from XML files that are required to instantiate and run each simulation
++ **Simulation Parser**
+	* Completes the parsing of the XML file needed to set up the chosen CA simulation and returns the values within these files to classes that need them.
+	* The SimulationParser class is extended for each simulation since each simulation might need to set more/different parameters than another.
+	* Initializes the grid and returns it via a method called populateGrid() or repopulateGrid().
 
-+ **Grid Template**
-	* The **"map"** on which each individual cell operates
-	* Could be implemented with a 2D array ***or*** a map, should be prone to switching between one or the other
-	* Includes method to populate empty grid with default settings specified by XML file
-	* Should be open to changes of the sizes/shape of the grid but the interfaces should be closed
+
++ **Grid**
+	* The **"world"** in which each individual cell operates, which is implemented with a 2d array. 
+	* Includes methods to add a species to a random cell on the grid or to a specific cell on the grid, which are used by the SimulationParser when it populates the grid.
+	* Also keeps track of which cells should be considered neighbors, as this can vary simulation to simulation, and which shape the grid cells should be displayed as.
 
 + **Game Engine**
-	* Gets satisfaction status from species and marks cells to be updated
-	* Updates grids and species
-	* Updates each species' neighbors
-	* Interfaces should be closed to changes in algorithm and should be open extensions for other new features
+	* Has access to the grid as it is in charge of updating it at each time step based on what the species algorithm would like to do, given its circumstances.
+	* Creates a copy of the grid to refer to as it loops through each cell on the grid so that each species in each cell can choose a new location or state based on the initial configuration it was surrounded by.
+	* Calls updateNextLocation on all species in each cell and either updates their state, updates their location on the grid, removes them from it if they died, or breeds another.
 
 + **Species**
-	* Subclasses that represent different states of the cell, as well as the algorithms that are in charge of how each cell responds given its current state & surroundings
+	* Subclasses that represent different species for each simulation, as well as the algorithms that are in charge of how each cell responds given its current state & surroundings.
 	* Interacts with neighbors based on its status at the given point in time
 	* Different kinds of species will extend from the Species superclass and could have different characteristics. In other words, the structure will be open to extension. On the other hand, it will be closed to changes in algorithms. For example, different ways of defining satisfaction of a species should not lead to code changes in other classes. The other classes should follow the same open closed principle.
 	 
++ **Cells**
+
++ **Neighborhood**
+
++ **Shapes**
+
++ **Location**
+
++ **Orientation**
+
 #### Design Overview Diagram
 
 ![Design Overview Diagram](final_design_overview.jpg "Final Design Overview Diagram")
@@ -88,23 +100,37 @@
 
 
 + **Game Engine**
-	+ Responsible for checking whether each species is satisfied in its current position and saving the unsatisfied
-species. It then calls *species.move()* on each instance of a species that is unsatisfied, ultimately using the return value to update the grid in terms of the position of species.	
-	+ This class will also query each species to see if it needs to reproduce and complete the actions necessary for that.
+	+ Responsible for checking whether each species is moving to a new location. It then updates the game settings e.g, species location, cell's parameters based on each species' next location parameters by calling *getNextLocation*. In short, It takes care of carrying out each step of the simulation.
+	+ This class will also query each species to see if it needs to reproduce or if is dying and complete the actions necessary for those conditions.
 	+ The game engine will be used by the Main class, which will pass the grid to it.
-	+ The game engine will also interact with the grid and the species classes.
+	+ The game engine will also interact with the grid, cell, species classes.
 
 
 + **Species**
-	+ Species will be an abstract super class so that subclasses can be created that each know their own state and 
-	  the rules that dictate how it responds to its environment, which is dependent on what other species it is closely surrounded by. 
-	+ Each subclass will have a function *stateOfSatisfaction(...)* that, given its surrounding neighbors as parameters, will return a value specifying whether or not it is satisfied with its state. If the cell is an edge cell, the neighbor parameters that are over the edge boundary should simply be passed in as null. Before it returns whether or not it is satisfied, it will also update its own knowledge about whether or not it was satisfied with its last position, or the last information it was given about its neighbors. 
-	+ Each subclass	will also have its own algorithm of movement or reaction to a certain state, so each subclass also needs to implement a move function that decides where to move on the grid. The move function will be passed the result of the *getEmptySpaces()* function in the grid template so that each species can make its decision about where to move based on its own specific algorithm but still without gaining access to the entire grid itself.
+	+ Species will be an abstract super class so that subclasses can be created that each know their own state and the rules that dictate how it responds to its environment, which is dependent on what other species it is closely surrounded by. 
+	+ Each subclass will have a function *updateNextLocation(...)* that, given its surrounding neighbors as parameters, will update next location that it would like to move to. If the cell is an edge cell, the neighbor parameters that are over the edge boundary would not be passed in. 
+	+ Each subclass will also have its own algorithm of movement or reaction to a certain state, so each subclass also needs to implement a updateNextLocation function that decides where to move on the grid. The move function will be passed available cells and neighborhood so that each species can make its decision about where to move based on its own specific algorithm but still without gaining access to the entire grid itself.
 	+ Each subclass should also keep track of whether or not it needs to reproduce, as this is something that each species might want to do.
-	+ Each species should also know its current location on the grid.
-	
+	+ Each species should also know its current location on the grid and also the cell it lives in.
+
++ **Cells**
+	+  Cell is an abstraction that essentially provides a place for species to operate on. It could also carry out actions each time step if need be. For example,  Foraging ants requires the nest to breed ants each time step. AntCell, which is a subclass of Cell, implements this simulation specific actions with the *step* function.
+	+ Cell also limits number of occupants it could store based on different simulation. 
+	+ *applyEffect* function in cell takes in an argument that is the new species coming into the cell and updates the states of the species and also carries out required actions.
+
++ **Neighborhood**
+	+  Neighborhood is an abstraction that stores the neighbors of a cell given its location. 
+	+ One could utilize it to find the neighbors of a cell based on different definition on a subclasses of neighborhood.
+
++ **Shapes**
+
++ **Location**
+	+  Location is an abstraction that represents the location on the grid. 
+	+ One could utilize it to check whether two objects are at the same locaiton or get the adjacent cells of a specific location.
+
+
 + **Use Cases**
-	1. Game engine class would call *stateOfSatisfaction(...)* on the species subclass, which would update the state of the cell in addition to returning a value about whether it is satisfied. If the result is false, it would also call *.move()* on the species subclass while passing the open cells in the grid as a parameter. However, since the game of life simulation does not require movement to another cell but rather just the switching of a live/dead state, nothing would happen in this *.move()* function as implemented in the species subclass. 	
+	1. Game engine class would call *updateNextLocation(...)* on the species subclass, which would update the next location of the species. If the next location is set to null, the species is removed because it indicates the species is dying.  On the other hand, if it's set to a different location than the current location,  applyEffect is called so that the cell could prepare for the incoming species and update the states for the incoming species.  Then, species is moved to the next location and breed if certain condition is met. 	
 	2. Same as above.
 	3. Call the game engine, which will loop through the grid and update each cell. The grid will then correspondingly be updated visually.
 	4. Once the user decides to run the Fire simulation, Main will initialize the simulation class which will parse the Fire XML file and save those values in itself. 
