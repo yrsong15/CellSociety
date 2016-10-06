@@ -8,7 +8,7 @@
 	* **Grid**: This is the basic template on which the *Game Engine* and each *Species* will operate.
 	* **Game Engine** : This is part of the *Game Loop* of our project that will not only give the start/stop signs for each step of the game, but also store the *status quo* of each state so that individual species know whether to change their state or not once the Game Loop begins.
 	* **Species** : This is the abstract model on which individual species will be based. Each individual species (ex: Sharks, Fire, different races) will work on the module provided by the Species superclass and manipulate the module so that specific details inherent to each model can be provided. The species class will be open to extension but closed to algorithms.
-	* **SimulationParser** : This is what will complete the parsing of the XML file needed to set up the chosen CA simulation. The values within these XML files can be changed as desired.
+	* **Simulation Parser** : This is what will complete the parsing of the XML file needed to set up the chosen CA simulation. The values within these XML files can be changed as desired.
 
 	
 
@@ -27,7 +27,6 @@
 	* The SimulationParser class is extended for each simulation since each simulation might need to set more/different parameters than another.
 	* Initializes the grid and returns it via a method called populateGrid() or repopulateGrid().
 
-
 + **Grid**
 	* The **"world"** in which each individual cell operates, which is implemented with a 2d array. 
 	* Includes methods to add a species to a random cell on the grid or to a specific cell on the grid, which are used by the SimulationParser when it populates the grid.
@@ -44,14 +43,24 @@
 	* Different kinds of species will extend from the Species superclass and could have different characteristics. In other words, the structure will be open to extension. On the other hand, it will be closed to changes in algorithms. For example, different ways of defining satisfaction of a species should not lead to code changes in other classes. The other classes should follow the same open closed principle.
 	 
 + **Cells**
+    * A way of representing a cell, or position, on the grid. It keeps track of the current occupants in the cell and also knows where it itself is located on the grid (location).
+    * Also has a getState function since each species could have a different state and an applyEffect function, which applies the effect of a species moving to that cell on the cell and its inhabitants.
+    * Extended for some simulations that have additional parameters to control for each location on the grid.
 
 + **Neighborhood**
+    * Finds and keeps track of a cell's surrounding neighbors and can be extended as each simulation might consider different locations to be 'neighbors'.
+    * Also has a function to return a list of locations in which species are of a certain state.
 
 + **Shapes**
+    * Constructs a shape that has a specific positioning on the grid based on the given values of row, column, length of a side, and margin for display purposes.
+    * Has the capability to represent a variety of different shapes, with hexagon and square being the only ones implemented so far.
 
 + **Location**
+    * Keeps track of x and y coordinate pairings.
+    * Given a list of locations, it can also return locations that are adjacent to it.
 
 + **Orientation**
+    * Knows which way a species is facing (N, NW, NE, E, S, SE, SW, W) and also returns what are considered 'forward locations' for ForagingAnts simulation.
 
 #### Design Overview Diagram
 
