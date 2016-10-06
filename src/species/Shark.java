@@ -7,10 +7,12 @@ import java.util.List;
 import cells.Cell;
 import neighborhood.Neighborhood;
 import util.Location;
-
 /**
- * @author Owen Chung, Chalena Scholl
+ * This entire file is part of my masterpiece.
+ * @author Owen Chung (tc153), Chelena
+ * This class serve as a super class of the species
  */
+
 
 public class Shark extends PredatorPreySpecies{
 	private int standardBreedTime = 10;
@@ -45,10 +47,18 @@ public class Shark extends PredatorPreySpecies{
 		if (reachedStarvation()){
 			setNextLocation(null);
 			return;
-
 		}
 		List<Location> possibleMoves = neighbors.findNeighborsOfState(0);
 		
+		algorithmHelper(emptyCells, possibleMoves);
+	}
+	/**
+	 * check if the shark can eat finish and update the next location
+	 * If able to move, it can also breed in the same round
+	 * @param emptyCells
+	 * @param possibleMoves
+	 */
+	private void algorithmHelper(List<Location> emptyCells, List<Location> possibleMoves) {
 		if(possibleMoves.isEmpty()){
 			possibleMoves.addAll(this.getCurrLocation().getAdjacentCells(emptyCells));
 			turnsSinceLastAte++;
@@ -65,7 +75,6 @@ public class Shark extends PredatorPreySpecies{
 		}
 		setRoomToBreed(false);
 		setNextLocation(getCurrLocation());
-
 	}
 	public boolean reachedStarvation(){
 		return ((standardStarveTime - turnsSinceLastAte) <= 0);

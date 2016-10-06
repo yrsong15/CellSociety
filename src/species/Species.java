@@ -5,9 +5,12 @@ import cells.Cell;
 import neighborhood.Neighborhood;
 import util.Location;
 
-/***
- * @author  Owen Chung, Chalena Scholl
+/**
+ * This entire file is part of my masterpiece.
+ * @author Owen Chung (tc153), Chalena
+ * This class serve as a super class of the species
  */
+
 
 public abstract class Species {
 
