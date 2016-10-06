@@ -12,7 +12,7 @@ import util.Orientation;
 
 public class Ant extends Species {
 
-	private Orientation myOrientation = new Orientation("N");
+	private Orientation currOrientation = new Orientation("N");
 	private boolean hasFoodItem;
 	private boolean atFoodSource;
 	private boolean atNest;
@@ -22,10 +22,6 @@ public class Ant extends Species {
 	private int maxPheromones;
 	private int standardLifeTime = 500;
 	private int turnsSinceBorn;
-	
-
-
-
 
 	public Ant(){
 		super();
@@ -71,7 +67,6 @@ public class Ant extends Species {
 
 	private boolean reachedLifeTime() {
 		return ((standardLifeTime - turnsSinceBorn) <= 0);
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -80,20 +75,19 @@ public class Ant extends Species {
 		if (atFoodSource){
 			Cell maxNeighbor = findMaxPheromones("home", neighborCells);
 			if (maxNeighbor != null){
-				myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
+				currOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
 			}
 			else{
-				myOrientation.updateOrientation(getCurrLocation(), neighborCells.get(0).getLocation());
+				currOrientation.updateOrientation(getCurrLocation(), neighborCells.get(0).getLocation());
 			}	
 		}
-			//neighborCells = neighbors.findNeighborsWithSpace();
 		Cell maxNeighbor = findMaxPheromones("home", findForward(neighborCells));
 		if (maxNeighbor == null){
 			maxNeighbor = findMaxPheromones("home", findOther(neighborCells));
 		}
 		if (maxNeighbor != null){
 			dropFoodPheromones(neighbors, currCell);
-			myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
+			currOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
 			setNextLocation(maxNeighbor.getLocation());
 		}
 		else{
@@ -106,7 +100,7 @@ public class Ant extends Species {
 				next = findForward(neighborCells).get(0).getLocation();
 			}
 			dropFoodPheromones(neighbors, currCell);
-			myOrientation.updateOrientation(getCurrLocation(), next);
+			currOrientation.updateOrientation(getCurrLocation(), next);
 			setNextLocation(next);
 		}
 	}
@@ -118,21 +112,19 @@ public class Ant extends Species {
 		if (atNest){
 			Cell maxNeighbor = findMaxPheromones("food", neighborCells);
 			if (maxNeighbor != null){
-				myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
+				currOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
 			}
 			else{
-				myOrientation.updateOrientation(getCurrLocation(), neighborCells.get(0).getLocation());
+				currOrientation.updateOrientation(getCurrLocation(), neighborCells.get(0).getLocation());
 			}	
 		}
-		//neighborCells = neighbors.findNeighborsWithSpace();
-		
 		Cell maxNeighbor = findMaxPheromones("food", findForward(neighborCells));
 		if (maxNeighbor == null){
 			maxNeighbor = findMaxPheromones("food", findOther(neighborCells));
 		}
 		if (maxNeighbor!=null){
 			dropHomePheromones(neighbors, currCell);
-			myOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
+			currOrientation.updateOrientation(getCurrLocation(), maxNeighbor.getLocation());
 			setNextLocation(maxNeighbor.getLocation());
 		}
 		else{
@@ -145,7 +137,7 @@ public class Ant extends Species {
 				next = findForward(neighborCells).get(0).getLocation();
 			}
 			dropHomePheromones(neighbors, currCell);
-			myOrientation.updateOrientation(getCurrLocation(), next);
+			currOrientation.updateOrientation(getCurrLocation(), next);
 			setNextLocation(next);
 		}
 	}
@@ -195,7 +187,7 @@ public class Ant extends Species {
 	}
 	
 	private List<Cell> findForward(List<Cell> neighborCells){
-		List<Location> forwardLocations = myOrientation.getForwardLocations(getCurrLocation());
+		List<Location> forwardLocations = currOrientation.getForwardLocations(getCurrLocation());
 		List<Cell> forwardNeighbors = new ArrayList<Cell>();
 		for (Cell neighbor : neighborCells){
 			if (forwardLocations.contains(neighbor.getLocation())){
@@ -205,7 +197,7 @@ public class Ant extends Species {
 		return forwardNeighbors;
 	}
 	private List<Cell> findOther(List<Cell> neighborCells){
-		List<Location> forwardLocations = myOrientation.getForwardLocations(getCurrLocation());
+		List<Location> forwardLocations = currOrientation.getForwardLocations(getCurrLocation());
 		List<Cell> otherNeighbors = new ArrayList<Cell>();
 		for (Cell neighbor : neighborCells){
 			if (!forwardLocations.contains(neighbor.getLocation())){
