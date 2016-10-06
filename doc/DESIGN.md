@@ -50,8 +50,13 @@
 + **Shapes**
 
 + **Location**
+	* abstraction created to represent cells and species at different places on the grid.
 
 + **Orientation**
+	* abstraction created in order to classify which orientation the ant is in.
+	* Ant's forward location is determined based on orientation 
+	* getForwardLocations() allows one to acquire the forward locations based on current locations it's in and facing.
+
 
 #### Design Overview Diagram
 
@@ -127,6 +132,13 @@
 + **Location**
 	+  Location is an abstraction that represents the location on the grid. 
 	+ One could utilize it to check whether two objects are at the same locaiton or get the adjacent cells of a specific location.
+
+
++ **Orientation**
+	* abstraction created in order to classify which orientation the ant is in.
+	* updateOrientation sets the orientation based on current location and the location a species is facing and at the same time sets the forward locations
+	* Ant's forward location is determined based on orientation 
+	* getForwardLocations() allows one to acquire the forward locations based on current locations it's in and facing.
 
 
 + **Use Cases**
