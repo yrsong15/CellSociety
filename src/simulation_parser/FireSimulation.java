@@ -14,7 +14,7 @@ public class FireSimulation extends SimulationParser{
 
 	public FireSimulation() {
 		setNeighborhoodType("PlusNeighborhood");
-		setCellType("Cell");
+		setCellType("BasicCell");
 	}
 
 	

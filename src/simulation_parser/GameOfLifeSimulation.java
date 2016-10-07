@@ -12,7 +12,7 @@ public class GameOfLifeSimulation extends SimulationParser{
 	
 	public GameOfLifeSimulation(){
 		setNeighborhoodType("WholeNeighborhood");
-		setCellType("Cell");
+		setCellType("BasicCell");
 	}
 
 

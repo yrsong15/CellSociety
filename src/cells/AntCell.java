@@ -1,7 +1,5 @@
 package cells;
 
-import java.util.List;
-
 import species.Ant;
 import species.Species;
 import util.Location;
@@ -12,33 +10,27 @@ public class AntCell extends Cell{
 	private int foodPheromones;
 	private int homePheromones;
 	private float evaporationRatio = (float) 0.001;
-
+	private int foodAmount = 0;
 
 	
 	public AntCell(Location where) {
 		super(where);
 		setMaxOccupants(10);
 	}
-	
-	
-	public AntCell(List<Species> occupants, int max, Location oldLocation) {
-		super(occupants, max, oldLocation);
-	}
 
 
 	public boolean isFoodSource() {
 		return isFoodSource;
-	}
-
-	
-	public boolean isNest() {
-		return isNest;
 	}
 	
 	public void setIsFoodSource(boolean isFoodSource) {
 		this.isFoodSource = isFoodSource;
 	}
 
+	
+	public boolean isNest() {
+		return isNest;
+	}
 
 	public void setIsNest(boolean isNest) {
 		this.isNest = isNest;
@@ -90,21 +82,26 @@ public class AntCell extends Cell{
 		setHomePheromones((int)(getHomePheromones() * (1 - evaporationRatio)));
 		setFoodPheromones((int)(getFoodPheromones() * (1 - evaporationRatio)));
 	}
+	
+
+	public int getFoodAmount() {
+		return foodAmount;
+	}
+
+	public void setFoodAmount(int foodamount) {
+		foodAmount = foodamount;
+	}
 
 	@Override
 	public int getState(){
 		if (isNest){
 			return 2;
 		}
-		
 		else if (isFoodSource){
 			return 1;
 		}
-		if (hasOccupants()){
-			return 0;
-		}
-		else{
-			return 3;
+		else {
+			return super.getState();
 		}
 	}
 }

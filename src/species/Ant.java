@@ -47,7 +47,7 @@ public class Ant extends Species {
 		if (atNest || atFoodSource){
 			setDesiredPheromones(maxPheromones);
 			if (atNest && hasFoodItem){
-				currCell.setFoodAmount(currCell.getFoodAmount() + 1);
+				((AntCell)currCell).setFoodAmount(((AntCell) currCell).getFoodAmount() + 1);
 				hasFoodItem = false;
 				//System.out.println("just dropped food");
 			}

@@ -14,7 +14,7 @@ public class PredatorPreySimulation extends SimulationParser{
 
 	public PredatorPreySimulation() {
 		setNeighborhoodType("PlusNeighborhood");
-		setCellType("Cell");
+		setCellType("PredatorPreyCell");
 	}
 	
 

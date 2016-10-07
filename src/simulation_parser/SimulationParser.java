@@ -277,7 +277,7 @@ public abstract class SimulationParser {
 	}
 	
 	public String getCellShape() {
-		return cellShape;
+		return cellShape; 
 	}
 
 

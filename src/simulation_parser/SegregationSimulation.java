@@ -13,7 +13,7 @@ public class SegregationSimulation extends SimulationParser {
 	
 	public SegregationSimulation(){
 		setNeighborhoodType("WholeNeighborhood");
-		setCellType("Cell");
+		setCellType("BasicCell");
 	}
 	
 

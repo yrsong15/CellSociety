@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 import cells.AntCell;
+import cells.BasicCell;
 import cells.Cell;
+import cells.PredatorPreyCell;
 import neighborhood.WholeNeighborhood;
 import neighborhood.HexagonNeighborhood;
 import neighborhood.Neighborhood;
@@ -33,29 +35,11 @@ public class Grid {
 		}
 		
 		
-		public Grid(Cell[][] mainGrid, int width, int height, String neighbType, String cellType) {
-			this.cellType = cellType;
-			this.neighbType = neighbType;
-			this.myGrid = create2DArray(width, height);
-			numRows = width;
-			numCols = height;
-			makeCopy(mainGrid);
-		}
-		
 		public void initializeGrid(){
 			for (int i = 0; i < numRows; i++){
 				for (int j = 0; j <numCols; j++){
 					Cell init = createCell(new Location(i,j));
 					this.myGrid[i][j] = init;
-				}
-			}
-		}
-		
-		public void makeCopy(Cell[][] myOrig){
-			for (int i = 0; i < numRows; i++){
-				for (int j = 0; j <numCols; j++){
-					Cell oldCell = myOrig[i][j];
-					this.myGrid[i][j] = createCell(oldCell.getOccupants(), oldCell.getMaxOccupants(), oldCell.getLocation());
 				}
 			}
 		}
@@ -115,7 +99,6 @@ public class Grid {
 				for (int j = 0; j < myGrid[i].length; j++){
 					Cell curr= myGrid[i][j];
 					if (curr.hasFreeSpace()){
-
 						emptyCells.add(new Location(i, j));
 					}
 				}
@@ -202,19 +185,13 @@ public class Grid {
 			if (cellType.equals("AntCell")){
 				return new AntCell(toPut);
 			}
-			else{
-				return new Cell(toPut);
-			}
-			
-			
-		}
-		public Cell createCell(List<Species> occupants, int max, Location oldLocation){
-			if (cellType.equals("AntCell")){
-				return new AntCell(occupants, max, oldLocation);
+			else if (cellType.equals("PredatorPreyCell")){
+				return new PredatorPreyCell(toPut);
 			}
 			else{
-				return new Cell(occupants, max, oldLocation);
+				return new BasicCell(toPut);
 			}
+			
 			
 		}
 }

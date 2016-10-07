@@ -83,16 +83,19 @@ public class GridController {
 				CustomShape shape = createShape(i, j, grid.getWidth(), margin);
 				shape.setPosition();
 				Location curr = new Location(i,j);
-				if(grid.getCell(curr).getState()==1){
-					shape.setFill(COLORONE);
-					numOfTypeOne++;
-				}
-				else if(grid.getCell(curr).getState()==0){
-					shape.setFill(COLORZERO);
-					numOfTypeTwo++;
-				}
-				else if(grid.getCell(curr).getState()==2){
-					shape.setFill(COLORTWO);
+				int currState = grid.getCell(curr).getState();
+				if (currState!= -1){
+					if(grid.getCell(curr).getState()==1){
+						shape.setFill(COLORONE);
+						numOfTypeOne++;
+					}
+					else if(grid.getCell(curr).getState()==0){
+						shape.setFill(COLORZERO);
+						numOfTypeTwo++;
+					}
+					else if(grid.getCell(curr).getState()==2){
+						shape.setFill(COLORTWO);
+					}
 				}
 				g.getChildren().add(shape.getShape());
 			}
