@@ -1,3 +1,10 @@
+// This entire file is part of my masterpiece.
+// Ray Song (ys101)
+// methods: resetGridReader() : lines 54-61
+/**
+ * Explanations/comments for the Code Masterpiece are in Controller.java.
+ */
+
 package user_interface;
 
 import java.util.ResourceBundle;
@@ -46,6 +53,8 @@ public class GridController {
 		return grid;
 	}
 	
+	// This method is part of my masterpiece.
+	// Ray Song (ys101)
 	public Grid resetGridReader(Group g, ResourceBundle rb, int margin, String path, Grid grid, int input){
 		setSimConfig(rb, path);
 		updateCellSize(input);
