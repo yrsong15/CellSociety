@@ -3,11 +3,11 @@
 Duke CompSci 308 Cell Society Project
 
 ### Group Members (in alphabetical order)
-+ Owen Chung (tc153)
++ **Owen Chung** (tc153)
 	+ Implemented back-end aspect of program, including Species and Neighborhood for each simulation
-+ Chalena Maess-Scholl (cm296)
++ **Chalena Maess-Scholl** (cm296)
 	+ Implemented back-end aspect of program, including simulation configuration for each scenario , Game Engine/Grid model, and Cell Shape variation
-+ Ray Song (ys101)
++ **Ray Song** (ys101)
 	+ Implemented front-end aspect of program, including UX/UI and Grid Visualization
 
 ### Project Date
@@ -23,7 +23,6 @@ Duke CompSci 308 Cell Society Project
 ### How to Use Program/Configure Settings
 1. Using the UI
 	+ Pressing button from Starting Page will take user to Simulation Page corresponding to the label of the button.
-	
 	+ From Simulation Page, pressing **Run Another Simulation** button will stop simulation and take user back to Starting Page. 
 	+ Pressing **Reset** will initialize grid back to original settings.
 	+ Pressing **Start** will begin automated simulation that runs until otherwise instructed by user.
@@ -34,9 +33,22 @@ Duke CompSci 308 Cell Society Project
 
 
 2. Configuring Settings through XML File
-	+ Shape of displayed cell can be configured by toggling the ***XXX*** setting on the XML file.
+	+ Shape of displayed cell can be configured by toggling the ***Shapes*** setting on the XML file.
 	+ The initial percentage of each species for each simulation can bye configured by toggling the configuration -> species -> percent settings on each XML file.
-	+ Extra settings for each simulation (ex) probCatch for Spreading Fire model, # of turns to breed/die for Fish-Shark model) can be configured on the XML file.
+	+ Extra settings for each simulation (ex: probCatch for Spreading Fire model, # of turns to breed/die for Fish-Shark model) can be configured on the XML file.
+	+ Shape of displayed cell can be configured by toggling the 'cellShape' setting in the XML file, which is under the details tag.
+	+ The initial percentage of each species for each simulation can be configured by toggling the configuration -> species -> percent settings in each XML file.
+	+ Each simulation can also be set to a specific initial configuration by adding an 'initialization' tag under the corresponding species that you wish to set. For example:  
+		\<species type ="Ant"\>  
+    	    \<initialization state = "0"\>  
+    		    \<row>0 0 0\</row\>  
+    		    \<row>0 0 0\</row\>  
+    			\<row>0 0 2\</row\>  
+    		\</initialization\>  
+    	 \</species\>  
+        + The above puts 2 ants with state 0 in the bottom right position.
+	+ Extra settings for each simulation (ex) probCatch for Spreading Fire model, # of turns to breed/die for Fish-Shark model) can be configured in the XML file under the general tag.
+	+ The initial width and height of the grid can also be set but needs to correspond to the number given in 'numCells' i.e. if width is 3 and height is 3 numCells needs to be 9.
  
 ### Known Bugs
 + After 1000+ iterations of the Fish-Shark model on a sped-up version of the simulation (by changing the Delay value), the sharks start to move around less than they did before.
@@ -52,6 +64,7 @@ Duke CompSci 308 Cell Society Project
 
 ### Additional Resources Consulted
 + CS308 TA: Vishnu
++ Course Notes provided by Professor Duvall in the CS308 Website
 + Online resources including ORACLE JavaFX Documentation
 + Example code in online forums including Stack Overflow
 
